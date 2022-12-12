@@ -1,14 +1,15 @@
 import * as React from 'react';
 import Image from 'next/image'
-import logo from '../public/banner.png'
+import logo from '../public/banner400.png'
+import Box from '@mui/material/Box';
 
 
 function Footer() {
     return (
     <footer>
-        <span>
-          <Image src={logo} width="400" alt="Honestore Logo" />
-        </span>
+        <Box sx={{display: {xs: "none", sm: "block"}}}>
+          <Image src={logo} alt="Honestore Logo" />
+        </Box>
     </footer>
     );
 }

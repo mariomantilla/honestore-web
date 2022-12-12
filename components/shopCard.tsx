@@ -54,8 +54,8 @@ export default function ShopCard(props: { shop: Shop | null }) {
     }
 
     return (
-        <Card sx={{ display: "flex" }}>
-            <CardMedia sx={{ padding: 2 }}>
+        <Card sx={{ display: "flex", flexDirection: {xs: "column", sm: "row"}}}>
+            <CardMedia sx={{ padding: 2, justifyContent: "center", display: "flex" }}>
                 {shop ? (
                     <Avatar alt={shop.name} src={logoUrl} sx={{ height: 128, width: 128 }} />
                 ) : (
@@ -78,7 +78,7 @@ export default function ShopCard(props: { shop: Shop | null }) {
                 {actions}
             </Box>
             </CardContent>
-            <Box sx={{ margin: "20px 20px", display: { md: "none", xs: "flex" }, gap: ".75em", flexDirection: "column" }}>
+            <Box sx={{ margin: "20px 20px", display: { md: "none", xs: "flex" }, gap: ".75em", flexDirection: {sm: "column"}, justifyContent: "center" }}>
                 {actions}
             </Box>
         </Card>

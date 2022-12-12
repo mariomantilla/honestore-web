@@ -44,7 +44,7 @@ function ResponsiveAppBar(props: { active: string }) {
     <AppBar position="static" sx={{ marginBottom: 3 }}>
       <Container maxWidth="lg">
         <Toolbar disableGutters>
-          <Box sx={{ marginRight: 2, display: { xs: 'none', md: 'flex' } }}>
+          <Box sx={{ marginRight: 2, flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             <Link href="/">
               <Image src={logo} alt="Honestore Logo" width={200}></Image>
             </Link>
@@ -85,8 +85,12 @@ function ResponsiveAppBar(props: { active: string }) {
               ))}
             </Menu>
           </Box>
-          <Box sx={{ display: { xs: 'flex', md: 'none', flexGrow: 1 } }}><Image src={logo} alt="Honestore Logo" width={180}></Image></Box>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, gap: 2.5, textTransform: "uppercase" }}>
+          <Box sx={{ display: { xs: 'flex', md: 'none', flexGrow: 1 } }}>
+            <Link href="/">
+              <Image src={logo} alt="Honestore Logo" width={180}></Image>
+            </Link>
+          </Box>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, gap: 2.5, textTransform: "uppercase", justifyContent: "right" }}>
             {Object.entries(pages).map(([path, page]) => (
               <Box
                 sx={{ my: 2, color: 'white', display: 'block', opacity: props.active == path ? '60%' : "100%" }}

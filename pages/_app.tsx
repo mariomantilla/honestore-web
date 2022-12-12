@@ -10,6 +10,7 @@ import { Analytics } from '@vercel/analytics/react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import ResponsiveAppBar from '../components/appBar'
 import Container from '@mui/material/Container'
+import Box from '@mui/material/Box'
 import Footer from '../components/footer'
 import Head from 'next/head'
 
@@ -57,14 +58,20 @@ function MyApp({
         <link rel="icon" href="/favicon.png" />
       </Head>
       <ThemeProvider theme={theme}>
-      <ResponsiveAppBar active={router.pathname} />
-      <Container maxWidth="lg">
-        <Component {...pageProps} />
-      </Container>
-      <Footer />
+        <Box sx={{
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: "column"
+        }}>
+          <ResponsiveAppBar active={router.pathname} />
+          <Container maxWidth="lg" sx={{ flex: 1 }}>
+            <Component {...pageProps} />
+          </Container>
+          <Footer />
+        </Box>
       </ThemeProvider>
       <Analytics />
-    </SessionContextProvider>
+    </SessionContextProvider >
   )
 }
 export default MyApp
