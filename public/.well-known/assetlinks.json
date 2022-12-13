@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "app.honestore.android",
+      "sha256_cert_fingerprints": [
+        "52:D4:6B:0C:70:31:6E:67:B2:04:D6:F5:3A:80:1C:05:76:DD:55:DE:C6:F3:3F:E0:3D:DA:24:27:A9:4D:97:A8"
+      ]
+    }
+  }
+]
