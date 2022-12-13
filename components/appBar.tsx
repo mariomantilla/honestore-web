@@ -41,7 +41,7 @@ function ResponsiveAppBar(props: { active: string }) {
   };
 
   return (
-    <AppBar position="static" sx={{ marginBottom: 3 }}>
+    <AppBar position="static" sx={{ marginBottom: 5 }}>
       <Container maxWidth="lg">
         <Toolbar disableGutters>
           <Box sx={{ marginRight: 2, flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>

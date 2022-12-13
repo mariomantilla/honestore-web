@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import Shop from '../models/Shop';
 
 export default function AlignItemsList(props: { shops: Shop[] | null }) {
-    const shops = props.shops??[null, null, null];
+    const shops = props.shops ?? new Array(10).fill(null);
     return (
         <Box sx={{ flexGrow: 1 }}>
             <Grid container rowSpacing={2} sx={{marginTop: "2em"}}>

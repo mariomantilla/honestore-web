@@ -7,6 +7,9 @@ import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import Box from '@mui/material/Box';
 import Link from 'next/link';
+import Grid from '@mui/material/Grid';
+import { Typography } from '@mui/material';
+import Underline from '../components/underline';
 
 
 async function getShops(supabase: SupabaseClient, searchQuery: string): Promise<Shop[] | null> {
@@ -37,11 +40,26 @@ export default function Home() {
 
   return (
     <>
-      <TextField id="outlined-basic" fullWidth placeholder="Buscar tiendas y emprendimientos" variant="outlined" onChange={(v) => { setSearchQuery(v.target.value) }} />
-      <ShopList shops={shops}></ShopList>
-      <Fab color="primary" aria-label="add" sx={{position: "fixed", bottom: "2em", right: "2em"}}>
-        <Link href="/add_shop" style={{lineHeight:"normal"}}>
-        <AddIcon sx={{color: "white"}} />
+      <Typography variant='h2' component="h1">La comunidad de activistas del consumo ético</Typography>
+      <Grid container spacing={2}>
+        <Grid item xs={12} lg={3}>
+          <Typography variant='h4' component="div" sx={{marginBottom: 1.3}}>Sobre <Underline>Honestore</Underline></Typography>
+          <Typography component="h2" variant="subtitle1">
+            Honestore es un proyecto que nace con la intención de formar una
+            comunidad de personas unidas por el propósito de cambiar sus
+            hábitos hacia un consumo consciente y basado en valores como el
+            respeto al medio ambiente, los derechos humanos y la justicia y el
+            impacto social.
+          </Typography>
+        </Grid>
+        <Grid item xs={12} lg={9}>
+          <TextField id="outlined-basic" fullWidth placeholder="Buscar tiendas y emprendimientos" variant="outlined" onChange={(v) => { setSearchQuery(v.target.value) }} />
+          <ShopList shops={shops}></ShopList>
+        </Grid>
+      </Grid>
+      <Fab color="primary" aria-label="add" sx={{ position: "fixed", bottom: "2em", right: "2em" }}>
+        <Link href="/add_shop" style={{ lineHeight: "normal" }}>
+          <AddIcon sx={{ color: "white" }} />
         </Link>
       </Fab>
     </>

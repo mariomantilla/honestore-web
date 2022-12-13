@@ -1,5 +1,6 @@
 
 import type { NextApiResponse } from 'next'
+import { BASE_URL } from '../constants';
 import { getShopsIds } from '../lib/data';
 
 const Sitemap = () => {
@@ -7,7 +8,6 @@ const Sitemap = () => {
 };
 
 export const getServerSideProps = async ({ res }: { res: NextApiResponse }) => {
-    const BASE_URL = 'https://honestore.app';
 
     let ids: number[] = await getShopsIds(); // some remote API call maybe!
     const dynamicPaths = ids.map(shopId => `${BASE_URL}/shops/${shopId}`)
