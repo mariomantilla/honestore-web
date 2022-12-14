@@ -45,7 +45,7 @@ export default function Home() {
       <Grid container spacing={2}>
         <Grid item xs={12} lg={3}>
           <Typography variant='h4' component="div" sx={{marginBottom: 1.3}}><Underline>Sobre Honestore</Underline></Typography>
-          <Typography component="h2" variant="subtitle1">
+          <Typography component="h2" variant="subtitle1" sx={{marginBottom: 1.3}}>
             Honestore es un proyecto que nace con la intención de formar una
             comunidad de personas unidas por el propósito de cambiar sus
             hábitos hacia un consumo consciente y basado en valores como el
