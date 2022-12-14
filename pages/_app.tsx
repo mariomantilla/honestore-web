@@ -6,17 +6,20 @@ import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs'
 import { SessionContextProvider, Session } from '@supabase/auth-helpers-react'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
-import Link from 'next/link'
 import { Analytics } from '@vercel/analytics/react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import ResponsiveAppBar from '../components/appBar'
 import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
-import Paper from '@mui/material/Paper'
 import Footer from '../components/footer'
 import Head from 'next/head'
 import { BASE_URL } from '../constants'
-import Button from '@mui/material/Button'
+
+import dynamic from 'next/dynamic'
+
+const AndroidBar = dynamic(() => import('../components/androidBar'), {
+  ssr: false,
+})
 
 const openSans = Open_Sans({ subsets: ['latin'] })
 
@@ -80,12 +83,6 @@ function MyApp({
 
   const canonicalUrl = (BASE_URL + (router.asPath === "/" ? "" : router.asPath)).split("?")[0];
 
-  var isMobile = {
-    Android: () => navigator.userAgent.match(/Android/i),
-    iOS: () => navigator.userAgent.match(/iPhone|iPad|iPod/i),
-    any: () => (isMobile.Android() || isMobile.iOS())
-  };
-
   return (
     <SessionContextProvider supabaseClient={supabase} initialSession={pageProps.initialSession}>
       <Head>
@@ -113,12 +110,7 @@ function MyApp({
           display: "flex",
           flexDirection: "column"
         }}>
-          <Paper sx={{position: "sticky", top: 0, zIndex: 10, display: isMobile.Android() ? 'inherit' : 'none'}} elevation={8}>
-            <Container maxWidth="lg" sx={{padding: "15px 0", display: "flex", gap: 4, alignItems: "center", justifyContent: "center"}}>
-              ¿Utilizas Android? Descarga la app, ¡es aun mejor!
-              <Button variant="contained"><Link href="/download">Descargar</Link></Button>
-            </Container>
-          </Paper>
+          <AndroidBar />
           <ResponsiveAppBar active={router.pathname} />
           <Container maxWidth="lg" sx={{ flex: 1 }}>
             <Component {...pageProps} />
