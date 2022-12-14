@@ -17,10 +17,10 @@ function Footer() {
           <Box sx={{ display: { xs: "none", md: "flex" }, alignItems: "center" }}>
             <Image src={logo} alt="Honestore Logo" />
           </Box>
-          <Box sx={{ display: { xs: "flex", md: "none" }, alignItems: "center", flexGrow: 1 }}>
+          <Box sx={{ display: { xs: "flex", md: "none" }, alignItems: "center", flexGrow: 1, justifyContent: {xs: "center"} }}>
             <Image src={logoSquare} width={150} alt="Honestore Logo" />
           </Box>
-          <Box sx={{ display: "flex", flexGrow: 1, color: "white", gap: 2.5, alignItems: "center", marginLeft: {md: 2}}}>
+          <Box sx={{ display: "flex", flexGrow: 1, color: "white", gap: 2.5, alignItems: "center", marginLeft: {xs: 0, md: 2}, justifyContent: {xs: "center"}}}>
             <Link href="https://instagram.com/honestore.app" target="_blank" rel="noreferrer"><Instagram fontSize='large' /></Link>
             <Link href="mailto:info@honestore.app" target="_blank" rel="noreferrer"><Email fontSize='large' /></Link>
           </Box>

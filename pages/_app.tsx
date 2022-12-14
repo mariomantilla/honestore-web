@@ -6,14 +6,17 @@ import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs'
 import { SessionContextProvider, Session } from '@supabase/auth-helpers-react'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 import { Analytics } from '@vercel/analytics/react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import ResponsiveAppBar from '../components/appBar'
 import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
+import Paper from '@mui/material/Paper'
 import Footer from '../components/footer'
 import Head from 'next/head'
 import { BASE_URL } from '../constants'
+import Button from '@mui/material/Button'
 
 const openSans = Open_Sans({ subsets: ['latin'] })
 
@@ -46,7 +49,7 @@ const theme = createTheme({
     h4: {
       fontSize: 16,
       lineHeight: 1.5,
-      fontWeight: 500
+      fontWeight: 500,
     },
     subtitle1: {
       color: "#444",
@@ -59,7 +62,8 @@ const theme = createTheme({
   },
   palette: {
     primary: {
-      main: "#FB7168"
+      main: "#FB7168",
+      contrastText: "#FFFFFF"
     }
   }
 });
@@ -74,7 +78,13 @@ function MyApp({
   const [supabase] = useState(() => createBrowserSupabaseClient())
   const router = useRouter()
 
-  const canonicalUrl = (BASE_URL + (router.asPath === "/" ? "": router.asPath)).split("?")[0];
+  const canonicalUrl = (BASE_URL + (router.asPath === "/" ? "" : router.asPath)).split("?")[0];
+
+  var isMobile = {
+    Android: () => navigator.userAgent.match(/Android/i),
+    iOS: () => navigator.userAgent.match(/iPhone|iPad|iPod/i),
+    any: () => (isMobile.Android() || isMobile.iOS())
+  };
 
   return (
     <SessionContextProvider supabaseClient={supabase} initialSession={pageProps.initialSession}>
@@ -103,6 +113,12 @@ function MyApp({
           display: "flex",
           flexDirection: "column"
         }}>
+          <Paper sx={{position: "sticky", top: 0, zIndex: 10, display: isMobile.Android() ? 'inherit' : 'none'}} elevation={8}>
+            <Container maxWidth="lg" sx={{padding: "15px 0", display: "flex", gap: 4, alignItems: "center", justifyContent: "center"}}>
+              ¿Utilizas Android? Descarga la app, ¡es aun mejor!
+              <Button variant="contained"><Link href="/download">Descargar</Link></Button>
+            </Container>
+          </Paper>
           <ResponsiveAppBar active={router.pathname} />
           <Container maxWidth="lg" sx={{ flex: 1 }}>
             <Component {...pageProps} />

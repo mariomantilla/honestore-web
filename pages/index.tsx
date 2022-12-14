@@ -5,10 +5,11 @@ import TextField from '@mui/material/TextField';
 import Shop from '../models/Shop';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
-import Box from '@mui/material/Box';
 import Link from 'next/link';
 import Grid from '@mui/material/Grid';
-import { Typography } from '@mui/material';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 import Underline from '../components/underline';
 
 
@@ -43,7 +44,7 @@ export default function Home() {
       <Typography variant='h2' component="h1">La comunidad de activistas del consumo ético</Typography>
       <Grid container spacing={2}>
         <Grid item xs={12} lg={3}>
-          <Typography variant='h4' component="div" sx={{marginBottom: 1.3}}>Sobre <Underline>Honestore</Underline></Typography>
+          <Typography variant='h4' component="div" sx={{marginBottom: 1.3}}><Underline>Sobre Honestore</Underline></Typography>
           <Typography component="h2" variant="subtitle1">
             Honestore es un proyecto que nace con la intención de formar una
             comunidad de personas unidas por el propósito de cambiar sus
@@ -51,6 +52,9 @@ export default function Home() {
             respeto al medio ambiente, los derechos humanos y la justicia y el
             impacto social.
           </Typography>
+          <Box sx={{display: "flex", justifyContent: "center"}}>
+            <Button variant='contained'><Link href="/about">Saber más</Link></Button>
+          </Box>
         </Grid>
         <Grid item xs={12} lg={9}>
           <TextField id="outlined-basic" fullWidth placeholder="Buscar tiendas y emprendimientos" variant="outlined" onChange={(v) => { setSearchQuery(v.target.value) }} />
