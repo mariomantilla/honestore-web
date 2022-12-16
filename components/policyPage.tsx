@@ -12,8 +12,8 @@ export default function PolicyPage({title, desc, children}: {title: string, desc
                 <meta property="og:title" content={titleText} />
                 <meta property="og:description" content={desc} />
             </Head>
-            <Container maxWidth="md">
-                <Typography variant="h1">{title}</Typography>
+            <Container maxWidth="lg">
+                <Typography variant="h1" component="h1">{title}</Typography>
                 <Typography sx={{ textAlign: "center" }}>{desc}</Typography>
                 <Typography sx={{ textAlign: "center" }}><em>Última modificación: 11/11/2022</em></Typography>
             </Container>

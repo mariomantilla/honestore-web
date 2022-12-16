@@ -44,20 +44,16 @@ export default function Home() {
       <Typography variant='h2' component="h1">La comunidad de activistas del consumo ético</Typography>
       <Grid container spacing={2}>
         <Grid item xs={12} lg={3}>
-          <Typography variant='h4' component="div" sx={{marginBottom: 1.3}}><Underline>Sobre Honestore</Underline></Typography>
+          {/* <Typography variant='h4' component="div" sx={{marginBottom: 1.3}}><Underline>Sobre Honestore</Underline></Typography> */}
           <Typography component="h2" variant="subtitle1" sx={{marginBottom: 1.3}}>
-            Honestore es un proyecto que nace con la intención de formar una
-            comunidad de personas unidas por el propósito de cambiar sus
-            hábitos hacia un consumo consciente y basado en valores como el
-            respeto al medio ambiente, los derechos humanos y la justicia y el
-            impacto social.
+          Somos una red de personas y tiendas unidas por cambiar hacia un consumo consciente y basado en valores sociales y medioambientales.
           </Typography>
           <Box sx={{display: "flex", justifyContent: "center"}}>
             <Button variant='contained'><Link href="/about">Saber más</Link></Button>
           </Box>
         </Grid>
         <Grid item xs={12} lg={9}>
-          <TextField id="outlined-basic" fullWidth placeholder="Buscar tiendas y emprendimientos" variant="outlined" onChange={(v) => { setSearchQuery(v.target.value) }} />
+          <TextField id="outlined-basic" fullWidth placeholder="Buscar tiendas y emprendimientos" variant="outlined" size="small" onChange={(v) => { setSearchQuery(v.target.value) }} />
           <ShopList shops={shops}></ShopList>
         </Grid>
       </Grid>

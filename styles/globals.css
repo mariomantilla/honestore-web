@@ -33,3 +33,20 @@ footer {
     margin: 0 -0.1em;
     padding: 0 0.1em;
 }
+
+
+.image-container div {
+  position: unset !important;
+}
+
+.image-container {
+  width: 100%;
+  position:relative;
+}
+
+.image-container .image {
+    object-fit: contain;
+    width: 100% !important;
+    position: relative !important;
+    height: unset !important;
+}

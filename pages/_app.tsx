@@ -39,7 +39,7 @@ const theme = createTheme({
     h1: {
       fontSize: 48,
       textAlign: "center",
-      lineHeight: "2em"
+      marginBottom: "0.7em"
     },
     h2: {
       fontSize: 32,
