@@ -80,7 +80,7 @@ function ResponsiveAppBar(props: { active: string }) {
             >
               {Object.entries(pages).map(([path, page]) => (
                 <MenuItem key={path} onClick={handleCloseNavMenu} selected={props.active == path}>
-                  <Typography textAlign="center">{page}</Typography>
+                  <Typography textAlign="center"><Link href={path}>{page}</Link></Typography>
                 </MenuItem>
               ))}
             </Menu>
