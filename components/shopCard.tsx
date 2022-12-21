@@ -16,7 +16,7 @@ import Map from '@mui/icons-material/Map';
 import ShopExternalAction from './shopExternalAction';
 import Link from 'next/link';
 
-export default function ShopCard({shop, listView = false}: { shop: Shop | null, listView: boolean }) {
+export default function ShopCard({shop, listView = false}: { shop: Shop | null, listView?: boolean }) {
     const logoUrl = shop ? `https://tbhtpkmrwtznqzsjlfmo.supabase.co/storage/v1/object/public/shops-content/${shop.logo}.jpg` : '';
 
     let actions: React.ReactNode[] = [];
