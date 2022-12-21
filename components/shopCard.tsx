@@ -14,9 +14,9 @@ import Email from '@mui/icons-material/Email';
 import Map from '@mui/icons-material/Map';
 
 import ShopExternalAction from './shopExternalAction';
+import Link from 'next/link';
 
-export default function ShopCard(props: { shop: Shop | null }) {
-    const shop = props.shop;
+export default function ShopCard({shop, listView = false}: { shop: Shop | null, listView: boolean }) {
     const logoUrl = shop ? `https://tbhtpkmrwtznqzsjlfmo.supabase.co/storage/v1/object/public/shops-content/${shop.logo}.jpg` : '';
 
     let actions: React.ReactNode[] = [];
@@ -53,6 +53,17 @@ export default function ShopCard(props: { shop: Shop | null }) {
         }
     }
 
+    const clampStyles = {
+        maxHeight: "8.58em",
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+        display: "-webkit-box",
+        WebkitLineClamp: 6,
+        lineClamp: 2,
+        WebkitBoxOrient: "vertical",
+        whiteSpace: "pre-wrap"
+    }
+
     return (
         <Card sx={{ display: "flex", flexDirection: {xs: "column", sm: "row"}}}>
             <CardMedia sx={{ padding: 2, justifyContent: "center", display: "flex" }}>
@@ -64,14 +75,16 @@ export default function ShopCard(props: { shop: Shop | null }) {
             </CardMedia>
             <CardContent sx={{ width: '100%' }}>
                 <Typography gutterBottom variant="h5" component="div">
-                    {shop ? shop.name : (
+                    {shop ? (
+                        <Link href={'/shops/'+shop.id}>{shop.name}</Link>
+                    ) : (
                         <Skeleton width={200} />
                     )}
                 </Typography>
                 <Typography variant="body2" color="text.secondary" fontWeight="bold" sx={{ marginBottom: "10px" }}>{shop ? shop.address : (
                     <Skeleton />
                 )}</Typography>
-                <Typography variant="body2" color="text.secondary" sx={{ whiteSpace: "pre-wrap" }}>{shop ? shop.description : (
+                <Typography variant="body2" color="text.secondary" sx={ listView ? clampStyles : { whiteSpace: "pre-wrap" }}>{shop ? shop.description : (
                     <Skeleton />
                 )}</Typography>
                 <Box sx={{ marginTop: "10px", display: { md: "flex", xs: "none" }, gap: ".75em" }}>

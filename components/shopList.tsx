@@ -13,7 +13,7 @@ export default function AlignItemsList(props: { shops: Shop[] | null }) {
                     <div>No data</div>
                 ) : shops.map((shop: Shop | null, i: number) => (
                     <Grid item xs={12} key={i}>
-                        <ShopCard shop={shop} />
+                        <ShopCard shop={shop} listView={true} />
                     </Grid>
                 ))}
             </Grid>
