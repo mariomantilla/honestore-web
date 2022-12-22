@@ -20,6 +20,11 @@ module.exports = {
         destination: '/shop/:path*',
         permanent: true,
       },
+      {
+        source: '/shop/:path*',
+        destination: '/shops/:path*',
+        permanent: true,
+      },
     ]
   },
 }
