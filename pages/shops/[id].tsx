@@ -29,7 +29,9 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }: { params: { id: number } }) {
+  console.log('getting shop');
   let shop: Shop | null = await getShop(params.id);
+  console.log('received shop', shop);
   if (!shop) {
     return {
       notFound: true,
