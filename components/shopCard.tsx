@@ -15,6 +15,8 @@ import Map from '@mui/icons-material/Map';
 
 import ShopExternalAction from './shopExternalAction';
 import Link from 'next/link';
+import Chip from '@mui/material/Chip';
+import { LocationOff } from '@mui/icons-material';
 
 export default function ShopCard({shop, listView = false}: { shop: Shop | null, listView?: boolean }) {
     const logoUrl = shop ? `https://tbhtpkmrwtznqzsjlfmo.supabase.co/storage/v1/object/public/shops-content/${shop.logo}.jpg` : '';
@@ -45,7 +47,7 @@ export default function ShopCard({shop, listView = false}: { shop: Shop | null, 
                 <ShopExternalAction title="Escribir email" url={url} key="email"><Email color='primary' /></ShopExternalAction>
             )
         }
-        if (shop.location_coordinates) {
+        if (shop.location_coordinates && !shop.online) {
             let url: string = `https://www.google.com/maps/search/?api=1&query=${shop.location_coordinates.replace(' ', ',')}`;
             actions.push(
                 <ShopExternalAction title="Abrir mapa" url={url} key="map"><Map color='primary' /></ShopExternalAction>
@@ -64,6 +66,10 @@ export default function ShopCard({shop, listView = false}: { shop: Shop | null, 
         whiteSpace: "pre-wrap"
     }
 
+    const onlineChip = shop && shop.online ? (
+        <Chip icon={<LocationOff />} label="Solo online" />
+    ) : '' ;
+
     return (
         <Card sx={{ display: "flex", flexDirection: {xs: "column", sm: "row"}}}>
             <CardMedia sx={{ padding: 2, justifyContent: "center", display: "flex" }}>
@@ -76,7 +82,7 @@ export default function ShopCard({shop, listView = false}: { shop: Shop | null, 
             <CardContent sx={{ width: '100%' }}>
                 <Typography gutterBottom variant="h5" component="div">
                     {shop ? (
-                        <Link href={'/shops/'+shop.id}>{shop.name}</Link>
+                        <Box sx={{display: "flex", gap: 2}}><Link href={'/shops/'+shop.id}>{shop.name}</Link>{onlineChip}</Box>
                     ) : (
                         <Skeleton width={200} />
                     )}

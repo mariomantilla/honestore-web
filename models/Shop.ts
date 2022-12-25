@@ -9,6 +9,7 @@ type Shop = {
     address: string;
     email: string;
     location_coordinates: string;
+    online: boolean;
 };
 
 export default Shop;
