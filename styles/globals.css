@@ -50,3 +50,7 @@ footer {
     position: relative !important;
     height: unset !important;
 }
+
+.MuiAvatar-circular img {
+  object-fit: contain; 
+}

@@ -44,12 +44,13 @@ export async function getStaticProps({ params }: { params: { id: number } }) {
 }
 
 export default function ShopPage({ shop }: { shop: Shop }) {
-  const logoUrl = shop ? `https://tbhtpkmrwtznqzsjlfmo.supabase.co/storage/v1/object/public/shops-content/${shop.logo}.jpg` : '';
 
   const router = useRouter()
   if (router.isFallback) {
     return <Container sx={{ textAlign: "center" }}><CircularProgress /></Container>
   }
+
+  const logoUrl = shop ? `https://tbhtpkmrwtznqzsjlfmo.supabase.co/storage/v1/object/public/shops-content/${shop.logo}.jpg` : '';
 
   let actions: React.ReactNode[] = [];
 
