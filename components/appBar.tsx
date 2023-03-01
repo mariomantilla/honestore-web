@@ -18,6 +18,7 @@ import Divider from '@mui/material/Divider';
 import Modal from '@mui/material/Modal';
 import Paper from '@mui/material/Paper';
 import LoginWidget from './loginWidget';
+import { useSession, useUser } from '@supabase/auth-helpers-react';
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -57,6 +58,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 function ResponsiveAppBar() {
 
+  const user = useUser()
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const { searchQuery, setSearchQuery } = useSearchContext();
   const [loginOpen, setLoginOpen] = React.useState(false);
@@ -90,10 +92,18 @@ function ResponsiveAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleOpenLogin}>Inicia sesión</MenuItem>
-      <MenuItem onClick={handleOpenLogin}>Crear cuenta</MenuItem>
-      <Divider />
-      <MenuItem onClick={handleMenuClose}><Link href="/add_shop">Añade tu tienda</Link></MenuItem>
+      {user ? (
+        <>
+        {user.email}
+        </>
+      ) : (
+        <>
+          <MenuItem onClick={handleOpenLogin}>Inicia sesión</MenuItem>
+          <MenuItem onClick={handleOpenLogin}>Crear cuenta</MenuItem>
+          <Divider />
+          <MenuItem onClick={handleMenuClose}><Link href="/add_shop">Añade tu tienda</Link></MenuItem>
+        </>
+      )}
     </Menu>
   );
 
@@ -127,7 +137,7 @@ function ResponsiveAppBar() {
                 onChange={(v) => { setSearchQuery(v.target.value) }}
               />
             </Search>
-            <Button variant="contained" color="secondary" sx={{display: {xs: "none", sm: "inherit"}, flexShrink: 0}}>
+            <Button variant="contained" color="secondary" sx={{ display: { xs: "none", sm: "inherit" }, flexShrink: 0 }}>
               <Link href="/add_shop">Añade tu tienda</Link>
             </Button>
             <IconButton
