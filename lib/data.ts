@@ -14,7 +14,7 @@ export async function getShop(id: number): Promise<Shop | null> {
     if (error) {
     throw error;
     }
-    return data ? data[0] : null;
+    return data ? data[0] as Shop : null;
 };
 
 export async function getShopsIds(): Promise<number[]> {
