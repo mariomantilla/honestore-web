@@ -18,7 +18,7 @@ import Divider from '@mui/material/Divider';
 import Modal from '@mui/material/Modal';
 import Paper from '@mui/material/Paper';
 import LoginWidget from './loginWidget';
-import { useSession, useUser } from '@supabase/auth-helpers-react';
+import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -64,6 +64,13 @@ function ResponsiveAppBar() {
   const [loginOpen, setLoginOpen] = React.useState(false);
   const handleOpenLogin = () => { setLoginOpen(true); handleMenuClose(); };
   const handleCloseLogin = () => { setLoginOpen(false); handleMenuClose(); };
+  const supabase = useSupabaseClient();
+
+  supabase.auth.onAuthStateChange((event, session) => {
+    if (event == 'PASSWORD_RECOVERY') {
+      console.log('aaaa');
+    }
+  })
 
   const isMenuOpen = Boolean(anchorEl);
 
@@ -93,16 +100,21 @@ function ResponsiveAppBar() {
       onClose={handleMenuClose}
     >
       {user ? (
-        <>
-        {user.email}
-        </>
+        [
+          <MenuItem key="email" sx={{pointerEvents: 'none'}}>{user.email}</MenuItem>,
+          <Divider key="div1" />,
+          <MenuItem key="account">Cuenta</MenuItem>,
+          <MenuItem key="shops">Mis tiendas</MenuItem>,
+          <Divider key="dev2" />,
+          <MenuItem key="logout" onClick={() => supabase.auth.signOut()}>Cerrar Sesión</MenuItem>
+        ]
       ) : (
-        <>
-          <MenuItem onClick={handleOpenLogin}>Inicia sesión</MenuItem>
-          <MenuItem onClick={handleOpenLogin}>Crear cuenta</MenuItem>
-          <Divider />
-          <MenuItem onClick={handleMenuClose}><Link href="/add_shop">Añade tu tienda</Link></MenuItem>
-        </>
+        [
+          <MenuItem key="login" onClick={handleOpenLogin}>Inicia sesión</MenuItem>,
+          <MenuItem key="singup" onClick={handleOpenLogin}>Crear cuenta</MenuItem>,
+          <Divider key="div" />,
+          <MenuItem key="addShop" onClick={handleMenuClose}><Link href="/add_shop">Añade tu tienda gratis</Link></MenuItem>,
+        ]
       )}
     </Menu>
   );
@@ -138,7 +150,7 @@ function ResponsiveAppBar() {
               />
             </Search>
             <Button variant="contained" color="secondary" sx={{ display: { xs: "none", sm: "inherit" }, flexShrink: 0 }}>
-              <Link href="/add_shop">Añade tu tienda</Link>
+              <Link href="/add_shop">Añade tu tienda gratis</Link>
             </Button>
             <IconButton
               size="large"

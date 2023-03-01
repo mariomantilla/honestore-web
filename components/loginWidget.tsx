@@ -14,6 +14,7 @@ export default function LoginWidget() {
                 appearance={{theme: ThemeSupa}}
                 localization={{variables: es}}
                 providers={['google']}
+                redirectTo={window.location.origin}
             />
         </Box>
     )
