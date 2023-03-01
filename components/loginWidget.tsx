@@ -7,14 +7,16 @@ import * as es from './login_es.json'
 export default function LoginWidget() {
     const supabase = useSupabaseClient()
 
+    const origin = typeof window !== "undefined" ? window.location.origin : undefined;
+
     return (
-        <Box sx={{padding: "3rem"}}>
+        <Box sx={{padding: "3rem", maxWidth: "400px"}}>
             <Auth
                 supabaseClient={supabase}
                 appearance={{theme: ThemeSupa}}
                 localization={{variables: es}}
                 providers={['google']}
-                redirectTo={window.location.origin}
+                redirectTo={origin}
             />
         </Box>
     )

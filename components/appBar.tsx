@@ -19,6 +19,7 @@ import Modal from '@mui/material/Modal';
 import Paper from '@mui/material/Paper';
 import LoginWidget from './loginWidget';
 import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
+import { useRouter } from 'next/router';
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -65,10 +66,11 @@ function ResponsiveAppBar() {
   const handleOpenLogin = () => { setLoginOpen(true); handleMenuClose(); };
   const handleCloseLogin = () => { setLoginOpen(false); handleMenuClose(); };
   const supabase = useSupabaseClient();
+  const router = useRouter();
 
   supabase.auth.onAuthStateChange((event, session) => {
     if (event == 'PASSWORD_RECOVERY') {
-      console.log('aaaa');
+      router.push('/account')
     }
   })
 
@@ -103,10 +105,10 @@ function ResponsiveAppBar() {
         [
           <MenuItem key="email" sx={{pointerEvents: 'none'}}>{user.email}</MenuItem>,
           <Divider key="div1" />,
-          <MenuItem key="account">Cuenta</MenuItem>,
+          <MenuItem key="account" onClick={handleMenuClose}><Link href="/account">Cuenta</Link></MenuItem>,
           <MenuItem key="shops">Mis tiendas</MenuItem>,
           <Divider key="dev2" />,
-          <MenuItem key="logout" onClick={() => supabase.auth.signOut()}>Cerrar Sesión</MenuItem>
+          <MenuItem key="logout" onClick={() => {handleMenuClose();supabase.auth.signOut();}}>Cerrar Sesión</MenuItem>
         ]
       ) : (
         [
@@ -132,7 +134,7 @@ function ResponsiveAppBar() {
 
   return (
     <>
-      <AppBar position="sticky">
+      <AppBar position="sticky" sx={{marginBottom: "2.5rem"}}>
         <Container maxWidth="lg">
           <Toolbar disableGutters sx={{ gap: 1 }}>
             <Link href="/">

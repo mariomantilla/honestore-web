@@ -60,9 +60,6 @@ const theme = createTheme({
       color: "#444",
       fontWeight: 400,
       lineHeight: 1.7
-    },
-    body1: {
-      padding: "0.7em"
     }
   },
   palette: {
