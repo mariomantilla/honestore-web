@@ -1,0 +1,43 @@
+{
+    "sign_up": {
+      "email_label": "Email",
+      "password_label": "Contraseña",
+      "email_input_placeholder": "Su dirección email",
+      "password_input_placeholder": "Eliga una contraseña...",
+      "button_label": "Unirme a Honestore!",
+      "loading_button_label": "Registrando ...",
+      "social_provider_text": "Continuar con",
+      "link_text": "¿Aún no tienes una cuenta? Regístrate!"
+    },
+    "sign_in": {
+      "email_label": "",
+      "password_label": "",
+      "email_input_placeholder": "Email",
+      "password_input_placeholder": "Contraseña",
+      "button_label": "Iniciar Sesión",
+      "loading_button_label": "Iniciando Sesión ...",
+      "social_provider_text": "Continuar con",
+      "link_text": "¿Ya tienes una cuenta? Inicia sesión"
+    },
+    "magic_link": {
+      "email_input_label": "",
+      "email_input_placeholder": "Email",
+      "button_label": "Enviar link mágico",
+      "loading_button_label": "Enviando link mágico ...",
+      "link_text": "Enviar link mágico por email"
+    },
+    "forgotten_password": {
+      "email_label": "Email",
+      "password_label": "Contraseña",
+      "email_input_placeholder": "Email con el que se registró",
+      "button_label": "Enviar email para recuperar mi contraseña",
+      "loading_button_label": "Enviando email para recuperar contraseña ...",
+      "link_text": "¿Olvidaste tu contraseña?"
+    },
+    "update_password": {
+      "password_label": "Contraseña",
+      "password_input_placeholder": "Eliga su nueva contraseña",
+      "button_label": "Actualizar contraseña",
+      "loading_button_label": "Actualizando contraseña ..."
+    }
+  }

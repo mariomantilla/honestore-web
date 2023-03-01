@@ -4,6 +4,7 @@ import { Open_Sans } from '@next/font/google'
 
 import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs'
 import { SessionContextProvider, Session } from '@supabase/auth-helpers-react'
+import { SearchProvider } from "../context/search";
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { Analytics } from '@vercel/analytics/react';
@@ -22,6 +23,7 @@ const AndroidBar = dynamic(() => import('../components/androidBar'), {
 })
 
 const openSans = Open_Sans({ subsets: ['latin'] })
+
 
 const theme = createTheme({
   typography: {
@@ -67,7 +69,11 @@ const theme = createTheme({
     primary: {
       main: "#FB7168",
       contrastText: "#FFFFFF"
-    }
+    },
+    secondary: {
+      main: "#521E1E",
+      // contrastText: "#FFFFFF"
+    },
   }
 });
 
@@ -111,10 +117,12 @@ function MyApp({
           flexDirection: "column"
         }}>
           <AndroidBar />
-          <ResponsiveAppBar active={router.pathname} />
-          <Container maxWidth="lg" sx={{ flex: 1 }}>
-            <Component {...pageProps} />
-          </Container>
+          <SearchProvider>
+            <ResponsiveAppBar />
+            <Container maxWidth="lg" sx={{ flex: 1 }}>
+              <Component {...pageProps} />
+            </Container>
+          </SearchProvider>
           <Footer />
         </Box>
       </ThemeProvider>

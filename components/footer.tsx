@@ -15,7 +15,7 @@ function Footer() {
       <Container maxWidth="lg">
         <Box sx={{ flexGrow: 1, display: "flex", flexWrap: "wrap" }}>
           <Box sx={{ display: { xs: "none", md: "flex" }, alignItems: "center" }}>
-            <Image src={logo} alt="Honestore Logo" />
+            <Link href="/"><Image src={logo} alt="Honestore Logo" /></Link>
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" }, alignItems: "center", flexGrow: 1, justifyContent: {xs: "center"} }}>
             <Image src={logoSquare} width={150} alt="Honestore Logo" />

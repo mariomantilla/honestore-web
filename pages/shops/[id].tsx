@@ -29,31 +29,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }: { params: { id: number } }) {
-  console.log('getting shop');
-  let shop: Shop | null;
-  try {
-    shop = await getShop(params.id);
-  } catch (error) {
-    shop = {
-      id: params.id,
-      name: String(error),
-      logo: '',
-      description: '',
-      instagram: '',
-      phone: '',
-      web: '',
-      address: '',
-      email: '',
-      location_coordinates: '',
-      online: false
-    };
-  }
-  console.log('received shop', shop);
-  if (!shop) {
-    return {
-      notFound: true,
-    }
-  }
+  let shop = await getShop(params.id);
   return {
     props: {
       shop: shop

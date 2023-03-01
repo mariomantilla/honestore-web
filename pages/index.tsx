@@ -14,6 +14,7 @@ import React from 'react';
 import Send from '@mui/icons-material/Send';
 import Snackbar from '@mui/material/Snackbar';
 import Divider from '@mui/material/Divider';
+import { useSearchContext } from '../context/search';
 
 
 async function getShops(supabase: SupabaseClient, searchQuery: string): Promise<Shop[] | null> {
@@ -32,7 +33,7 @@ async function getShops(supabase: SupabaseClient, searchQuery: string): Promise<
 
 export default function Home() {
   const [shops, setShops] = useState<Shop[] | null>(null);
-  const [searchQuery, setSearchQuery] = useState<string>('');
+  const { searchQuery, setSearchQuery } = useSearchContext();
 
   const supabase = useSupabaseClient();
 
@@ -84,7 +85,6 @@ export default function Home() {
           <Divider sx={{marginTop: 1.5, display: {lg: "none"}}} />
         </Grid>
         <Grid item xs={12} lg={9}>
-          <TextField id="outlined-basic" fullWidth placeholder="Buscar tiendas y emprendimientos" variant="outlined" size="small" onChange={(v) => { setSearchQuery(v.target.value) }} />
           <ShopList shops={shops}></ShopList>
         </Grid>
       </Grid>

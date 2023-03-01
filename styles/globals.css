@@ -54,3 +54,10 @@ footer {
 .MuiAvatar-circular img {
   object-fit: contain; 
 }
+
+
+.MuiModal-root {  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
