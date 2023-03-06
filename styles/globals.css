@@ -61,3 +61,12 @@ footer {
   justify-content: center;
   align-items: center;
 }
+
+.MuiButtonBase-root.MuiMenuItem-root.Link {
+  padding: 0;
+}
+
+.MuiButtonBase-root.MuiMenuItem-root.Link a {
+  padding: 6px 16px;
+  width: 100%;
+}

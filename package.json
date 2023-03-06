@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "gentypes": "sudo npx supabase gen types typescript --project-id tbhtpkmrwtznqzsjlfmo --schema public > types/supabase.ts"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
@@ -32,6 +33,6 @@
     "typescript": "4.9.3"
   },
   "devDependencies": {
-    "supabase": "^1.17.4"
+    "supabase": "^1.41.1"
   }
 }

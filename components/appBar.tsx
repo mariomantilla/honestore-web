@@ -105,7 +105,8 @@ function ResponsiveAppBar() {
         [
           <MenuItem key="email" sx={{pointerEvents: 'none'}}>{user.email}</MenuItem>,
           <Divider key="div1" />,
-          <MenuItem key="account" onClick={handleMenuClose}><Link href="/account">Cuenta</Link></MenuItem>,
+          <MenuItem key="account" onClick={handleMenuClose} className="Link"><Link href="/account">Cuenta</Link></MenuItem>,
+          <MenuItem key="favs" onClick={handleMenuClose} className="Link"><Link href="/favourites">Favoritos</Link></MenuItem>,
           <MenuItem key="shops">Mis tiendas</MenuItem>,
           <Divider key="dev2" />,
           <MenuItem key="logout" onClick={() => {handleMenuClose();supabase.auth.signOut();}}>Cerrar Sesión</MenuItem>
@@ -115,7 +116,7 @@ function ResponsiveAppBar() {
           <MenuItem key="login" onClick={handleOpenLogin}>Inicia sesión</MenuItem>,
           <MenuItem key="singup" onClick={handleOpenLogin}>Crear cuenta</MenuItem>,
           <Divider key="div" />,
-          <MenuItem key="addShop" onClick={handleMenuClose}><Link href="/add_shop">Añade tu tienda gratis</Link></MenuItem>,
+          <MenuItem key="addShop" onClick={handleMenuClose} className="Link"><Link href="/add_shop">Añade tu tienda gratis</Link></MenuItem>,
         ]
       )}
     </Menu>

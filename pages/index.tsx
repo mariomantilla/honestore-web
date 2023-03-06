@@ -2,7 +2,7 @@ import { SupabaseClient, useSupabaseClient } from '@supabase/auth-helpers-react'
 import { useEffect, useState } from 'react';
 import ShopList from '../components/shopList';
 import TextField from '@mui/material/TextField';
-import Shop from '../models/Shop';
+import Shop from '../models';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import Link from 'next/link';

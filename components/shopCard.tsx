@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
 import Skeleton from '@mui/material/Skeleton';
 import Box from '@mui/material/Box';
-import Shop from '../models/Shop';
+import Shop from '../models';
 import Instagram from '@mui/icons-material/Instagram';
 import Phone from '@mui/icons-material/Phone';
 import Language from '@mui/icons-material/Language';

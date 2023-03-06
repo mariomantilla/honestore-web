@@ -2,7 +2,7 @@ import * as React from 'react';
 import Grid from '@mui/material/Grid';
 import ShopCard from './shopCard';
 import Box from '@mui/material/Box';
-import Shop from '../models/Shop';
+import Shop from '../models';
 
 export default function AlignItemsList(props: { shops: Shop[] | null }) {
     const shops = props.shops ?? new Array(10).fill(null);

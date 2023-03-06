@@ -1,4 +1,4 @@
-import Shop from "../../models/Shop";
+import Shop from "../../models";
 import ShopCard from "../../components/shopCard"
 import { getShop, getShopsIds } from "../../lib/data";
 import Head from "next/head";

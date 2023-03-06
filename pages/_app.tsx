@@ -1,90 +1,45 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
-import { Open_Sans } from '@next/font/google'
 
-import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs'
 import { SessionContextProvider, Session } from '@supabase/auth-helpers-react'
 import { SearchProvider } from "../context/search";
-import { useState } from 'react'
+import { ReactElement, ReactNode, useState } from 'react'
 import { useRouter } from 'next/router'
 import { Analytics } from '@vercel/analytics/react';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
 import ResponsiveAppBar from '../components/appBar'
 import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
 import Footer from '../components/footer'
 import Head from 'next/head'
-import { BASE_URL } from '../constants'
+import { BASE_URL, theme } from '../constants'
 
 import dynamic from 'next/dynamic'
+import { NextPage } from 'next';
+import { supabase } from '../lib/supabaseClient';
 
 const AndroidBar = dynamic(() => import('../components/androidBar'), {
   ssr: false,
 })
 
-const openSans = Open_Sans({ subsets: ['latin'] })
+export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+  getLayout?: (page: ReactElement) => ReactNode
+}
 
-
-const theme = createTheme({
-  typography: {
-    fontFamily: [
-      openSans.style.fontFamily,
-      '"Segoe UI"',
-      'Roboto',
-      '"Helvetica Neue"',
-      'Arial',
-      'sans-serif',
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"',
-    ].join(','),
-    h1: {
-      fontSize: 48,
-      textAlign: "center",
-      marginBottom: "0.7em"
-    },
-    h2: {
-      fontSize: 32,
-      textAlign: "center",
-      marginBottom: "1em",
-    },
-    h3: {
-      fontSize: 24,
-    },
-    h4: {
-      fontSize: 16,
-      lineHeight: 1.5,
-      fontWeight: 500,
-    },
-    subtitle1: {
-      color: "#444",
-      fontWeight: 400,
-      lineHeight: 1.7
-    }
-  },
-  palette: {
-    primary: {
-      main: "#FB7168",
-      contrastText: "#FFFFFF"
-    },
-    secondary: {
-      main: "#521E1E",
-      // contrastText: "#FFFFFF"
-    },
-  }
-});
-
+type AppPropsWithLayout<P = any> = AppProps & {
+  Component: NextPageWithLayout
+}
 
 function MyApp({
   Component,
   pageProps,
-}: AppProps<{
+}: AppPropsWithLayout<{
   initialSession: Session,
 }>) {
-  const [supabase] = useState(() => createBrowserSupabaseClient())
   const router = useRouter()
 
   const canonicalUrl = (BASE_URL + (router.asPath === "/" ? "" : router.asPath)).split("?")[0];
+  const getLayout = Component.getLayout || ((page) => page)
 
   return (
     <SessionContextProvider supabaseClient={supabase} initialSession={pageProps.initialSession}>
@@ -117,7 +72,7 @@ function MyApp({
           <SearchProvider>
             <ResponsiveAppBar />
             <Container maxWidth="lg" sx={{ flex: 1 }}>
-              <Component {...pageProps} />
+              {getLayout(<Component {...pageProps} />)}
             </Container>
           </SearchProvider>
           <Footer />
