@@ -89,13 +89,13 @@ export default function ShopPage({ shop }: { shop: Shop }) {
     <>
       <Head>
         <title>{shop.name + " en Honestore"}</title>
-        <meta name="description" content={shop.description} />
+        <meta name="description" content={shop.description??''} />
         <meta property="og:title" content={shop.name + " en Honestore"} />
-        <meta property="og:description" content={shop.description} />
+        <meta property="og:description" content={shop.description??''} />
       </Head>
       <Box sx={{ display: "flex", gap: 2, flexDirection: "column" }}>
         <Box sx={{ display: "flex", gap: 1, alignItems: "center", justifyContent: "center", flexDirection: "column" }}>
-          <Avatar alt={shop.name} src={logoUrl} sx={{ height: 128, width: 128, border: "1px solid #ccc" }} />
+          <Avatar alt={shop.name??''} src={logoUrl} sx={{ height: 128, width: 128, border: "1px solid #ccc" }} />
           <Typography variant="h1" component="h1" sx={{ marginBottom: 0 }}>{shop.name}</Typography>
           <Typography variant="body2" color="text.secondary" fontWeight="bold">{shop.address}</Typography>
           {onlineChip}

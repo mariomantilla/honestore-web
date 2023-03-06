@@ -9,6 +9,9 @@ import Avatar from "@mui/material/Avatar";
 import { getShopLogo } from "../lib/data";
 import Divider from "@mui/material/Divider";
 import Link from "next/link";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
 
 const FavouritesPage: NextPageWithLayout = () => {
 
@@ -22,11 +25,28 @@ const FavouritesPage: NextPageWithLayout = () => {
         <>
             <Typography variant="h1" component="h1">Mis Favoritos</Typography>
             <Divider />
-            <Grid container spacing={2} sx={{justifyContent: "center"}}>
+            <Grid container spacing={1.5} sx={{ justifyContent: "center", marginTop: "0.5rem" }}>
                 {shops.map((shop) => (
-                    <Grid xs={6} md={4} lg={3} key={shop.id} sx={{display: "flex", flexDirection: "column", alignItems: "center", minWidth: "256px", borderBottom: "1px solid #eee", marginTop: "0.8rem"}}>
-                        <Link href={'/shops/'+shop.id}><Avatar alt={shop.name ?? ''} src={getShopLogo(shop)} sx={{ height: 256, width: 256 }} /></Link>
-                        <Typography gutterBottom component="div" sx={{textAlign: "center", marginTop: "0.5rem", marginBottom: "0.3rem", fontSize: "18px"}}><Link href={'/shops/'+shop.id}>{shop.name}</Link></Typography>
+                    <Grid xs={12} sm={6} md={4} lg={3} key={shop.id} sx={{ minWidth: "256px" }}>
+                        <Card elevation={4}>
+                            <Link href={'/shops/' + shop.id}>
+                                <CardMedia
+                                    component="img"
+                                    height="256"
+                                    width="256"
+                                    image={getShopLogo(shop)}
+                                    alt={shop.name ?? ''}
+                                />
+                            </Link>
+                            <CardContent sx={{height: "10rem", overflow: "hidden"}}>
+                                <Typography component="div"><Link href={'/shops/' + shop.id}>{shop.name}</Link></Typography>
+                                <Typography variant="body2" color="text.secondary">
+                                    This impressive paella is a perfect party dish and a fun meal to cook
+                                    together with your guests. Add 1 cup of frozen peas along with the mussels,
+                                    if you like.
+                                </Typography>
+                            </CardContent>
+                        </Card>
                     </Grid>
                 ))}
             </Grid>

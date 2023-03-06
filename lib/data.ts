@@ -2,7 +2,6 @@ import Shop from "../models";
 import { supabase } from "./supabaseClient";
 
 export async function getShop(id: number): Promise<Shop | null> {
-    console.log('calling shops api');
     let { data, error, status } = await supabase
     .from("shops")
     .select("*")

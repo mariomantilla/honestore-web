@@ -74,7 +74,7 @@ export default function ShopCard({shop, listView = false}: { shop: Shop | null, 
         <Card sx={{ display: "flex", flexDirection: {xs: "column", sm: "row"}}}>
             <CardMedia sx={{ padding: 2, justifyContent: "center", display: "flex" }}>
                 {shop ? (
-                    <Avatar alt={shop.name} src={logoUrl} sx={{ height: 128, width: 128 }} />
+                    <Avatar alt={shop.name??''} src={logoUrl} sx={{ height: 128, width: 128 }} />
                 ) : (
                     <Skeleton variant='circular' height={128} width={128} />
                 )}
