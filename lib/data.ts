@@ -1,3 +1,4 @@
+import { User } from "@supabase/supabase-js";
 import Shop from "../models";
 import { supabase } from "./supabaseClient";
 
@@ -24,6 +25,26 @@ export async function getShopsIds(): Promise<number[]> {
     return data?.map((s) => s.id)??[];
 };
 
-export const getShopLogo = (shop: Shop) => {
-    return `https://tbhtpkmrwtznqzsjlfmo.supabase.co/storage/v1/object/public/shops-content/${shop.logo}.jpg`
+export namespace DataService {
+
+    export const getShopsWithFavs = ()  => {
+        return supabase.from('shops').select('*, favourites!inner(user)');
+    }
+
+    export const getFavourites = (user: User)  => {
+        return supabase.from('shops').select('*, favourites!inner(user)').eq('favourites.user', user.id);
+    }
+    
+    export const addFavourite = (user: User, shop: Shop) => {
+        return supabase.from('favourites').insert({'shop': shop.id, 'user': user.id});
+    }
+
+    export const removeFavourite = (user: User, shop: Shop) => {
+        return supabase.from('favourites').delete().eq('shop', shop.id).eq('user', user.id);
+    }
+    
+    export const getShopLogo = (shop: Shop) => {
+        return `https://tbhtpkmrwtznqzsjlfmo.supabase.co/storage/v1/object/public/shops-content/${shop.logo}.jpg`
+    }
+
 }

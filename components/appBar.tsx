@@ -18,8 +18,9 @@ import Divider from '@mui/material/Divider';
 import Modal from '@mui/material/Modal';
 import Paper from '@mui/material/Paper';
 import LoginWidget from './loginWidget';
-import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
+import { useUser } from '@supabase/auth-helpers-react';
 import { useRouter } from 'next/router';
+import { supabase } from '../lib/supabaseClient';
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -65,7 +66,6 @@ function ResponsiveAppBar() {
   const [loginOpen, setLoginOpen] = React.useState(false);
   const handleOpenLogin = () => { setLoginOpen(true); handleMenuClose(); };
   const handleCloseLogin = () => { setLoginOpen(false); handleMenuClose(); };
-  const supabase = useSupabaseClient();
   const router = useRouter();
 
   supabase.auth.onAuthStateChange((event, session) => {

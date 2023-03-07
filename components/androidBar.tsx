@@ -15,7 +15,7 @@ export default function AndroidBar() {
     };
 
     return (
-        <Paper sx={{ position: "sticky", top: 0, zIndex: 10, display: isMobile.Android() ? 'inherit' : 'none' }} elevation={8}>
+        <Paper sx={{ position: "static", top: 0, zIndex: 10, display: isMobile.Android() ? 'inherit' : 'none' }} elevation={8}>
             <Container maxWidth="lg" sx={{ padding: "15px", display: "flex", gap: {xs: 1, sm: 4}, alignItems: "center", justifyContent: "center", flexDirection: {xs: "column", sm: "row"}, textAlign: "center" }}>
                 ¿Utilizas Android? Descarga la app, ¡es aun mejor!
                 <Button variant="contained"><Link href="/download">Descargar</Link></Button>

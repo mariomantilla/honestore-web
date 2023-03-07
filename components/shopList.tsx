@@ -1,22 +1,18 @@
 import * as React from 'react';
-import Grid from '@mui/material/Grid';
+import Grid from '@mui/material/Unstable_Grid2';
 import ShopCard from './shopCard';
-import Box from '@mui/material/Box';
 import Shop from '../models';
 
-export default function AlignItemsList(props: { shops: Shop[] | null }) {
-    const shops = props.shops ?? new Array(10).fill(null);
+export default function ShopList(props: { shops: (Shop|null)[] }) {
     return (
-        <Box sx={{ flexGrow: 1 }}>
-            <Grid container rowSpacing={2} sx={{marginTop: "2em"}}>
-                {!shops ? (
-                    <div>No data</div>
-                ) : shops.map((shop: Shop | null, i: number) => (
-                    <Grid item xs={12} key={i}>
-                        <ShopCard shop={shop} listView={true} />
-                    </Grid>
-                ))}
-            </Grid>
-        </Box>
+        <Grid container spacing={1.5}>
+            {props.shops.map((shop, i) => (
+                <Grid xs={12} sm={6} md={4} lg={3} key={i} sx={{ minWidth: "256px" }}>
+                    <ShopCard shop={shop}></ShopCard>
+                </Grid>
+            ))}
+        </Grid>
     );
 }
+
+ShopList.defaultProps = { shops: [], onlyFavs: false};

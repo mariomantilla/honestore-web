@@ -17,6 +17,7 @@ import { BASE_URL, theme } from '../constants'
 import dynamic from 'next/dynamic'
 import { NextPage } from 'next';
 import { supabase } from '../lib/supabaseClient';
+import { UserProvider } from '../context/userData';
 
 const AndroidBar = dynamic(() => import('../components/androidBar'), {
   ssr: false,
@@ -70,10 +71,12 @@ function MyApp({
         }}>
           <AndroidBar />
           <SearchProvider>
-            <ResponsiveAppBar />
-            <Container maxWidth="lg" sx={{ flex: 1 }}>
-              {getLayout(<Component {...pageProps} />)}
-            </Container>
+            <UserProvider>
+              <ResponsiveAppBar />
+              <Container maxWidth="lg" sx={{ flex: 1 }}>
+                {getLayout(<Component {...pageProps} />)}
+              </Container>
+            </UserProvider>
           </SearchProvider>
           <Footer />
         </Box>

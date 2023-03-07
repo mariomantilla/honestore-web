@@ -32,7 +32,7 @@ async function getShops(supabase: SupabaseClient, searchQuery: string): Promise<
 }
 
 export default function Home() {
-  const [shops, setShops] = useState<Shop[] | null>(null);
+  const [shops, setShops] = useState<Shop[] | null>(new Array(10).fill(null));
   const { searchQuery, setSearchQuery } = useSearchContext();
 
   const supabase = useSupabaseClient();
@@ -72,6 +72,7 @@ export default function Home() {
   return (
     <>
       <Typography variant='h2' component="h1">La comunidad de activistas del consumo ético</Typography>
+      <ShopList shops={shops}></ShopList>
       <Grid container spacing={2}>
         <Grid item xs={12} lg={3}>
           <Typography component="h2" variant="subtitle1" sx={{ marginBottom: 1.3 }}>
@@ -85,7 +86,6 @@ export default function Home() {
           <Divider sx={{marginTop: 1.5, display: {lg: "none"}}} />
         </Grid>
         <Grid item xs={12} lg={9}>
-          <ShopList shops={shops}></ShopList>
         </Grid>
       </Grid>
       <Fab color="primary" aria-label="add" sx={{ position: "fixed", bottom: "2em", right: "2em" }}>

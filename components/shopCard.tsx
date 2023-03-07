@@ -1,105 +1,126 @@
-import * as React from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-import Avatar from '@mui/material/Avatar';
-import Skeleton from '@mui/material/Skeleton';
-import Box from '@mui/material/Box';
-import Shop from '../models';
-import Instagram from '@mui/icons-material/Instagram';
-import Phone from '@mui/icons-material/Phone';
-import Language from '@mui/icons-material/Language';
-import Email from '@mui/icons-material/Email';
-import Map from '@mui/icons-material/Map';
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Typography from "@mui/material/Typography";
+import Link from "next/link";
+import Shop from "../models";
 
-import ShopExternalAction from './shopExternalAction';
-import Link from 'next/link';
-import Chip from '@mui/material/Chip';
-import { LocationOff } from '@mui/icons-material';
+import { DataService } from "../lib/data";
+import Skeleton from "@mui/material/Skeleton";
+import CardActions from "@mui/material/CardActions";
+import IconButton from "@mui/material/IconButton";
+import { Favorite, FavoriteBorder } from "@mui/icons-material";
+import Button from "@mui/material/Button";
+import { useRouter } from "next/router";
+import { useUserContext } from "../context/userData";
+import Tooltip from "@mui/material/Tooltip";
+import { useUser } from "@supabase/auth-helpers-react";
 
-export default function ShopCard({shop, listView = false}: { shop: Shop | null, listView?: boolean }) {
-    const logoUrl = shop ? `https://tbhtpkmrwtznqzsjlfmo.supabase.co/storage/v1/object/public/shops-content/${shop.logo}.jpg` : '';
+const FavButton = ({ shop }: { shop: Shop}) => {
+    
+    const user = useUser();
+    const { userFavouriteShopsIds, addFavourite, removeFavourite } = useUserContext();
+    const router = useRouter();
+    const isFav = userFavouriteShopsIds.includes(shop.id);
 
-    let actions: React.ReactNode[] = [];
-
-    if (shop) {
-        if (shop.instagram) {
-            let url: string = `https://instagram.com/${shop.instagram}`;
-            actions.push(
-                <ShopExternalAction title="Ir a Instagram" url={url} key="instagram"><Instagram color='primary' /></ShopExternalAction>
-            )
+    const handleFavToggle = () => {
+        if (!user) { 
+            router.push('/login');
+            return
         }
-        if (shop.phone) {
-            let url: string = `tel:${shop.phone}`;
-            actions.push(
-                <ShopExternalAction title="Llamar" url={url} key="phone"><Phone color='primary' /></ShopExternalAction>
-            )
+        if (isFav) {
+            DataService.removeFavourite(user, shop).then((r) => {if (!r.error) removeFavourite(shop.id)});
         }
-        if (shop.web) {
-            actions.push(
-                <ShopExternalAction title="Ir a la web" url={shop.web} key="web"><Language color='primary' /></ShopExternalAction>
-            )
-        }
-        if (shop.email) {
-            let url: string = `mailto:${shop.email}`;
-            actions.push(
-                <ShopExternalAction title="Escribir email" url={url} key="email"><Email color='primary' /></ShopExternalAction>
-            )
-        }
-        if (shop.location_coordinates && !shop.online) {
-            let url: string = `https://www.google.com/maps/search/?api=1&query=${shop.location_coordinates.replace(' ', ',')}`;
-            actions.push(
-                <ShopExternalAction title="Abrir mapa" url={url} key="map"><Map color='primary' /></ShopExternalAction>
-            )
+        else {
+            DataService.addFavourite(user, shop).then((r) => {if (!r.error) addFavourite(shop.id)});
         }
     }
 
+    return (
+        <Tooltip title={isFav ? "Quitar de favoritos" : "Guardar en favoritos"}>
+            <IconButton
+                aria-label="añadir o quitar de favoritos"
+                onClick={() => { handleFavToggle() }}
+            >
+                {isFav ? (
+                    <Favorite color="primary" />
+                ) : (
+                    <FavoriteBorder color="primary" />
+                ) }            
+            </IconButton>
+        </Tooltip>
+    );
+}
+
+const ShopCard = ({ shop }: { shop: Shop | null }) => {
+
+    const maxLines = 3;
+    const lineHeight = 1.43;
+
     const clampStyles = {
-        maxHeight: "8.58em",
+        lineHeight: `${lineHeight}rem`,
+        height: `${lineHeight * maxLines}rem`,
         overflow: "hidden",
         textOverflow: "ellipsis",
         display: "-webkit-box",
-        WebkitLineClamp: 6,
-        lineClamp: 2,
+        WebkitLineClamp: maxLines,
+        lineClamp: maxLines,
         WebkitBoxOrient: "vertical",
-        whiteSpace: "pre-wrap"
     }
 
-    const onlineChip = shop && shop.online ? (
-        <Chip icon={<LocationOff />} label="Solo online" />
-    ) : '' ;
-
     return (
-        <Card sx={{ display: "flex", flexDirection: {xs: "column", sm: "row"}}}>
-            <CardMedia sx={{ padding: 2, justifyContent: "center", display: "flex" }}>
-                {shop ? (
-                    <Avatar alt={shop.name??''} src={logoUrl} sx={{ height: 128, width: 128 }} />
-                ) : (
-                    <Skeleton variant='circular' height={128} width={128} />
-                )}
-            </CardMedia>
-            <CardContent sx={{ width: '100%' }}>
-                <Typography gutterBottom variant="h5" component="div">
+        <Card elevation={4}>
+            {shop ? (
+                <Link href={'/shops/' + shop.id}>
+                    <CardMedia
+                        component="img"
+                        image={DataService.getShopLogo(shop)}
+                        alt={shop.name ?? ''}
+                        sx={{ height: { xs: "auto", sm: "256px" } }}
+                    />
+                </Link>
+            ) : (
+                <Skeleton variant='rectangular' height={256} width={"100%"} />
+            )}
+            <CardContent>
+                <Typography component="div" sx={{ textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap" }}>
                     {shop ? (
-                        <Box sx={{display: "flex", gap: 2}}><Link href={'/shops/'+shop.id}>{shop.name}</Link>{onlineChip}</Box>
+                        <Link href={'/shops/' + shop.id}>{shop.name}</Link>
                     ) : (
-                        <Skeleton width={200} />
+                        <Skeleton width="60%" />
                     )}
                 </Typography>
-                <Typography variant="body2" color="text.secondary" fontWeight="bold" sx={{ marginBottom: "10px" }}>{shop ? shop.address : (
-                    <Skeleton />
-                )}</Typography>
-                <Typography variant="body2" color="text.secondary" sx={ listView ? clampStyles : { whiteSpace: "pre-wrap" }}>{shop ? shop.description : (
-                    <Skeleton />
-                )}</Typography>
-                <Box sx={{ marginTop: "10px", display: { md: "flex", xs: "none" }, gap: ".75em" }}>
-                {actions}
-            </Box>
+                <Typography variant="body2" color="text.secondary" sx={clampStyles}>
+                    {shop ? shop.description : (
+                        <>
+                            <Skeleton width="90%" />
+                            <Skeleton width="100%" />
+                            <Skeleton width="85%" />
+                        </>
+                    )}
+                </Typography>
             </CardContent>
-            <Box sx={{ margin: "20px 20px", display: { md: "none", xs: "flex" }, gap: ".75em", flexDirection: {sm: "column"}, justifyContent: "center" }}>
-                {actions}
-            </Box>
+            <CardActions disableSpacing>
+                {shop ? (
+                    <FavButton shop={shop} />
+                ) : (
+                    <Skeleton width="20px" />
+                ) }
+                <Button
+                    aria-label="ir a la tienda"
+                    sx={{ marginLeft: "auto" }}
+                >
+                    {shop ? (
+                        <Link href={'/shops/' + shop.id}>Ver tienda</Link>
+                    ) : (
+                        <Skeleton width="40px" />
+                    )}
+                </Button>
+            </CardActions>
         </Card>
     );
 }
+
+ShopCard.defaultProps = { shop: null, onlyFavs: false };
+
+export default ShopCard;

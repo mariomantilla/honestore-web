@@ -1,4 +1,5 @@
 import CircularProgress from "@mui/material/CircularProgress";
+import Typography from "@mui/material/Typography";
 import { useSessionContext } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/router";
 import Center from "../components/center";
@@ -21,6 +22,7 @@ export default function LoginPage() {
 
     return (
         <Center>
+            <Typography variant="h1" component="h1">Iniciar sesión</Typography>
             <LoginWidget />
         </Center>
     );

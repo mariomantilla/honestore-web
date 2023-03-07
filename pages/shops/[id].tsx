@@ -1,5 +1,5 @@
 import Shop from "../../models";
-import ShopCard from "../../components/shopCard"
+import ShopCard from "../../components/shopCardOld"
 import { getShop, getShopsIds } from "../../lib/data";
 import Head from "next/head";
 import { useRouter } from "next/router";

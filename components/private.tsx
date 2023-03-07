@@ -10,7 +10,7 @@ export default function Private(props: { children: ReactElement }): ReactElement
     const router = useRouter();
 
     useEffect(() => {
-        if (!sessionContext.session) router.push("/login");
+        if (!sessionContext.isLoading && !sessionContext.session) router.push("/login");
     });
 
     if (sessionContext.isLoading || !sessionContext.session) {
