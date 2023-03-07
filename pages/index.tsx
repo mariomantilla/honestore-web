@@ -32,7 +32,7 @@ async function getShops(supabase: SupabaseClient, searchQuery: string): Promise<
 }
 
 export default function Home() {
-  const [shops, setShops] = useState<Shop[] | null>(new Array(10).fill(null));
+  const [shops, setShops] = useState<(Shop|null)[]>(new Array(10).fill(null));
   const { searchQuery, setSearchQuery } = useSearchContext();
 
   const supabase = useSupabaseClient();
@@ -49,7 +49,7 @@ export default function Home() {
   };
 
   useEffect(() => {
-    getShops(supabase, searchQuery).then((shopsData) => setShops(shopsData));
+    getShops(supabase, searchQuery).then((shopsData) => setShops(shopsData??[]));
   }, [searchQuery, supabase]);
 
   async function addContact() {
