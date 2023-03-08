@@ -1,16 +1,17 @@
-import { createContext, ReactNode, useContext, useState } from "react";
+import { useRouter } from "next/router";
+import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 
 type searchContextType = {
     searchQuery: string;
-    setSearchQuery: (arg0: string) => void
+    updateSearch: (arg0: string) => void
 };
 
 const searchContextDefaultValues: searchContextType = {
     searchQuery: '',
-    setSearchQuery: (srg0) => {},
+    updateSearch: (srg0) => {},
 };
 
-const SearchContext = createContext<searchContextType>(searchContextDefaultValues);
+export const SearchContext = createContext<searchContextType>(searchContextDefaultValues);
 
 export function useSearchContext() {
     return useContext(SearchContext);
@@ -20,11 +21,22 @@ type Props = {
     children: ReactNode;
 };
 
-export function SearchProvider<ReactNode>({ children }: Props) {
-    const [searchQuery, setSearchQuery] = useState<string>("");
+export function SearchProvider({ children }: Props) {
+
+	const router = useRouter();
+    const [searchQuery, setSearchQuery] = useState<string>('');
+
+    useEffect(() => {
+        setSearchQuery(router.query.q ? router.query.q as string : '');
+    }, [router.query.q]);
+
     const value = {
         searchQuery,
-        setSearchQuery,
+        updateSearch: (query: string) => {
+            setSearchQuery(query);
+            let shallow = router.pathname == '/search'
+            router.push('/search?q='+query, undefined, {shallow: shallow})
+        },
     };
     return (
         <SearchContext.Provider value={value}>

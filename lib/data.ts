@@ -27,8 +27,8 @@ export async function getShopsIds(): Promise<number[]> {
 
 export namespace DataService {
 
-    export const getShopsWithFavs = ()  => {
-        return supabase.from('shops').select('*, favourites!inner(user)');
+    export const searchShops = (query: string)  => {
+        return supabase.rpc('search_shops', { search: query });
     }
 
     export const getFavourites = (user: User)  => {

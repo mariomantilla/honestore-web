@@ -1,4 +1,3 @@
-import { SupabaseClient, useSupabaseClient } from '@supabase/auth-helpers-react'
 import { useEffect, useState } from 'react';
 import ShopList from '../components/shopList';
 import TextField from '@mui/material/TextField';
@@ -15,9 +14,10 @@ import Send from '@mui/icons-material/Send';
 import Snackbar from '@mui/material/Snackbar';
 import Divider from '@mui/material/Divider';
 import { useSearchContext } from '../context/search';
+import { supabase } from '../lib/supabaseClient';
 
 
-async function getShops(supabase: SupabaseClient, searchQuery: string): Promise<Shop[] | null> {
+async function getShops(searchQuery: string): Promise<Shop[] | null> {
   try {
     let { data, error, status } = await supabase
       .rpc('search_shops', { search: searchQuery });
@@ -33,9 +33,7 @@ async function getShops(supabase: SupabaseClient, searchQuery: string): Promise<
 
 export default function Home() {
   const [shops, setShops] = useState<(Shop|null)[]>(new Array(10).fill(null));
-  const { searchQuery, setSearchQuery } = useSearchContext();
-
-  const supabase = useSupabaseClient();
+  const { searchQuery } = useSearchContext();
 
   const [open, setOpen] = React.useState(false);
   const [email, setEmail] = React.useState('');
@@ -49,8 +47,9 @@ export default function Home() {
   };
 
   useEffect(() => {
-    getShops(supabase, searchQuery).then((shopsData) => setShops(shopsData??[]));
-  }, [searchQuery, supabase]);
+    setShops(new Array(4).fill(null));
+    getShops(searchQuery).then((shopsData) => setShops(shopsData??[]));
+  }, [searchQuery]);
 
   async function addContact() {
     const response = await fetch("/api/addContact", {
@@ -74,7 +73,7 @@ export default function Home() {
       <Typography variant='h2' component="h1">La comunidad de activistas del consumo ético</Typography>
       <ShopList shops={shops}></ShopList>
       <Grid container spacing={2}>
-        <Grid item xs={12} lg={3}>
+        <Grid item xs={12}>
           <Typography component="h2" variant="subtitle1" sx={{ marginBottom: 1.3 }}>
             Somos una red de personas y tiendas unidas por cambiar hacia un consumo consciente y basado en valores sociales y medioambientales.
           </Typography>
@@ -84,8 +83,6 @@ export default function Home() {
           <TextField id="outlined-basic" onChange={(e) => setEmail(e.target.value)} fullWidth placeholder="Suscribete al newsletter" size="small" variant="outlined" sx={{ marginTop: 2 }} InputProps={{ endAdornment: SendButton }} />
           <Typography variant="caption">He leído y acepto la <Link href="/privacy">Política de Privaciad</Link></Typography>
           <Divider sx={{marginTop: 1.5, display: {lg: "none"}}} />
-        </Grid>
-        <Grid item xs={12} lg={9}>
         </Grid>
       </Grid>
       <Fab color="primary" aria-label="add" sx={{ position: "fixed", bottom: "2em", right: "2em" }}>
