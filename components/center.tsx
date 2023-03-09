@@ -1,9 +1,13 @@
-import Box from "@mui/material/Box";
+import Box, { BoxProps } from "@mui/material/Box";
 
 
-export default function Center({children}: {children: React.ReactNode | React.ReactNode[] }) {
+export default function Center({ children, ...props }: BoxProps) {
+    props.sx = {
+        ...{display: "flex", justifyContent: "center", flexDirection: "column", width: "100%", alignItems: "center"},
+        ...props.sx
+    }
     return (
-        <Box sx={{display: "flex", justifyContent: "center", flexDirection: "column", width: "100%"}}>
+        <Box {...props}>
             {children}
         </Box>
     )

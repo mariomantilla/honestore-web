@@ -8,8 +8,8 @@ import MenuItem from '@mui/material/MenuItem';
 import Image from 'next/image';
 import logo from '../public/images/logo2000.jpg'
 import Link from 'next/link';
-import { useSearchContext, SearchContext } from "../context/search";
-import { alpha, styled } from '@mui/material/styles';
+import { useSearchContext } from "../context/search";
+import { alpha, styled, SxProps } from '@mui/material/styles';
 import InputBase, { InputBaseProps } from '@mui/material/InputBase/InputBase';
 import IconButton from '@mui/material/IconButton';
 import { AccountCircle } from '@mui/icons-material';
@@ -22,6 +22,8 @@ import { useUser } from '@supabase/auth-helpers-react';
 import { useRouter } from 'next/router';
 import { supabase } from '../lib/supabaseClient';
 import { useEffect, useState } from 'react';
+import { theme } from '../constants';
+import Loader from './loader';
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -32,19 +34,8 @@ const Search = styled('div')(({ theme }) => ({
 		backgroundColor: alpha(theme.palette.common.white, 0.25),
 	},
 	marginLeft: 0,
-	marginRight: "auto",
 	width: '100%',
 	maxWidth: '500px'
-}));
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-	padding: theme.spacing(0, 2),
-	height: '100%',
-	position: 'absolute',
-	pointerEvents: 'none',
-	display: 'flex',
-	alignItems: 'center',
-	justifyContent: 'center',
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
@@ -57,31 +48,45 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 	},
 }));
 
-
 function SearchInput(props: InputBaseProps) {
 
 	const { searchQuery, updateSearch } = useSearchContext();
 	const [text, setText] = useState('');
 
 	useEffect(() => {
-        setText(searchQuery);
-    }, [searchQuery]);
-	
-	return (
-		<StyledInputBase
-			placeholder="Buscar tiendas..."
-			inputProps={{ 'aria-label': 'buscar' }}
-			fullWidth
-			value={text}
-			onChange={(e) => setText(e.target.value)}
-			onKeyDown={(e) => { if (e.key == 'Enter') updateSearch(text) }}
-			endAdornment={
-				<IconButton onClick={() => {updateSearch(text)}}>
-					<SearchIcon />
-				</IconButton>
-			}
-			{...props}
-		/>
+		setText(searchQuery);
+	}, [searchQuery]);
+
+	const buttonStyles: SxProps = {
+		backgroundColor: alpha("#fff", .80),
+		marginLeft: "-1.5rem",
+		marginRight: "auto",
+		'&:hover': {
+			backgroundColor: "#fff"
+		},
+		color: theme.palette.primary.main,
+		transition: "opacity 500ms",
+		opacity: text ? 1 : 0
+	}
+
+
+	return (<>
+		<Search>
+			<StyledInputBase
+				placeholder="Buscar tiendas..."
+				inputProps={{ 'aria-label': 'buscar' }}
+				fullWidth
+				value={text}
+				onChange={(e) => setText(e.target.value)}
+				onKeyDown={(e) => { if (e.key == 'Enter') updateSearch(text) }}
+				{...props}
+			/>
+
+		</Search>
+		<IconButton onClick={() => { updateSearch(text) }} sx={buttonStyles} size={"small"} >
+			<SearchIcon />
+		</IconButton>
+	</>
 	);
 
 }
@@ -132,10 +137,10 @@ function ResponsiveAppBar() {
 				[
 					<MenuItem key="email" sx={{ pointerEvents: 'none' }}>{user.email}</MenuItem>,
 					<Divider key="div1" />,
-					<MenuItem key="account" onClick={handleMenuClose} className="Link"><Link href="/account">Cuenta</Link></MenuItem>,
-					<MenuItem key="favs" onClick={handleMenuClose} className="Link"><Link href="/favourites">Favoritos</Link></MenuItem>,
+					<MenuItem key="account" onClick={handleMenuClose} LinkComponent={Link} href="/account">Cuenta</MenuItem>,
+					<MenuItem key="favs" onClick={handleMenuClose} LinkComponent={Link} href="/favourites">Favoritos</MenuItem>,
 					<MenuItem key="shops">Mis tiendas</MenuItem>,
-					<Divider key="dev2" />,
+					<Divider key="div2" />,
 					<MenuItem key="logout" onClick={() => { handleMenuClose(); supabase.auth.signOut(); }}>Cerrar Sesión</MenuItem>
 				]
 			) : (
@@ -143,7 +148,7 @@ function ResponsiveAppBar() {
 					<MenuItem key="login" onClick={handleOpenLogin}>Inicia sesión</MenuItem>,
 					<MenuItem key="singup" onClick={handleOpenLogin}>Crear cuenta</MenuItem>,
 					<Divider key="div" />,
-					<MenuItem key="addShop" onClick={handleMenuClose} className="Link"><Link href="/add_shop">Añade tu tienda gratis</Link></MenuItem>,
+					<MenuItem key="addShop" onClick={handleMenuClose} LinkComponent={Link} href="/add_shop">Añade tu tienda gratis</MenuItem>,
 				]
 			)}
 		</Menu>
@@ -168,11 +173,15 @@ function ResponsiveAppBar() {
 						<Link href="/">
 							<Image src={logo} alt="Honestore Logo" width={35} sizes="70px" style={{ margin: "1rem" }} />
 						</Link>
-						<Search>
-							<SearchInput />
-						</Search>
-						<Button variant="contained" color="secondary" sx={{ display: { xs: "none", sm: "inherit" }, flexShrink: 0 }}>
-							<Link href="/add_shop">Añade tu tienda gratis</Link>
+						<SearchInput />
+						<Button
+							variant="contained"
+							color="secondary"
+							sx={{ display: { xs: "none", sm: "inherit" }, flexShrink: 0 }}
+							LinkComponent={Link}
+							href="/add_shop"
+						>
+							Añade tu tienda gratis
 						</Button>
 						<IconButton
 							size="large"
@@ -187,6 +196,7 @@ function ResponsiveAppBar() {
 						</IconButton>
 					</Toolbar>
 				</Container>
+				<Loader />
 			</AppBar>
 			{renderMenu}
 			{renderLoginModal}

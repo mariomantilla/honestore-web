@@ -13,44 +13,17 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Snackbar from "@mui/material/Snackbar";
 import ResponsiveImage from "../components/responsiveImage";
-import Send from '@mui/icons-material/Send';
 import React from "react";
+import AddContact from "../components/addContact";
 
 
 export default function AboutPage() {
-
-    const [open, setOpen] = React.useState(false);
-    const [email, setEmail] = React.useState('');
-    const [snackBarMessage, setsnackBarMessage] = React.useState('');
-
-    const handleClose = (event: React.SyntheticEvent | Event, reason?: string) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-        setOpen(false);
-    };
 
     const desc = `Honestore es un proyecto que nace con la intención de formar una
         comunidad de personas unidas por el propósito de cambiar sus
         hábitos hacia un consumo consciente y basado en valores como el
         respeto al medio ambiente, los derechos humanos y la justicia y el
-        impacto social.)`
-
-    async function addContact() {
-        const response = await fetch("/api/addContact", {
-            method: "POST",
-            body: JSON.stringify({ email: email }),
-        });
-        if (response.status == 200) {
-            setsnackBarMessage('Te has suscrito correctamente, por favor verifica tu email');
-            setOpen(true);
-        } else {
-            setsnackBarMessage('Ha ocurrido un error');
-            setOpen(true);
-        }
-    }
-
-    const SendButton = <Button onClick={addContact}><Send /></Button>
+        impacto social.`
 
     return (
         <>
@@ -60,7 +33,7 @@ export default function AboutPage() {
                 <meta property="og:title" content="Sobre Honestore" />
                 <meta property="og:description" content={desc} />
             </Head>
-            <Container maxWidth="lg" sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
+            <Container maxWidth="lg" sx={{ display: "flex", flexDirection: "column", gap: 2.5 }}>
                 <Box>
                     <Typography variant="h1" component="h1">Honestore</Typography>
                     <Typography variant="h2" component="h2">La comunidad de activistas del consumo ético</Typography>
@@ -75,8 +48,7 @@ export default function AboutPage() {
                         <Typography variant="h4" sx={{ textAlign: { xs: "center", md: "right" } }} component="div">
                             Somos una red de personas y tiendas unidas por cambiar hacia un consumo consciente y basado en valores sociales y medioambientales.
                         </Typography>
-                        <TextField id="outlined-basic" onChange={(e) => setEmail(e.target.value)} fullWidth placeholder="Suscribete al newsletter" size="small" variant="outlined" sx={{ marginTop: 2 }} InputProps={{ endAdornment: SendButton }} />
-                        <Typography variant="caption">He leído y acepto la <Link href="/privacy">Política de Privaciad</Link></Typography>
+                        <AddContact />
                     </Grid>
                 </Grid>
                 <Divider></Divider>
@@ -88,7 +60,7 @@ export default function AboutPage() {
                         </Typography>
                         <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
                             <Typography>¿Tienes un emprendimieto sostenible?</Typography>
-                            <Button variant='contained'><Link href="/about">Únete</Link></Button>
+                            <Button variant='contained' LinkComponent={Link} href="/add_shop">Únete</Button>
                         </Box>
                     </Grid>
                     <Grid item sm={12} md={6} sx={{ display: "flex", justifyContent: "center" }}>
@@ -107,17 +79,11 @@ export default function AboutPage() {
                             accede a sus datos y redes sociales o compartir la localización a una aplicación de navegación.
                         </Typography>
                         <Box sx={{ display: "flex", gap: 2, marginTop: 3 }}>
-                            <Button variant='contained'><Link href="/">Pruébalo en la web</Link></Button>
-                            <Button variant='contained'><Link href="/download">Pruébalo en app para Android</Link></Button>
+                            <Button variant='contained' LinkComponent={Link} href="/search">Pruébalo en la web</Button>
+                            <Button variant='contained' LinkComponent={Link} href="/download">Pruébalo en app para Android</Button>
                         </Box>
                     </Grid>
                 </Grid>
-                <Snackbar
-                    open={open}
-                    autoHideDuration={6000}
-                    onClose={handleClose}
-                    message={snackBarMessage}
-                />
             </Container>
         </>
     )

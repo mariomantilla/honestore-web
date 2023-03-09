@@ -1,101 +1,78 @@
 import { useEffect, useState } from 'react';
 import ShopList from '../components/shopList';
-import TextField from '@mui/material/TextField';
 import Shop from '../models';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import Link from 'next/link';
-import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import React from 'react';
-import Send from '@mui/icons-material/Send';
-import Snackbar from '@mui/material/Snackbar';
 import Divider from '@mui/material/Divider';
-import { useSearchContext } from '../context/search';
-import { supabase } from '../lib/supabaseClient';
+import Image from 'next/image'
+import banner from '../public/banner-inverted.png'
+import Center from '../components/center';
+import { DataService } from '../lib/data';
+import Search from '@mui/icons-material/Search';
+import { Diversity1, NavigateNext, Store } from '@mui/icons-material';
+import IconButton from '@mui/material/IconButton';
+import { SxProps } from '@mui/material/styles';
+import { theme } from '../constants';
 
-
-async function getShops(searchQuery: string): Promise<Shop[] | null> {
-  try {
-    let { data, error, status } = await supabase
-      .rpc('search_shops', { search: searchQuery });
-    if (error) {
-      throw error;
-    }
-    return data;
-  } catch (error) {
-    console.log(error);
-    return []
-  }
-}
 
 export default function Home() {
-  const [shops, setShops] = useState<(Shop|null)[]>(new Array(10).fill(null));
-  const { searchQuery } = useSearchContext();
 
-  const [open, setOpen] = React.useState(false);
-  const [email, setEmail] = React.useState('');
-  const [snackBarMessage, setsnackBarMessage] = React.useState('');
+	const [shops, setShops] = useState<(Shop | null)[]>(new Array(10).fill(null));
 
-  const handleClose = (event: React.SyntheticEvent | Event, reason?: string) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setOpen(false);
-  };
+	useEffect(() => {
+		DataService.newShops().then((resp) => setShops(resp.data ?? []));
+	}, []);
 
-  useEffect(() => {
-    setShops(new Array(4).fill(null));
-    getShops(searchQuery).then((shopsData) => setShops(shopsData??[]));
-  }, [searchQuery]);
+	const buttonStyles: SxProps = {
+		backgroundColor: theme.palette.primary.main,
+		'&:hover': {
+			backgroundColor: theme.palette.primary.dark
+		},
+		color: "#fff"
+	}
 
-  async function addContact() {
-    const response = await fetch("/api/addContact", {
-      method: "POST",
-      body: JSON.stringify({ email: email }),
-    });
-    if (response.status == 200) {
-      setsnackBarMessage('Te has suscrito correctamente, por favor verifica tu email');
-      setOpen(true);
-    } else {
-      setsnackBarMessage('Ha ocurrido un error');
-      setOpen(true);
-    }
-  }
-
-  const SendButton = <Button onClick={addContact}><Send /></Button>
-
-
-  return (
-    <>
-      <Typography variant='h2' component="h1">La comunidad de activistas del consumo ético</Typography>
-      <ShopList shops={shops}></ShopList>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <Typography component="h2" variant="subtitle1" sx={{ marginBottom: 1.3 }}>
-            Somos una red de personas y tiendas unidas por cambiar hacia un consumo consciente y basado en valores sociales y medioambientales.
-          </Typography>
-          <Box sx={{ display: "flex", justifyContent: "center" }}>
-            <Button variant='contained'><Link href="/about">Saber más</Link></Button>
-          </Box>
-          <TextField id="outlined-basic" onChange={(e) => setEmail(e.target.value)} fullWidth placeholder="Suscribete al newsletter" size="small" variant="outlined" sx={{ marginTop: 2 }} InputProps={{ endAdornment: SendButton }} />
-          <Typography variant="caption">He leído y acepto la <Link href="/privacy">Política de Privaciad</Link></Typography>
-          <Divider sx={{marginTop: 1.5, display: {lg: "none"}}} />
-        </Grid>
-      </Grid>
-      <Fab color="primary" aria-label="add" sx={{ position: "fixed", bottom: "2em", right: "2em" }}>
-        <Link href="/add_shop" style={{ lineHeight: "normal" }}>
-          <AddIcon sx={{ color: "white" }} />
-        </Link>
-      </Fab>
-      <Snackbar
-        open={open}
-        autoHideDuration={6000}
-        onClose={handleClose}
-        message={snackBarMessage}
-      />
-    </>
-  )
+	return (
+		<>
+			<Center sx={{ display: { xs: 'none', sm: 'flex' } }}>
+				<Image src={banner} width={500} priority alt="Honestore, La comunidad de activistas del consumo ético" />
+			</Center>
+			<Center sx={{ display: { xs: 'flex', sm: 'none' } }}>
+				<Image src={banner} width={300} priority alt="Honestore, La comunidad de activistas del consumo ético" />
+			</Center>
+			<Typography variant='h2' component="h1">La comunidad de activistas del consumo ético</Typography>
+			<Typography variant='h4' component="div" sx={{ display: "flex", gap: 2, justifyContent: "center", alignItems: "center", marginBottom: "2rem" }}>
+				¿Quieres saber más?
+				<IconButton sx={buttonStyles} href="/about" LinkComponent={Link}>
+					<NavigateNext />
+				</IconButton>
+			</Typography>
+			<Divider />
+			<Box sx={{ padding: "2rem", display: "flex", justifyContent: "space-evenly", flexWrap: "wrap", gap: "1rem" }}>
+				<Button variant="contained" startIcon={<Search />} LinkComponent={Link} href="/search">
+					Buscar tiendas sostenibles
+				</Button>
+				<Button variant="contained" startIcon={<Store />} LinkComponent={Link} href="/add_shop">
+					¿Tienes una tienda? Anádela
+				</Button>
+				<Button variant="contained" startIcon={<Diversity1 />} LinkComponent={Link} href="/signup">
+					Únete a la comunidad
+				</Button>
+			</Box>
+			<Divider />
+			<Box sx={{ display: "flex", flexDirection: "column", gap: 2.5, marginTop: "2rem" }}>
+				<Typography variant='h3'>Novedades</Typography>
+				<ShopList shops={shops}></ShopList>
+			</Box>
+			<Fab color="primary" aria-label="add" sx={{ position: "fixed", bottom: "2em", right: "2em" }}>
+				<Link href="/add_shop" style={{ lineHeight: "normal" }}>
+					<AddIcon sx={{ color: "white" }} />
+				</Link>
+			</Fab>
+		</>
+	)
 }

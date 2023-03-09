@@ -18,6 +18,8 @@ import dynamic from 'next/dynamic'
 import { NextPage } from 'next';
 import { supabase } from '../lib/supabaseClient';
 import { UserProvider } from '../context/userData';
+import AlertComponent from '../components/alerts';
+import { MessagesProvider } from '../context/messages';
 
 const AndroidBar = dynamic(() => import('../components/androidBar'), {
   ssr: false,
@@ -70,14 +72,17 @@ function MyApp({
           flexDirection: "column"
         }}>
           <AndroidBar />
-          <SearchProvider>
-            <UserProvider>
-              <ResponsiveAppBar />
-              <Container maxWidth="lg" sx={{ flex: 1 }}>
-                {getLayout(<Component {...pageProps} />)}
-              </Container>
-            </UserProvider>
-          </SearchProvider>
+          <MessagesProvider>
+            <SearchProvider>
+              <UserProvider>
+                <ResponsiveAppBar />
+                <Container maxWidth="lg" sx={{ flex: 1 }}>
+                  {getLayout(<Component {...pageProps} />)}
+                </Container>
+              </UserProvider>
+            </SearchProvider>
+            <AlertComponent />
+          </MessagesProvider>
           <Footer />
         </Box>
       </ThemeProvider>

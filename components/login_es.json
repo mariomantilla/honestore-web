@@ -2,8 +2,8 @@
     "sign_up": {
       "email_label": "Email",
       "password_label": "Contraseña",
-      "email_input_placeholder": "Su dirección email",
-      "password_input_placeholder": "Eliga una contraseña...",
+      "email_input_placeholder": "Tu dirección email",
+      "password_input_placeholder": "Elige una contraseña...",
       "button_label": "Unirme a Honestore!",
       "loading_button_label": "Registrando ...",
       "social_provider_text": "Continuar con",
@@ -29,14 +29,14 @@
     "forgotten_password": {
       "email_label": "Email",
       "password_label": "Contraseña",
-      "email_input_placeholder": "Email con el que se registró",
+      "email_input_placeholder": "Email con el que te registraste",
       "button_label": "Enviar email para recuperar mi contraseña",
       "loading_button_label": "Enviando email para recuperar contraseña ...",
       "link_text": "¿Olvidaste tu contraseña?"
     },
     "update_password": {
       "password_label": "Contraseña",
-      "password_input_placeholder": "Eliga su nueva contraseña",
+      "password_input_placeholder": "Elige su nueva contraseña",
       "button_label": "Actualizar contraseña",
       "loading_button_label": "Actualizando contraseña ..."
     }

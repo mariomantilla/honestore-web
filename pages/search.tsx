@@ -3,6 +3,7 @@ import Shop from "../models";
 import { DataService } from "../lib/data";
 import ShopList from "../components/shopList";
 import { useSearchContext } from "../context/search";
+import OverrideHead from "../components/head";
 
 const SearchPage = () => {
 
@@ -14,7 +15,10 @@ const SearchPage = () => {
     }, [searchQuery]);
 
     return (
-        <ShopList shops={shops}></ShopList>
+        <>
+            <OverrideHead title="Buscar tiendas en Honestore" />
+            <ShopList shops={shops}></ShopList>
+        </>
     );
 }
 

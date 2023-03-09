@@ -1,13 +1,21 @@
 import { createContext, ReactNode, useContext, useState } from "react";
 
+type TypesOfMessages = 'success' | 'info' | 'warning' | 'error';
+
 type messagesContextType = {
-    searchQuery: string;
-    setSearchQuery: (arg0: string) => void
+    msgType: TypesOfMessages;
+    message: string,
+    show: boolean,
+    sendMessage: (msgType: TypesOfMessages, message: string) => void,
+    hideMessage: (event?: React.SyntheticEvent | Event, reason?: string) => void
 };
 
 const messagesContextDefaultValues: messagesContextType = {
-    searchQuery: '',
-    setSearchQuery: () => {},
+    msgType: 'success',
+    message: '',
+    show: false,
+    sendMessage: () => {},
+    hideMessage: () => {}
 };
 
 const MessagesContext = createContext<messagesContextType>(messagesContextDefaultValues);
@@ -21,10 +29,23 @@ type Props = {
 };
 
 export function MessagesProvider({ children }: Props) {
-    const [searchQuery, setSearchQuery] = useState<string>("");
+    const [msgType, setMsgType] = useState<TypesOfMessages>('success');
+    const [message, setMessage] = useState<string>('');
+    const [show, setShow] = useState<boolean>(false);
+
     const value = {
-        searchQuery,
-        setSearchQuery,
+        msgType: msgType,
+        message: message,
+        show: show,
+        sendMessage: (msgType: TypesOfMessages, message: string) => {
+            setMsgType(msgType);
+            setMessage(message);
+            setShow(true);
+        },
+        hideMessage: (event?: React.SyntheticEvent | Event, reason?: string) => {
+            if (reason === 'clickaway') return;
+            setShow(false);
+        }
     };
     return (
         <MessagesContext.Provider value={value}>

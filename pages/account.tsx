@@ -6,27 +6,25 @@ import Center from "../components/center";
 import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
 import { useEffect, useState } from "react";
-import Snackbar from "@mui/material/Snackbar";
-import Alert from "@mui/material/Alert";
 import Modal from "@mui/material/Modal";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import { useRouter } from "next/router";
 import { NextPageWithLayout } from "./_app";
 import { privatePageLayout } from "../helpers/privatePageLayout";
+import TitlePage from "../components/titlePage";
+import { useMessagesContext } from "../context/messages";
 
 
 const AccountPage: NextPageWithLayout = () => {
 
     const user = useUser();
+    const { sendMessage } = useMessagesContext();
     const supabase = useSupabaseClient()
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
-    const [open, setOpen] = useState(false);
     const [modified, setModified] = useState(false);
-    const [errorMsg, setErrorMsg] = useState('');
-    const [emailWaitingConfirmation, setEmailWaitingConfirmation] = useState('');
     const [deleteOpen, setDeleteOpen] = useState(false);
     const handleOpenDelete = () => setDeleteOpen(true);
     const handleCloseDelete = () => setDeleteOpen(false);
@@ -36,30 +34,19 @@ const AccountPage: NextPageWithLayout = () => {
         setEmail(user?.email??'');
         const getAndSetName = async (id: string) => {
             const { data, error } = await supabase.from('profiles').select('name').eq('id', id);
-            if (error) showError(error.message);
+            if (error) sendMessage('error', error.message);
             else {
                 setName(data[0].name);
             }
         }
         if (user) getAndSetName(user.id);
-    }, [user, supabase]);
+    }, [user, supabase, sendMessage]);
 
-    const showError = (msg: string) => {
-        setOpen(true);
-        setErrorMsg(msg);
-    }
-
-    const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-        setOpen(false);
-    };
 
     const handleDelete = async () => {
         const { data, error } = await supabase.rpc('deleteUser');
         if (error) {
-            showError(error.message);
+            sendMessage('error', error.message);
         } else {
             supabase.auth.signOut();
             router.push("/");
@@ -69,17 +56,15 @@ const AccountPage: NextPageWithLayout = () => {
     const updateUser = async () => {
         const { data, error } = await supabase.auth.updateUser({ email: email, password: password != '' ? password : undefined })
         if (error) {
-            setOpen(true);
-            setErrorMsg(error.message);
+            sendMessage('error', error.message);
         } else {
             setPassword('');
-            if (email != user?.email) setEmailWaitingConfirmation('Esperando confirmacion de email');
             const resp = await supabase.from('profiles').update({ name: name }).eq('id', user?.id)
-            if (resp.error) {
-                setOpen(true);
-                setErrorMsg(resp.error.message);
+            if (resp.error) { 
+                sendMessage('error', resp.error.message);
             } else {
                 setModified(false);
+                sendMessage('success', 'Guardado correctamente. Recuerda que para cambiar tu email deberás confirmar tu nueva dirección.');
             }
         }
     };
@@ -101,12 +86,11 @@ const AccountPage: NextPageWithLayout = () => {
       </Modal>);
 
     return (
-        <>
-            <Typography variant="h1" component="h1">Mi cuenta</Typography>
+        <TitlePage title="Mi cuenta">
             <Center>
                 <Container maxWidth="sm" sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
                     <TextField placeholder="¿Cómo te gusta que te llamen?" variant="filled" color="secondary" label="Nombre" value={name} onChange={(e) => {setName(e.target.value); setModified(true)}} />
-                    <TextField placeholder="Escribe tu email…" variant="filled" color="secondary" label="Email" value={email} onChange={(e) => {setEmail(e.target.value); setModified(true)}} helperText={emailWaitingConfirmation} />
+                    <TextField placeholder="Escribe tu email…" variant="filled" color="secondary" label="Email" value={email} onChange={(e) => {setEmail(e.target.value); setModified(true)}} />
                     <Divider />
                     <TextField placeholder="Elige una nueva contraseña…" variant="filled" color="secondary" label="Nueva contraseña" type="password" value={password} onChange={(e) => {setPassword(e.target.value); setModified(true)}} />
                     <Button variant="contained" onClick={updateUser} disabled={!modified}>Actualizar</Button>
@@ -114,11 +98,8 @@ const AccountPage: NextPageWithLayout = () => {
                     <div><Button onClick={handleOpenDelete} color="error">Eliminar cuenta</Button></div>
                 </Container>
             </Center>
-            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose} anchorOrigin={{ vertical: "top", horizontal: "center" }}>
-                <Alert severity="error">{errorMsg}</Alert>
-            </Snackbar>
             {renderDeleteAccountModal}
-        </>
+        </TitlePage>
     );
 }
 

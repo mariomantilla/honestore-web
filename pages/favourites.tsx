@@ -1,14 +1,12 @@
-import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
 import { privatePageLayout } from "../helpers/privatePageLayout";
 import Shop from "../models";
 import { NextPageWithLayout } from "./_app";
-import Divider from "@mui/material/Divider";
 import { DataService } from "../lib/data";
-import Box from "@mui/material/Box";
 import ShopList from "../components/shopList";
 import { useUserContext } from "../context/userData";
 import { useUser } from "@supabase/auth-helpers-react";
+import TitlePage from "../components/titlePage";
 
 const FavouritesPage: NextPageWithLayout = () => {
 
@@ -21,11 +19,9 @@ const FavouritesPage: NextPageWithLayout = () => {
     }, [user]);
 
     return (
-        <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-            <Typography variant="h1" component="h1">Mis Favoritos</Typography>
-            <Divider />
+        <TitlePage title="Mis Favoritos">
             <ShopList shops={shops.filter((s) => !s || userFavouriteShopsIds.includes(s.id))}></ShopList>
-        </Box>
+        </TitlePage>
     );
 }
 
