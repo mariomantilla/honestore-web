@@ -28,7 +28,7 @@ export async function getShopsIds(): Promise<number[]> {
 export namespace DataService {
 
     export const newShops = ()  => {
-        return supabase.from('shops').select('*').order('created_at', {ascending: false}).limit(4);
+        return supabase.from('shops').select('*').order('created_at', {ascending: false}).limit(12);
     }
 
     export const searchShops = (query: string)  => {

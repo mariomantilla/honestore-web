@@ -1,4 +1,4 @@
-import { createTheme } from "@mui/material/styles";
+import { createTheme, SxProps } from "@mui/material/styles";
 import { Open_Sans } from "@next/font/google";
 
 export const BASE_URL: string = 'https://honestore.app';
@@ -50,5 +50,15 @@ export const theme = createTheme({
             main: "#521E1E",
             // contrastText: "#FFFFFF"
         },
+
     }
 });
+
+
+export const buttonStyles: SxProps = {
+    backgroundColor: theme.palette.primary.main,
+    '&:hover': {
+        backgroundColor: theme.palette.primary.dark
+    },
+    color: "#fff"
+}

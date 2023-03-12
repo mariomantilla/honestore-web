@@ -8,49 +8,8 @@ import Shop from "../models";
 import { DataService } from "../lib/data";
 import Skeleton from "@mui/material/Skeleton";
 import CardActions from "@mui/material/CardActions";
-import IconButton from "@mui/material/IconButton";
-import { Favorite, FavoriteBorder } from "@mui/icons-material";
 import Button from "@mui/material/Button";
-import { useRouter } from "next/router";
-import { useUserContext } from "../context/userData";
-import Tooltip from "@mui/material/Tooltip";
-import { useUser } from "@supabase/auth-helpers-react";
-
-const FavButton = ({ shop }: { shop: Shop}) => {
-    
-    const user = useUser();
-    const { userFavouriteShopsIds, addFavourite, removeFavourite } = useUserContext();
-    const router = useRouter();
-    const isFav = userFavouriteShopsIds.includes(shop.id);
-
-    const handleFavToggle = () => {
-        if (!user) { 
-            router.push('/login');
-            return
-        }
-        if (isFav) {
-            DataService.removeFavourite(user, shop).then((r) => {if (!r.error) removeFavourite(shop.id)});
-        }
-        else {
-            DataService.addFavourite(user, shop).then((r) => {if (!r.error) addFavourite(shop.id)});
-        }
-    }
-
-    return (
-        <Tooltip title={isFav ? "Quitar de favoritos" : "Guardar en favoritos"}>
-            <IconButton
-                aria-label="añadir o quitar de favoritos"
-                onClick={() => { handleFavToggle() }}
-            >
-                {isFav ? (
-                    <Favorite color="primary" />
-                ) : (
-                    <FavoriteBorder color="primary" />
-                ) }            
-            </IconButton>
-        </Tooltip>
-    );
-}
+import { FavButton } from "./favButton";
 
 const ShopCard = ({ shop }: { shop: Shop | null }) => {
 

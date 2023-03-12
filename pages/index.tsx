@@ -1,6 +1,3 @@
-import { useEffect, useState } from 'react';
-import ShopList from '../components/shopList';
-import Shop from '../models';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import Link from 'next/link';
@@ -12,29 +9,14 @@ import Divider from '@mui/material/Divider';
 import Image from 'next/image'
 import banner from '../public/banner-inverted.png'
 import Center from '../components/center';
-import { DataService } from '../lib/data';
 import Search from '@mui/icons-material/Search';
 import { Diversity1, NavigateNext, Store } from '@mui/icons-material';
 import IconButton from '@mui/material/IconButton';
-import { SxProps } from '@mui/material/styles';
-import { theme } from '../constants';
+import { buttonStyles } from '../constants';
+import NewShops from '../components/newShops';
 
 
 export default function Home() {
-
-	const [shops, setShops] = useState<(Shop | null)[]>(new Array(10).fill(null));
-
-	useEffect(() => {
-		DataService.newShops().then((resp) => setShops(resp.data ?? []));
-	}, []);
-
-	const buttonStyles: SxProps = {
-		backgroundColor: theme.palette.primary.main,
-		'&:hover': {
-			backgroundColor: theme.palette.primary.dark
-		},
-		color: "#fff"
-	}
 
 	return (
 		<>
@@ -53,21 +35,18 @@ export default function Home() {
 			</Typography>
 			<Divider />
 			<Box sx={{ padding: "2rem", display: "flex", justifyContent: "space-evenly", flexWrap: "wrap", gap: "1rem" }}>
-				<Button variant="contained" startIcon={<Search />} LinkComponent={Link} href="/search">
+				<Button variant="contained" startIcon={<Search />} LinkComponent={Link} href="/search" sx={{textAlign: "center"}}>
 					Buscar tiendas sostenibles
 				</Button>
-				<Button variant="contained" startIcon={<Store />} LinkComponent={Link} href="/add_shop">
+				<Button variant="contained" startIcon={<Store />} LinkComponent={Link} href="/add_shop" sx={{textAlign: "center"}}>
 					¿Tienes una tienda? Anádela
 				</Button>
-				<Button variant="contained" startIcon={<Diversity1 />} LinkComponent={Link} href="/signup">
+				<Button variant="contained" startIcon={<Diversity1 />} LinkComponent={Link} href="/signup" sx={{textAlign: "center"}}>
 					Únete a la comunidad
 				</Button>
 			</Box>
 			<Divider />
-			<Box sx={{ display: "flex", flexDirection: "column", gap: 2.5, marginTop: "2rem" }}>
-				<Typography variant='h3'>Novedades</Typography>
-				<ShopList shops={shops}></ShopList>
-			</Box>
+			<NewShops sx={{marginTop: "1.5rem"}} />
 			<Fab color="primary" aria-label="add" sx={{ position: "fixed", bottom: "2em", right: "2em" }}>
 				<Link href="/add_shop" style={{ lineHeight: "normal" }}>
 					<AddIcon sx={{ color: "white" }} />
