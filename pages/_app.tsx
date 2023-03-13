@@ -14,16 +14,16 @@ import Footer from '../components/footer'
 import Head from 'next/head'
 import { BASE_URL, theme } from '../constants'
 
-// import dynamic from 'next/dynamic'
+import dynamic from 'next/dynamic'
 import { NextPage } from 'next';
 import { supabase } from '../lib/supabaseClient';
 import { UserProvider } from '../context/userData';
 import AlertComponent from '../components/alerts';
 import { MessagesProvider } from '../context/messages';
 
-// const AndroidBar = dynamic(() => import('../components/androidBar'), {
-//   ssr: false,
-// })
+const AndroidBar = dynamic(() => import('../components/androidBar'), {
+  ssr: false,
+})
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -72,7 +72,7 @@ function MyApp({
           display: "flex",
           flexDirection: "column"
         }}>
-          {/* <AndroidBar /> */}
+          <AndroidBar />
           <MessagesProvider>
             <SearchProvider>
               <UserProvider>
