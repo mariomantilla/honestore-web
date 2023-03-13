@@ -38,8 +38,8 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }: { params: { id: number } }) {
-  let shop = await getShop(params.id);
-  if (!shop) shop = {
+  // let shop = await getShop(params.id);
+  let shop = {
     id: params.id,
     owner: null,
     owner_name: "",
