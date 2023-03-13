@@ -72,19 +72,19 @@ function MyApp({
           display: "flex",
           flexDirection: "column"
         }}>
-          {/* <AndroidBar />
+          {/* <AndroidBar /> */}
           <MessagesProvider>
             <SearchProvider>
               <UserProvider>
                 <ResponsiveAppBar />
-                <Container maxWidth="lg" sx={{ flex: 1 }}> */}
+                <Container maxWidth="lg" sx={{ flex: 1 }}>
                   {getLayout(<Component {...pageProps} />)}
-                {/* </Container>
+                </Container>
               </UserProvider>
             </SearchProvider>
             <AlertComponent />
           </MessagesProvider>
-          <Footer /> */}
+          <Footer />
         </Box>
       </ThemeProvider>
       <Analytics />
