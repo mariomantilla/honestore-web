@@ -71,6 +71,8 @@ export async function getStaticProps({ params }: { params: { id: number } }) {
 
 export default function ShopPage({ shop }: { shop: Shop }) {
 
+  return <></>
+
   const router = useRouter()
   if (router.isFallback) {
     return <Container sx={{ textAlign: "center" }}><CircularProgress /></Container>
