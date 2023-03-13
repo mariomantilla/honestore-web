@@ -12,7 +12,7 @@ import { useSearchContext } from "../context/search";
 import { alpha, styled, SxProps } from '@mui/material/styles';
 import InputBase, { InputBaseProps } from '@mui/material/InputBase/InputBase';
 import IconButton from '@mui/material/IconButton';
-import { AccountCircle } from '@mui/icons-material';
+import AccountCircle from '@mui/icons-material/AccountCircle';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import Modal from '@mui/material/Modal';
