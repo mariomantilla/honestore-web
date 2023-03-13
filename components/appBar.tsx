@@ -168,12 +168,12 @@ function ResponsiveAppBar() {
 	return (
 		<>
 			<AppBar position="sticky" sx={{ marginBottom: "2.5rem" }}>
-				{/* <Container maxWidth="lg">
+				<Container maxWidth="lg">
 					<Toolbar disableGutters sx={{ gap: 1 }}>
 						<Link href="/">
 							<Image src={logo} alt="Honestore Logo" width={35} sizes="70px" style={{ margin: "1rem" }} />
 						</Link>
-						<SearchInput />
+						{/* <SearchInput /> */}
 						<Button
 							variant="contained"
 							color="secondary"
@@ -183,7 +183,7 @@ function ResponsiveAppBar() {
 						>
 							Añade tu tienda gratis
 						</Button>
-						<IconButton
+						{/* <IconButton
 							size="large"
 							edge="end"
 							aria-label="account of current user"
@@ -193,10 +193,10 @@ function ResponsiveAppBar() {
 							color="inherit"
 						>
 							<AccountCircle />
-						</IconButton>
+						</IconButton> */}
 					</Toolbar>
 				</Container>
-				<Loader /> */}
+				{/* <Loader /> */}
 			</AppBar>
 			{/* {renderMenu}
 			{renderLoginModal} */}
