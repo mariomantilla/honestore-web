@@ -45,52 +45,50 @@ function MyApp({
   const canonicalUrl = (BASE_URL + (router.asPath === "/" ? "" : router.asPath)).split("?")[0];
   const getLayout = Component.getLayout || ((page) => page)
 
-  return <Component {...pageProps} />;
-
-  // return (
-  //   <SessionContextProvider supabaseClient={supabase} initialSession={pageProps.initialSession}>
-  //     <Head>
-  //       <title>Honestore: La comunidad de activistas del consumo ético</title>
-  //       <meta name="description" content="Honestore es una comunidad de personas que queremos consumir de forma más responsable.
-  // Formamos una red de usuarios y tiendas con un foco en la sostenibilidad, cuidado por el medio ambiente, derechos de los trabajadores e impacto social.
-  // Como usuario, en la app puedes encontrar tiendas que te gustan y venden productos que encajan con tus valores cerca de ti.
-  // Guarda tus tiendas favoritas para tenerlas siempre a mano y compártelas con tu familia y amigos." />
-  //       <link rel="icon" href="/favicon.png" />
-  //       <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-  //       <meta name="author" content="Honestore" />
-  //       <meta property="og:title" content="Honestore: La comunidad de activistas del consumo ético" />
-  //       <meta property="og:description" content="Honestore es una comunidad de personas que queremos consumir de forma más responsable.
-  // Formamos una red de usuarios y tiendas con un foco en la sostenibilidad, cuidado por el medio ambiente, derechos de los trabajadores e impacto social.
-  // Como usuario, en la app puedes encontrar tiendas que te gustan y venden productos que encajan con tus valores cerca de ti.
-  // Guarda tus tiendas favoritas para tenerlas siempre a mano y compártelas con tu familia y amigos." />
-  //       <meta property="og:image" content="https://honestore.app/images/logo2000.jpg" />
-  //       <meta property="og:url" content={canonicalUrl} />
-  //       <link href={canonicalUrl} rel="canonical" />
-  //       <link rel="shortcut icon" type="image/x-icon" href="/favicon.png" />
-  //     </Head>
-  //     <ThemeProvider theme={theme}>
-  //       <Box sx={{
-  //         minHeight: "100vh",
-  //         display: "flex",
-  //         flexDirection: "column"
-  //       }}>
-  //         <AndroidBar />
-  //         <MessagesProvider>
-  //           <SearchProvider>
-  //             <UserProvider>
-  //               <ResponsiveAppBar />
-  //               <Container maxWidth="lg" sx={{ flex: 1 }}>
-  //                 {getLayout(<Component {...pageProps} />)}
-  //               </Container>
-  //             </UserProvider>
-  //           </SearchProvider>
-  //           <AlertComponent />
-  //         </MessagesProvider>
-  //         <Footer />
-  //       </Box>
-  //     </ThemeProvider>
-  //     <Analytics />
-  //   </SessionContextProvider >
-  // )
+  return (
+    <SessionContextProvider supabaseClient={supabase} initialSession={pageProps.initialSession}>
+      <Head>
+        <title>Honestore: La comunidad de activistas del consumo ético</title>
+        <meta name="description" content="Honestore es una comunidad de personas que queremos consumir de forma más responsable.
+  Formamos una red de usuarios y tiendas con un foco en la sostenibilidad, cuidado por el medio ambiente, derechos de los trabajadores e impacto social.
+  Como usuario, en la app puedes encontrar tiendas que te gustan y venden productos que encajan con tus valores cerca de ti.
+  Guarda tus tiendas favoritas para tenerlas siempre a mano y compártelas con tu familia y amigos." />
+        <link rel="icon" href="/favicon.png" />
+        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="author" content="Honestore" />
+        <meta property="og:title" content="Honestore: La comunidad de activistas del consumo ético" />
+        <meta property="og:description" content="Honestore es una comunidad de personas que queremos consumir de forma más responsable.
+  Formamos una red de usuarios y tiendas con un foco en la sostenibilidad, cuidado por el medio ambiente, derechos de los trabajadores e impacto social.
+  Como usuario, en la app puedes encontrar tiendas que te gustan y venden productos que encajan con tus valores cerca de ti.
+  Guarda tus tiendas favoritas para tenerlas siempre a mano y compártelas con tu familia y amigos." />
+        <meta property="og:image" content="https://honestore.app/images/logo2000.jpg" />
+        <meta property="og:url" content={canonicalUrl} />
+        <link href={canonicalUrl} rel="canonical" />
+        <link rel="shortcut icon" type="image/x-icon" href="/favicon.png" />
+      </Head>
+      <ThemeProvider theme={theme}>
+        <Box sx={{
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: "column"
+        }}>
+          {/* <AndroidBar />
+          <MessagesProvider>
+            <SearchProvider>
+              <UserProvider>
+                <ResponsiveAppBar />
+                <Container maxWidth="lg" sx={{ flex: 1 }}> */}
+                  {getLayout(<Component {...pageProps} />)}
+                {/* </Container>
+              </UserProvider>
+            </SearchProvider>
+            <AlertComponent />
+          </MessagesProvider>
+          <Footer /> */}
+        </Box>
+      </ThemeProvider>
+      <Analytics />
+    </SessionContextProvider >
+  )
 }
 export default MyApp
