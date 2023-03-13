@@ -24,7 +24,7 @@ export default function Loader() {
             router.events.off('routeChangeComplete', endLoading)
             router.events.off('routeChangeError', endLoading)
         }
-    }, [])
+    }, [router.events])
 
     return (
         <LinearProgress sx={{ visibility: isLoading ? 'visible' : 'hidden' }} />
