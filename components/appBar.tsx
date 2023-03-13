@@ -183,7 +183,7 @@ function ResponsiveAppBar() {
 						>
 							Añade tu tienda gratis
 						</Button>
-						<IconButton
+						{/* <IconButton
 							size="large"
 							edge="end"
 							aria-label="account of current user"
@@ -193,7 +193,7 @@ function ResponsiveAppBar() {
 							color="inherit"
 						>
 							<AccountCircle />
-						</IconButton>
+						</IconButton> */}
 					</Toolbar>
 				</Container>
 				{/* <Loader /> */}
