@@ -2,24 +2,24 @@ import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 
 import { SessionContextProvider, Session } from '@supabase/auth-helpers-react'
-// import { SearchProvider } from "../context/search";
+import { SearchProvider } from "../context/search";
 import { ReactElement, ReactNode, useState } from 'react'
-// import { useRouter } from 'next/router'
-// import { Analytics } from '@vercel/analytics/react';
-// import { ThemeProvider } from '@mui/material/styles';
-// import ResponsiveAppBar from '../components/appBar'
-// import Container from '@mui/material/Container'
-// import Box from '@mui/material/Box'
-// import Footer from '../components/footer'
-// import Head from 'next/head'
-// import { BASE_URL, theme } from '../constants'
+import { useRouter } from 'next/router'
+import { Analytics } from '@vercel/analytics/react';
+import { ThemeProvider } from '@mui/material/styles';
+import ResponsiveAppBar from '../components/appBar'
+import Container from '@mui/material/Container'
+import Box from '@mui/material/Box'
+import Footer from '../components/footer'
+import Head from 'next/head'
+import { BASE_URL, theme } from '../constants'
 
 // import dynamic from 'next/dynamic'
 import { NextPage } from 'next';
-// import { supabase } from '../lib/supabaseClient';
-// import { UserProvider } from '../context/userData';
-// import AlertComponent from '../components/alerts';
-// import { MessagesProvider } from '../context/messages';
+import { supabase } from '../lib/supabaseClient';
+import { UserProvider } from '../context/userData';
+import AlertComponent from '../components/alerts';
+import { MessagesProvider } from '../context/messages';
 
 // const AndroidBar = dynamic(() => import('../components/androidBar'), {
 //   ssr: false,
@@ -40,11 +40,12 @@ function MyApp({
   initialSession: Session,
 }>) {
 
-  return <Component {...pageProps} />;
-  // const router = useRouter()
+  const router = useRouter()
 
-  // const canonicalUrl = (BASE_URL + (router.asPath === "/" ? "" : router.asPath)).split("?")[0];
-  // const getLayout = Component.getLayout || ((page) => page)
+  const canonicalUrl = (BASE_URL + (router.asPath === "/" ? "" : router.asPath)).split("?")[0];
+  const getLayout = Component.getLayout || ((page) => page)
+
+  return <Component {...pageProps} />;
 
   // return (
   //   <SessionContextProvider supabaseClient={supabase} initialSession={pageProps.initialSession}>
