@@ -1,9 +1,9 @@
 // import Shop from "../../models";
 // import { DataService, getShop, getShopsIds } from "../../lib/data";
 // import Head from "next/head";
-import { useRouter } from "next/router";
-import CircularProgress from "@mui/material/CircularProgress";
-import Container from "@mui/material/Container";
+// import { useRouter } from "next/router";
+// import CircularProgress from "@mui/material/CircularProgress";
+// import Container from "@mui/material/Container";
 // import Box from "@mui/material/Box";
 // import Typography from "@mui/material/Typography";
 // import Avatar from "@mui/material/Avatar";
@@ -70,10 +70,10 @@ export async function getStaticProps({ params }: { params: { id: number } }) {
 
 export default function ShopPage({ shop }: { shop: number }) {
 
-  const router = useRouter()
-  if (router.isFallback) {
-    return <Container sx={{ textAlign: "center" }}><CircularProgress /></Container>
-  }
+  // const router = useRouter()
+  // if (router.isFallback) {
+  //   return <Container sx={{ textAlign: "center" }}><CircularProgress /></Container>
+  // }
 
   return <>{shop}</>;
 
