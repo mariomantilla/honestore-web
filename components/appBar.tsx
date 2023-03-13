@@ -168,7 +168,7 @@ function ResponsiveAppBar() {
 	return (
 		<>
 			<AppBar position="sticky" sx={{ marginBottom: "2.5rem" }}>
-				<Container maxWidth="lg">
+				{/* <Container maxWidth="lg">
 					<Toolbar disableGutters sx={{ gap: 1 }}>
 						<Link href="/">
 							<Image src={logo} alt="Honestore Logo" width={35} sizes="70px" style={{ margin: "1rem" }} />
@@ -196,10 +196,10 @@ function ResponsiveAppBar() {
 						</IconButton>
 					</Toolbar>
 				</Container>
-				<Loader />
+				<Loader /> */}
 			</AppBar>
-			{renderMenu}
-			{renderLoginModal}
+			{/* {renderMenu}
+			{renderLoginModal} */}
 		</>
 	);
 }
