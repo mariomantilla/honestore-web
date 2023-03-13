@@ -183,23 +183,23 @@ function ResponsiveAppBar() {
 						>
 							Añade tu tienda gratis
 						</Button>
-						{/* <IconButton
+						<IconButton
 							size="large"
 							edge="end"
 							aria-label="account of current user"
 							aria-controls={menuId}
 							aria-haspopup="true"
-							onClick={handleProfileMenuOpen}
+							//onClick={handleProfileMenuOpen}
 							color="inherit"
 						>
 							<AccountCircle />
-						</IconButton> */}
+						</IconButton>
 					</Toolbar>
 				</Container>
-				{/* <Loader /> */}
+				<Loader />
 			</AppBar>
-			{/* {renderMenu}
-			{renderLoginModal} */}
+			{/* {renderMenu} */}
+			{/* {renderLoginModal} */}
 		</>
 	);
 }
