@@ -37,45 +37,45 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }: { params: { id: number } }) {
-  // let shop = await getShop(params.id);
-  // let shop = {
-  //   id: params.id,
-  //   owner: null,
-  //   owner_name: "",
-  //   owner_email: "",
-  //   web: "",
-  //   published: true,
-  //   location: "",
-  //   location_coordinates: "",
-  //   email: "",
-  //   logo: "",
-  //   online: true,
-  //   name: "Test",
-  //   address: "",
-  //   consent_proof: null,
-  //   created_at: "",
-  //   updated_at: "",
-  //   description: "description",
-  //   instagram: "",
-  //   phone: "",
+  let shop = await getShop(params.id);
+  if (!shop) shop = {
+    id: params.id,
+    owner: null,
+    owner_name: "",
+    owner_email: "",
+    web: "",
+    published: true,
+    location: "",
+    location_coordinates: "",
+    email: "",
+    logo: "",
+    online: true,
+    name: "Test",
+    address: "",
+    consent_proof: null,
+    created_at: "",
+    updated_at: "",
+    description: "description",
+    instagram: "",
+    phone: "",
 
-  // }
+  }
   return {
     props: {
-      shop: params.id
+      shop: shop
     },
 
   }
 }
 
-export default function ShopPage({ shop }: { shop: number }) {
+export default function ShopPage({ shop }: { shop: Shop }) {
 
   // const router = useRouter()
   // if (router.isFallback) {
   //   return <Container sx={{ textAlign: "center" }}><CircularProgress /></Container>
   // }
 
-  return <>{shop}</>;
+  return <>{shop.id}</>;
 
   // const router = useRouter()
   // if (router.isFallback) {
