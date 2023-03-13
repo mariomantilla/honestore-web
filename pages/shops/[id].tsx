@@ -1,35 +1,35 @@
-// import Shop from "../../models";
-// import { DataService, getShop, getShopsIds } from "../../lib/data";
-// import Head from "next/head";
-// import { useRouter } from "next/router";
-// import CircularProgress from "@mui/material/CircularProgress";
-// import Container from "@mui/material/Container";
-// import Box from "@mui/material/Box";
-// import Typography from "@mui/material/Typography";
-// import Avatar from "@mui/material/Avatar";
-// import Divider from "@mui/material/Divider";
-// import Instagram from '@mui/icons-material/Instagram';
-// import Phone from '@mui/icons-material/Phone';
-// import Language from '@mui/icons-material/Language';
-// import Email from '@mui/icons-material/Email';
-// import Map from '@mui/icons-material/Map';
-// import ShopExternalAction from '../../components/shopExternalAction';
-// import { LocationOff } from '@mui/icons-material';
-// import Chip from "@mui/material/Chip";
-// import NewShops from "../../components/newShops";
-// import Grid from '@mui/material/Unstable_Grid2';
-// import Card from "@mui/material/Card";
-// import banner from '../../public/banner-inverted.png'
-// import Image from 'next/image'
-// import CardContent from "@mui/material/CardContent";
-// import Link from "next/link";
-// import Button from "@mui/material/Button";
-// import IconButton from "@mui/material/IconButton";
-// import { FavButton } from "../../components/favButton";
+import Shop from "../../models";
+import { DataService, getShop, getShopsIds } from "../../lib/data";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import CircularProgress from "@mui/material/CircularProgress";
+import Container from "@mui/material/Container";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Avatar from "@mui/material/Avatar";
+import Divider from "@mui/material/Divider";
+import Instagram from '@mui/icons-material/Instagram';
+import Phone from '@mui/icons-material/Phone';
+import Language from '@mui/icons-material/Language';
+import Email from '@mui/icons-material/Email';
+import Map from '@mui/icons-material/Map';
+import ShopExternalAction from '../../components/shopExternalAction';
+import { LocationOff } from '@mui/icons-material';
+import Chip from "@mui/material/Chip";
+import NewShops from "../../components/newShops";
+import Grid from '@mui/material/Unstable_Grid2';
+import Card from "@mui/material/Card";
+import banner from '../../public/banner-inverted.png'
+import Image from 'next/image'
+import CardContent from "@mui/material/CardContent";
+import Link from "next/link";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import { FavButton } from "../../components/favButton";
 
 
 export async function getStaticPaths() {
-  let ids: number[] = [1,2,3]; //await getShopsIds();
+  let ids: number[] = await getShopsIds();
   return {
     paths: ids?.map((sid) => `/shops/${sid}`) ?? [],
     fallback: true, // can also be true or 'blocking'
