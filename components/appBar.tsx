@@ -198,8 +198,8 @@ function ResponsiveAppBar() {
 				</Container>
 				<Loader />
 			</AppBar>
-			{/* {renderMenu} */}
-			{/* {renderLoginModal} */}
+			{renderMenu}
+			{renderLoginModal}
 		</>
 	);
 }
