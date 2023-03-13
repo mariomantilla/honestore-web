@@ -192,7 +192,7 @@ function ResponsiveAppBar() {
 							// //onClick={handleProfileMenuOpen}
 							// color="inherit"
 						>
-							{/* <AccountCircle /> */}
+							<AccountCircle />
 						</IconButton>
 					</Toolbar>
 				</Container>
