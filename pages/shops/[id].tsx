@@ -30,7 +30,7 @@ import { idText } from "typescript";
 
 
 export async function getStaticPaths() {
-  let ids: number[] = await getShopsIds();
+  let ids: number[] = [1,2,3]; //await getShopsIds();
   return {
     paths: ids?.map((sid) => `/shops/${sid}`) ?? [],
     fallback: true, // can also be true or 'blocking'
@@ -70,7 +70,7 @@ export async function getStaticProps({ params }: { params: { id: number } }) {
 }
 
 export default function ShopPage({ shop }: { shop: Shop }) {
-  
+
   const router = useRouter()
   if (router.isFallback) {
     return <Container sx={{ textAlign: "center" }}><CircularProgress /></Container>
