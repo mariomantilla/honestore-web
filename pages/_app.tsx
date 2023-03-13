@@ -1,7 +1,7 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 
-// import { SessionContextProvider, Session } from '@supabase/auth-helpers-react'
+import { SessionContextProvider, Session } from '@supabase/auth-helpers-react'
 // import { SearchProvider } from "../context/search";
 import { ReactElement, ReactNode, useState } from 'react'
 // import { useRouter } from 'next/router'
@@ -37,7 +37,7 @@ function MyApp({
   Component,
   pageProps,
 }: AppPropsWithLayout<{
-  // initialSession: Session,
+  initialSession: Session,
 }>) {
 
   return <Component {...pageProps} />;
