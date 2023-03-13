@@ -76,7 +76,7 @@ function MyApp({
           <MessagesProvider>
             <SearchProvider>
               <UserProvider>
-                <ResponsiveAppBar />
+                {/* <ResponsiveAppBar /> */}
                 <Container maxWidth="lg" sx={{ flex: 1 }}>
                   {getLayout(<Component {...pageProps} />)}
                 </Container>
