@@ -123,7 +123,7 @@ export default function ShopPage({ shop }: { shop: Shop }) {
       <Grid container spacing={1.5} rowSpacing={3}>
         <Grid xs={12} sm={6} md={8} sx={{position: "relative"}}>
           <Box sx={{position: "absolute", top: 0, right: "1rem"}}>
-            {/* <FavButton shop={shop} size="large" /> */}
+            <FavButton shop={shop} size="large" />
           </Box>
           <Box sx={{ display: "flex", gap: 2, flexDirection: "column" }}>
             <Box sx={{ display: "flex", gap: 1, alignItems: "center", justifyContent: "center", flexDirection: "column" }}>
@@ -163,7 +163,7 @@ export default function ShopPage({ shop }: { shop: Shop }) {
         </Grid>
       </Grid>
       <Divider sx={{ marginTop: "1rem" }} />
-      {/* <NewShops sx={{ marginTop: "1rem" }} /> */}
+      <NewShops sx={{ marginTop: "1rem" }} />
     </>
   );
 }
