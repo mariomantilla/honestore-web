@@ -37,27 +37,10 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }: { params: { id: number } }) {
   let shop = await getShop(params.id);
-  if (!shop) shop = {
-    id: params.id,
-    owner: null,
-    owner_name: "",
-    owner_email: "",
-    web: "",
-    published: true,
-    location: "",
-    location_coordinates: "",
-    email: "",
-    logo: "",
-    online: true,
-    name: "Test",
-    address: "",
-    consent_proof: null,
-    created_at: "",
-    updated_at: "",
-    description: "description",
-    instagram: "",
-    phone: "",
-
+  if (!shop) {
+    return {
+      notFound: true,
+    }
   }
   return {
     props: {
