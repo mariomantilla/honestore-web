@@ -112,60 +112,58 @@ export default function ShopPage({ shop }: { shop: Shop }) {
     <Chip icon={<LocationOff />} label="Solo online" />
   ) : '';
 
-  return <>{shop.id}</>
-
-  // return (
-  //   <>
-  //     <Head>
-  //       <title>{shop.name + " en Honestore"}</title>
-  //       <meta name="description" content={shop.description ?? ''} />
-  //       <meta property="og:title" content={shop.name + " en Honestore"} />
-  //       <meta property="og:description" content={shop.description ?? ''} />
-  //     </Head>
-  //     <Grid container spacing={1.5} rowSpacing={3}>
-  //       <Grid xs={12} sm={6} md={8} sx={{position: "relative"}}>
-  //         <Box sx={{position: "absolute", top: 0, right: "1rem"}}>
-  //           <FavButton shop={shop} size="large" />
-  //         </Box>
-  //         <Box sx={{ display: "flex", gap: 2, flexDirection: "column" }}>
-  //           <Box sx={{ display: "flex", gap: 1, alignItems: "center", justifyContent: "center", flexDirection: "column" }}>
-  //             <Avatar alt={shop.name ?? ''} src={logoUrl} sx={{ height: 128, width: 128, border: "1px solid #ccc" }} />
-  //             <Typography variant="h1" component="h1" sx={{ marginBottom: 0 }}>{shop.name}</Typography>
-  //             <Typography variant="body2" color="text.secondary" fontWeight="bold">{shop.address}</Typography>
-  //             {onlineChip}
-  //           </Box>
-  //           <Box sx={{ display: "flex", gap: 3, justifyContent: "center" }}>
-  //             {actions}
-  //           </Box>
-  //           <Divider />
-  //           <Box sx={{ display: "flex", justifyContent: "center" }}>
-  //             <Typography sx={{ whiteSpace: "pre-wrap" }}>{shop.description}</Typography>
-  //           </Box>
-  //         </Box>
-  //       </Grid>
-  //       <Grid xs={12} sm={6} md={4}>
-  //         <Card elevation={4} sx={{ borderRadius: "10px" }}>
-  //           <CardContent sx={{ textAlign: "center" }}>
-  //             <Image
-  //               src={banner}
-  //               width={300}
-  //               priority
-  //               alt="Honestore, La comunidad de activistas del consumo ético" style={{ maxWidth: "100%", height: "auto" }}
-  //             />
-  //             <Typography sx={{ padding: "0.5rem 0.8rem", fontWeight: "bold" }}>La comunidad de activistas del consumo ético</Typography>
-  //             <Button href="/about" LinkComponent={Link} variant="contained">
-  //               Descubrir más
-  //             </Button>
-  //             <Divider sx={{margin: "1rem 0"}} />
-  //             <Button href="/search" LinkComponent={Link} variant="contained">
-  //               Buscar más tiendas
-  //             </Button>
-  //           </CardContent>
-  //         </Card>
-  //       </Grid>
-  //     </Grid>
-  //     <Divider sx={{ marginTop: "1rem" }} />
-  //     <NewShops sx={{ marginTop: "1rem" }} />
-  //   </>
-  // );
+  return (
+    <>
+      <Head>
+        <title>{shop.name + " en Honestore"}</title>
+        <meta name="description" content={shop.description ?? ''} />
+        <meta property="og:title" content={shop.name + " en Honestore"} />
+        <meta property="og:description" content={shop.description ?? ''} />
+      </Head>
+      <Grid container spacing={1.5} rowSpacing={3}>
+        <Grid xs={12} sm={6} md={8} sx={{position: "relative"}}>
+          <Box sx={{position: "absolute", top: 0, right: "1rem"}}>
+            {/* <FavButton shop={shop} size="large" /> */}
+          </Box>
+          <Box sx={{ display: "flex", gap: 2, flexDirection: "column" }}>
+            {/* <Box sx={{ display: "flex", gap: 1, alignItems: "center", justifyContent: "center", flexDirection: "column" }}>
+              <Avatar alt={shop.name ?? ''} src={logoUrl} sx={{ height: 128, width: 128, border: "1px solid #ccc" }} />
+              <Typography variant="h1" component="h1" sx={{ marginBottom: 0 }}>{shop.name}</Typography>
+              <Typography variant="body2" color="text.secondary" fontWeight="bold">{shop.address}</Typography>
+              {onlineChip}
+            </Box>
+            <Box sx={{ display: "flex", gap: 3, justifyContent: "center" }}>
+              {actions}
+            </Box>
+            <Divider />
+            <Box sx={{ display: "flex", justifyContent: "center" }}>
+              <Typography sx={{ whiteSpace: "pre-wrap" }}>{shop.description}</Typography>
+            </Box> */}
+          </Box>
+        </Grid>
+        <Grid xs={12} sm={6} md={4}>
+          <Card elevation={4} sx={{ borderRadius: "10px" }}>
+            <CardContent sx={{ textAlign: "center" }}>
+              <Image
+                src={banner}
+                width={300}
+                priority
+                alt="Honestore, La comunidad de activistas del consumo ético" style={{ maxWidth: "100%", height: "auto" }}
+              />
+              <Typography sx={{ padding: "0.5rem 0.8rem", fontWeight: "bold" }}>La comunidad de activistas del consumo ético</Typography>
+              <Button href="/about" LinkComponent={Link} variant="contained">
+                Descubrir más
+              </Button>
+              <Divider sx={{margin: "1rem 0"}} />
+              <Button href="/search" LinkComponent={Link} variant="contained">
+                Buscar más tiendas
+              </Button>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
+      <Divider sx={{ marginTop: "1rem" }} />
+      {/* <NewShops sx={{ marginTop: "1rem" }} /> */}
+    </>
+  );
 }
