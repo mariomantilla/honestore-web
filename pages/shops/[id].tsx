@@ -126,7 +126,7 @@ export default function ShopPage({ shop }: { shop: Shop }) {
             {/* <FavButton shop={shop} size="large" /> */}
           </Box>
           <Box sx={{ display: "flex", gap: 2, flexDirection: "column" }}>
-            {/* <Box sx={{ display: "flex", gap: 1, alignItems: "center", justifyContent: "center", flexDirection: "column" }}>
+            <Box sx={{ display: "flex", gap: 1, alignItems: "center", justifyContent: "center", flexDirection: "column" }}>
               <Avatar alt={shop.name ?? ''} src={logoUrl} sx={{ height: 128, width: 128, border: "1px solid #ccc" }} />
               <Typography variant="h1" component="h1" sx={{ marginBottom: 0 }}>{shop.name}</Typography>
               <Typography variant="body2" color="text.secondary" fontWeight="bold">{shop.address}</Typography>
@@ -138,7 +138,7 @@ export default function ShopPage({ shop }: { shop: Shop }) {
             <Divider />
             <Box sx={{ display: "flex", justifyContent: "center" }}>
               <Typography sx={{ whiteSpace: "pre-wrap" }}>{shop.description}</Typography>
-            </Box> */}
+            </Box>
           </Box>
         </Grid>
         <Grid xs={12} sm={6} md={4}>
