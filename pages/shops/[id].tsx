@@ -70,12 +70,12 @@ export async function getStaticProps({ params }: { params: { id: number } }) {
 
 export default function ShopPage({ shop }: { shop: Shop }) {
 
-  // const router = useRouter()
-  // if (router.isFallback) {
-  //   return <Container sx={{ textAlign: "center" }}><CircularProgress /></Container>
-  // }
+  const router = useRouter()
+  if (router.isFallback) {
+    return <Container sx={{ textAlign: "center" }}><CircularProgress /></Container>
+  }
 
-  return <>{shop ? shop.id : "No shop"}</>;
+  return <>{shop.id}</>;
 
   // const router = useRouter()
   // if (router.isFallback) {
