@@ -75,7 +75,7 @@ export default function ShopPage({ shop }: { shop: Shop }) {
   //   return <Container sx={{ textAlign: "center" }}><CircularProgress /></Container>
   // }
 
-  return <>{shop.id}</>;
+  return <>{shop ? shop.id : "No shop"}</>;
 
   // const router = useRouter()
   // if (router.isFallback) {
