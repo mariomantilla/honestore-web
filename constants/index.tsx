@@ -5,6 +5,8 @@ export const BASE_URL: string = 'https://honestore.app';
 
 const openSans = Open_Sans({ subsets: ['latin'] })
 
+export const imageKitAuthenticationEndpoint = 'http://localhost:3000/api/imageKitAuth';
+
 export const theme = createTheme({
     typography: {
         fontFamily: [

@@ -21,7 +21,7 @@ ThemeSupa.honestore = {
 export default function LoginWidget({ view }: { view?: ViewType }) {
     const supabase = useSupabaseClient()
 
-    const origin = typeof window !== "undefined" ? window.location.origin : undefined;
+    const origin = typeof window !== "undefined" ? window.location.origin+window.location.pathname+window.location.search : undefined;
 
     return (
         <Box sx={{ padding: "3rem", maxWidth: "400px" }}>

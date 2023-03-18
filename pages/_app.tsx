@@ -12,14 +12,15 @@ import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
 import Footer from '../components/footer'
 import Head from 'next/head'
-import { BASE_URL, theme } from '../constants'
+import { BASE_URL, imageKitAuthenticationEndpoint, theme } from '../constants'
 
 import dynamic from 'next/dynamic'
 import { NextPage } from 'next';
-import { supabase } from '../lib/supabaseClient';
+import { supabase, endpoint } from '../lib/supabaseClient';
 import { UserProvider } from '../context/userData';
 import AlertComponent from '../components/alerts';
 import { MessagesProvider } from '../context/messages';
+import { IKContext } from 'imagekitio-react';
 
 const AndroidBar = dynamic(() => import('../components/androidBar'), {
   ssr: false,
@@ -77,9 +78,14 @@ function MyApp({
             <SearchProvider>
               <UserProvider>
                 <ResponsiveAppBar />
-                <Container maxWidth="lg" sx={{ flex: 1 }}>
-                  {getLayout(<Component {...pageProps} />)}
-                </Container>
+                <IKContext
+                  urlEndpoint={process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT}
+                  publicKey={process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY} // optional
+                  authenticationEndpoint={imageKitAuthenticationEndpoint}>
+                  <Container maxWidth="lg" sx={{ flex: 1 }}>
+                    {getLayout(<Component {...pageProps} />)}
+                  </Container>
+                </IKContext>
               </UserProvider>
             </SearchProvider>
             <AlertComponent />
