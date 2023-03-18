@@ -10,7 +10,7 @@ export default function ShopList(props: { shops: (Shop|null)[] }) {
     return (
         <Grid container spacing={1.5}>
             { props.shops.length ? props.shops.map((shop, i) => (
-                <Grid xs={12} sm={6} md={4} lg={3} key={i} sx={{ minWidth: "256px" }}>
+                <Grid xs={12} sm={12} md={6} lg={6} key={i}>
                     <ShopCard shop={shop}></ShopCard>
                 </Grid>
             )) : (
