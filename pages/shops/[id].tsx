@@ -25,6 +25,7 @@ import CardContent from "@mui/material/CardContent";
 import Link from "next/link";
 import Button from "@mui/material/Button";
 import { FavButton } from "../../components/favButton";
+import { flexbox } from "@mui/system";
 
 
 export async function getStaticPaths() {
@@ -104,27 +105,25 @@ export default function ShopPage({ shop }: { shop: Shop }) {
         <meta property="og:description" content={shop.description ?? ''} />
       </Head>
       <Grid container spacing={1.5} rowSpacing={3}>
-        <Grid xs={12} sm={6} md={8} sx={{position: "relative"}}>
-          <Box sx={{position: "absolute", top: 0, right: "1rem"}}>
-            <FavButton shop={shop} size="large" />
-          </Box>
-          <Box sx={{ display: "flex", gap: 2, flexDirection: "column" }}>
-            <Box sx={{ display: "flex", gap: 1, alignItems: "center", justifyContent: "center", flexDirection: "column" }}>
-              <Avatar alt={shop.name ?? ''} src={logoUrl} sx={{ height: 128, width: 128, border: "1px solid #ccc" }} />
-              <Typography variant="h1" component="h1" sx={{ marginBottom: 0 }}>{shop.name}</Typography>
-              <Typography variant="body2" color="text.secondary" fontWeight="bold">{shop.address}</Typography>
-              {onlineChip}
-            </Box>
-            <Box sx={{ display: "flex", gap: 3, justifyContent: "center" }}>
-              {actions}
-            </Box>
-            <Divider />
-            <Box sx={{ display: "flex", justifyContent: "center" }}>
+        <Grid xs={12} md={8}>
+          <Box sx={{ display: "flex", gap: 3, flexDirection: {xs: "column", sm: "row"}, padding: 2 }}>
+            <Avatar alt={shop.name ?? ''} src={logoUrl} sx={{ height: 200, width: 200, border: "1px solid #ccc", alignSelf: {xs: "center", sm: "inherit"} }} />
+            <Box sx={{ display: "flex", gap: 2, flexDirection: "column", flexGrow: 1 }}>
+              <Box sx={{display: "flex"}}>
+                <Typography variant="h1" component="h1" sx={{ marginBottom: 0, flexGrow: 1, textAlign: "left"}}>{shop.name}</Typography>
+                <FavButton shop={shop} />
+              </Box>
+              {shop.address ? (<Typography variant="body2" color="text.secondary" fontWeight="bold">{shop.address}</Typography>) : ''}
+              <Box sx={{ display: "flex", gap: 2.5, alignItems: "baseline", flexGrap: "wrap" }}>
+                {actions}
+                {onlineChip}
+              </Box>
+              <Divider />
               <Typography sx={{ whiteSpace: "pre-wrap" }}>{shop.description}</Typography>
             </Box>
           </Box>
         </Grid>
-        <Grid xs={12} sm={6} md={4}>
+        <Grid xs={12} md={4}>
           <Card elevation={4} sx={{ borderRadius: "10px" }}>
             <CardContent sx={{ textAlign: "center" }}>
               <Image
@@ -137,7 +136,7 @@ export default function ShopPage({ shop }: { shop: Shop }) {
               <Button href="/about" LinkComponent={Link} variant="contained">
                 Descubrir más
               </Button>
-              <Divider sx={{margin: "1rem 0"}} />
+              <Divider sx={{ margin: "1rem 0" }} />
               <Button href="/search" LinkComponent={Link} variant="contained">
                 Buscar más tiendas
               </Button>

@@ -8,6 +8,15 @@ const openSans = Open_Sans({ subsets: ['latin'] })
 export const imageKitAuthenticationEndpoint = 'http://localhost:3000/api/imageKitAuth';
 
 export const theme = createTheme({
+    breakpoints: {
+        values: {
+            xs: 0,
+            sm: 700,
+            md: 900,
+            lg: 1200,
+            xl: 1536,
+          },
+    },
     typography: {
         fontFamily: [
             openSans.style.fontFamily,

@@ -11,7 +11,7 @@ a {
   text-decoration: none;
 }
 
-p > a {
+p>a {
   color: #FB7168;
 }
 
@@ -28,10 +28,10 @@ footer {
 
 .mark {
   background: transparent;
-    background-image: linear-gradient(to top,#FB7168,#FB7168 19%,transparent 20%);
-    background-repeat: no-repeat;
-    margin: 0 -0.1em;
-    padding: 0 0.1em;
+  background-image: linear-gradient(to top, #FB7168, #FB7168 19%, transparent 20%);
+  background-repeat: no-repeat;
+  margin: 0 -0.1em;
+  padding: 0 0.1em;
 }
 
 
@@ -41,22 +41,22 @@ footer {
 
 .image-container {
   width: 100%;
-  position:relative;
+  position: relative;
 }
 
 .image-container .image {
-    object-fit: contain;
-    width: 100% !important;
-    position: relative !important;
-    height: unset !important;
+  object-fit: contain;
+  width: 100% !important;
+  position: relative !important;
+  height: unset !important;
 }
 
 .MuiAvatar-circular img {
-  object-fit: contain; 
+  object-fit: contain;
 }
 
 
-.MuiModal-root {  
+.MuiModal-root {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -68,4 +68,10 @@ label .MuiAvatar-root {
 
 input[type=file] {
   display: none;
+}
+
+.singleLineEllipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
