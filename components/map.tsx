@@ -39,7 +39,7 @@ function DraggableMarker({ center, callback}: { center: LatLng, callback: NewPos
             ref={markerRef}
             icon={MarkerIcon}
         >
-            <Tooltip>Arrástrame hasta la ubicación de tu tienda</Tooltip>
+            <Tooltip direction="bottom">Arrástrame hasta la ubicación de tu tienda</Tooltip>
         </LeafletMarker>
     )
 }
@@ -55,7 +55,7 @@ function ShopMarker({ shop }: { shop: Shop }) {
             position={center}
             icon={MarkerIcon}
         >
-            <Popup direction="bottom">
+            <Popup>
                 {shop.name}
             </Popup>
         </LeafletMarker>

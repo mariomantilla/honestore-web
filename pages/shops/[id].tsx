@@ -105,7 +105,7 @@ export default function ShopPage({ shop }: { shop: Shop }) {
 	) : '';
 
 	const mapCentercoordsArray = shop.location_coordinates ? shop.location_coordinates.split(' ').map((x) => parseFloat(x)) : undefined;
-	const mapCentercoords: [number, number] = mapCentercoordsArray ? [mapCentercoordsArray[0], mapCentercoordsArray[1]] : undefined;
+	const mapCentercoords: [number, number] | undefined = mapCentercoordsArray ? [mapCentercoordsArray[0], mapCentercoordsArray[1]] : undefined;
 
 	return (
 		<>
