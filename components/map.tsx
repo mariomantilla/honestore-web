@@ -1,4 +1,4 @@
-import { MapContainer, Marker as LeafletMarker, TileLayer, Tooltip, useMapEvents } from "react-leaflet";
+import { MapContainer, Marker as LeafletMarker, Popup, TileLayer, Tooltip, useMapEvents } from "react-leaflet";
 import 'leaflet/dist/leaflet.css';
 import { useEffect, useMemo, useRef, useState } from "react";
 import { DivIcon, LatLng, Marker } from "leaflet";
@@ -9,7 +9,7 @@ const MarkerIcon = new DivIcon({
     html: `<svg viewBox="0 0 24 24" fill="${theme.palette.primary.main}"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>`,
     className: "grabbable",
     iconSize: [36, 36],
-    iconAnchor: [18, 40]
+    iconAnchor: [18, 0]
 });
 
 type NewPosCallback = (pos: LatLng) => void;
@@ -44,6 +44,24 @@ function DraggableMarker({ center, callback}: { center: LatLng, callback: NewPos
     )
 }
 
+function ShopMarker({ shop }: { shop: Shop }) {
+
+    if (shop.location_coordinates == null) return null
+    const coords = shop.location_coordinates.split(' ').map((x) => parseFloat(x));
+    const center: [number, number] = [coords[0], coords[1]];
+
+    return (
+        <LeafletMarker
+            position={center}
+            icon={MarkerIcon}
+        >
+            <Popup direction="bottom">
+                {shop.name}
+            </Popup>
+        </LeafletMarker>
+    )
+}
+
 function LocationMarker(props: {callback: NewPosCallback}) {
     const [position, setPosition] = useState<LatLng>(new LatLng(41.3885578, 2.1654211));
     const map = useMapEvents({
@@ -62,10 +80,10 @@ function LocationMarker(props: {callback: NewPosCallback}) {
     )
 }
 
-export default function Map(props: {callback?: NewPosCallback, shops?: Shop[]}) {
+export default function Map(props: {callback?: NewPosCallback, shops?: Shop[], center?: [number, number]}) {
     return (
         <MapContainer
-            center={[41.3885578, 2.1654211]}
+            center={props.center??[41.3885578, 2.1654211]}
             zoom={13}
             style={{ height: "400px", width: "100%" }}
             scrollWheelZoom={false}
@@ -75,6 +93,7 @@ export default function Map(props: {callback?: NewPosCallback, shops?: Shop[]}) 
                 url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
             />
             {props.callback ? <LocationMarker callback={props.callback} /> : '' }
+            {props.shops ? props.shops.map((shop) => <ShopMarker shop={shop} key={shop.id} />) : null }
         </MapContainer>
     )
 }
