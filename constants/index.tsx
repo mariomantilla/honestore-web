@@ -1,11 +1,11 @@
 import { createTheme, SxProps } from "@mui/material/styles";
 import { Open_Sans } from "@next/font/google";
 
-export const BASE_URL: string = 'https://honestore.app';
+export const BASE_URL: string = process.env.NEXT_PUBLIC_BASE_URL??'';
 
 const openSans = Open_Sans({ subsets: ['latin'] })
 
-export const imageKitAuthenticationEndpoint = 'http://localhost:3000/api/imageKitAuth';
+export const imageKitAuthenticationEndpoint = BASE_URL + '/api/imageKitAuth';
 
 export const theme = createTheme({
     breakpoints: {
