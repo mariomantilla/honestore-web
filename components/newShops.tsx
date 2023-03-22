@@ -2,7 +2,7 @@ import Box, { BoxProps } from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
 import { DataService } from "../lib/data";
-import Shop from "../models";
+import { Shop } from "../models";
 import ShopList from "./shopList";
 
 export default function NewShops({ children, ...props }: BoxProps) {

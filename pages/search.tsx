@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Shop from "../models";
+import { Shop } from "../models";
 import { DataService } from "../lib/data";
 import ShopList from "../components/shopList";
 import { useSearchContext } from "../context/search";

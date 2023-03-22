@@ -28,14 +28,17 @@
     "eslint-config-next": "13.0.6",
     "imagekit": "^4.1.2",
     "imagekitio-react": "^2.0.0",
+    "leaflet": "^1.9.3",
     "next": "13.0.6",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-leaflet": "^4.2.1",
     "sharp": "^0.31.3",
     "typescript": "4.9.3",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
+    "@types/leaflet": "^1.9.3",
     "@types/uuid": "^9.0.1",
     "supabase": "^1.41.1"
   }

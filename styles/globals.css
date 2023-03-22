@@ -62,6 +62,14 @@ footer {
   align-items: center;
 }
 
+.MuiFilledInput-root.Mui-error {
+  border: 1px solid #d32f2f;
+}
+
+.MuiFilledInput-root:not(.Mui-error) {
+  border: 1px solid transparent;
+}
+
 label .MuiAvatar-root {
   cursor: pointer;
 }
@@ -74,4 +82,19 @@ input[type=file] {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+
+.grabbable {
+  cursor: move; /* fallback if grab cursor is unsupported */
+  cursor: grab !important;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+}
+
+/* (Optional) Apply a "closed-hand" cursor during drag operation. */
+.grabbable:active {
+  cursor: grabbing !important;
+  cursor: -moz-grabbing;
+  cursor: -webkit-grabbing;
 }

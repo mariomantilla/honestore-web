@@ -84,6 +84,7 @@ export interface Database {
           location: unknown | null
           location_coordinates: string | null
           logo: string | null
+          logo_path: string | null
           name: string | null
           online: boolean
           owner: string | null
@@ -93,6 +94,7 @@ export interface Database {
           published: boolean
           updated_at: string
           web: string | null
+          whatsapp: string | null
         }
         Insert: {
           address?: string | null
@@ -105,6 +107,7 @@ export interface Database {
           location?: unknown | null
           location_coordinates?: string | null
           logo?: string | null
+          logo_path?: string | null
           name?: string | null
           online?: boolean
           owner?: string | null
@@ -114,6 +117,7 @@ export interface Database {
           published?: boolean
           updated_at?: string
           web?: string | null
+          whatsapp?: string | null
         }
         Update: {
           address?: string | null
@@ -126,6 +130,7 @@ export interface Database {
           location?: unknown | null
           location_coordinates?: string | null
           logo?: string | null
+          logo_path?: string | null
           name?: string | null
           online?: boolean
           owner?: string | null
@@ -135,6 +140,7 @@ export interface Database {
           published?: boolean
           updated_at?: string
           web?: string | null
+          whatsapp?: string | null
         }
       }
       tagged_shops: {
@@ -210,6 +216,7 @@ export interface Database {
               location: unknown | null
               location_coordinates: string | null
               logo: string | null
+              logo_path: string | null
               name: string | null
               online: boolean
               owner: string | null
@@ -219,6 +226,7 @@ export interface Database {
               published: boolean
               updated_at: string
               web: string | null
+              whatsapp: string | null
             }[]
           }
         | {
@@ -250,6 +258,7 @@ export interface Database {
           location: unknown | null
           location_coordinates: string | null
           logo: string | null
+          logo_path: string | null
           name: string | null
           online: boolean
           owner: string | null
@@ -259,6 +268,7 @@ export interface Database {
           published: boolean
           updated_at: string
           web: string | null
+          whatsapp: string | null
         }[]
       }
       search_shops: {
@@ -276,6 +286,7 @@ export interface Database {
           location: unknown | null
           location_coordinates: string | null
           logo: string | null
+          logo_path: string | null
           name: string | null
           online: boolean
           owner: string | null
@@ -285,6 +296,7 @@ export interface Database {
           published: boolean
           updated_at: string
           web: string | null
+          whatsapp: string | null
         }[]
       }
       unaccent: {

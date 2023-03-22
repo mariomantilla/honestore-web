@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { privatePageLayout } from "../helpers/privatePageLayout";
-import Shop from "../models";
+import { Shop } from "../models";
 import { NextPageWithLayout } from "./_app";
 import { DataService } from "../lib/data";
 import ShopList from "../components/shopList";

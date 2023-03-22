@@ -1,8 +1,8 @@
 import * as React from 'react';
 import Grid from '@mui/material/Unstable_Grid2';
 import ShopCard from './shopCard';
-import Shop from '../models';
-import { Typography } from '@mui/material';
+import { Shop } from '../models';
+import Typography from '@mui/material/Typography';
 import Image from 'next/image';
 import logoSad from '../public/logo-sad.png'
 

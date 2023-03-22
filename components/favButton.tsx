@@ -6,7 +6,7 @@ import { useUser } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/router";
 import { useUserContext } from "../context/userData";
 import { DataService } from "../lib/data";
-import Shop from "../models";
+import { Shop } from "../models";
 
 export const FavButton = ({ shop, size }: { shop: Shop, size?: 'medium' | 'large' | undefined}) => {
     
@@ -33,6 +33,7 @@ export const FavButton = ({ shop, size }: { shop: Shop, size?: 'medium' | 'large
             <IconButton
                 aria-label="añadir o quitar de favoritos"
                 onClick={() => { handleFavToggle() }}
+                sx={{height: "fit-content"}}
             >
                 {isFav ? (
                     <Favorite color="primary" fontSize={size || 'medium'} />

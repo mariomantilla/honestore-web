@@ -1,5 +1,5 @@
-import Shop from "../../models";
-import { DataService, getShop, getShopsIds } from "../../lib/data";
+import { Shop } from "../../models";
+import { getShop, getShopsIds } from "../../lib/data";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -25,7 +25,8 @@ import CardContent from "@mui/material/CardContent";
 import Link from "next/link";
 import Button from "@mui/material/Button";
 import { FavButton } from "../../components/favButton";
-import { flexbox } from "@mui/system";
+import { IKImage } from "imagekitio-react";
+import WhatsApp from "@mui/icons-material/WhatsApp";
 
 
 export async function getStaticPaths() {
@@ -57,8 +58,6 @@ export default function ShopPage({ shop }: { shop: Shop }) {
   if (router.isFallback) {
     return <Container sx={{ textAlign: "center" }}><CircularProgress /></Container>
   }
-
-  const logoUrl = DataService.getShopLogo(shop);
 
   let actions: React.ReactNode[] = [];
 
@@ -92,6 +91,13 @@ export default function ShopPage({ shop }: { shop: Shop }) {
     )
   }
 
+  if (shop.whatsapp) {
+    let url: string = `https://wa.me/${shop.whatsapp}`;
+    actions.push(
+      <ShopExternalAction title="Abrir WhatsApp" url={url} key="map"><WhatsApp color='primary' /></ShopExternalAction>
+    )
+  }
+
   const onlineChip = shop && shop.online ? (
     <Chip icon={<LocationOff />} label="Solo online" />
   ) : '';
@@ -106,11 +112,19 @@ export default function ShopPage({ shop }: { shop: Shop }) {
       </Head>
       <Grid container spacing={1.5} rowSpacing={3}>
         <Grid xs={12} md={8}>
-          <Box sx={{ display: "flex", gap: 3, flexDirection: {xs: "column", sm: "row"}, padding: 2 }}>
-            <Avatar alt={shop.name ?? ''} src={logoUrl} sx={{ height: 200, width: 200, border: "1px solid #ccc", alignSelf: {xs: "center", sm: "inherit"} }} />
+          <Box sx={{ display: "flex", gap: 3, flexDirection: { xs: "column", sm: "row" }, padding: 2 }}>
+            <Avatar alt={shop.name ?? ''} sx={{ height: 200, width: 200, border: "1px solid #ccc", alignSelf: { xs: "center", sm: "inherit" } }}>
+              <IKImage
+                path={`shops/${shop.logo_path}`}
+                transformation={[{
+                  height: "200px",
+                  width: "200px"
+                }]}
+              />
+            </Avatar>
             <Box sx={{ display: "flex", gap: 2, flexDirection: "column", flexGrow: 1 }}>
-              <Box sx={{display: "flex"}}>
-                <Typography variant="h1" component="h1" sx={{ marginBottom: 0, flexGrow: 1, textAlign: "left"}}>{shop.name}</Typography>
+              <Box sx={{ display: "flex" }}>
+                <Typography variant="h1" component="h1" sx={{ marginBottom: 0, flexGrow: 1, textAlign: "left" }}>{shop.name}</Typography>
                 <FavButton shop={shop} />
               </Box>
               {shop.address ? (<Typography variant="body2" color="text.secondary" fontWeight="bold">{shop.address}</Typography>) : ''}

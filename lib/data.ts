@@ -1,5 +1,5 @@
 import { User } from "@supabase/supabase-js";
-import Shop from "../models";
+import { InsertShop, Shop } from "../models";
 import { supabase } from "./supabaseClient";
 
 export async function getShop(id: number): Promise<Shop | null> {
@@ -49,6 +49,14 @@ export namespace DataService {
     
     export const getShopLogo = (shop: Shop) => {
         return `https://tbhtpkmrwtznqzsjlfmo.supabase.co/storage/v1/object/public/shops-content/${shop.logo}.jpg`
+    }
+
+    export const addShop = (data: InsertShop) => {
+        return supabase
+        .from('shops')
+        .insert([
+            data,
+        ]).select();
     }
 
 }

@@ -1,19 +1,13 @@
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import Link from "next/link";
-import Shop from "../models";
+import { Shop } from "../models";
 
-import { DataService } from "../lib/data";
 import Skeleton from "@mui/material/Skeleton";
-import CardActions from "@mui/material/CardActions";
-import Button from "@mui/material/Button";
 import { FavButton } from "./favButton";
-import CardHeader from "@mui/material/CardHeader";
 import Avatar from "@mui/material/Avatar";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
+import { IKImage } from "imagekitio-react";
 
 const clampStyles = (lines: number, lineHeight: number = 1.43) => {
     return {
@@ -37,9 +31,16 @@ const ShopCard = ({ shop }: { shop: Shop | null }) => {
                         <Link href={'/shops/' + shop.id}>
                             <Avatar
                                 sx={{ width: "120px", height: "120px" }}
-                                src={DataService.getShopLogo(shop)}
                                 alt={shop.name ?? ''}
-                            />
+                            >
+                                <IKImage
+                                    path={`shops/${shop.logo_path}`}
+                                    transformation={[{
+                                        height: "120px",
+                                        width: "120px"
+                                    }]}
+                                />
+                            </Avatar>
                         </Link>
                     ) : (<Skeleton variant='circular' height={120} width={120} />)}
                 </Box>
