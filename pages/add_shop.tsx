@@ -26,33 +26,10 @@ import Link from "next/link";
 import { Typography } from "@mui/material";
 import { DataService } from "../lib/data";
 import { useRouter } from "next/router";
+import { ValidatedControlledInput } from "../components/validatedControlledInput";
+import { InsertShop } from "../models";
+import { useUserContext } from "../context/userData";
 
-const ValidatedControlledInput = (props: { label: string, pattern: RegExp, setValue: (val: string | null) => void, helper: string }) => {
-
-    const [value, setValue] = useState('');
-    const [error, setError] = useState(false);
-
-    return (
-        <TextField
-            variant="filled"
-            helperText={props.helper}
-            label={props.label}
-            fullWidth
-            error={error}
-            value={value}
-            onChange={(event) => {
-                setValue(event.target.value);
-                if (event.target.value.match(props.pattern)) {
-                    setError(false)
-                    props.setValue(event.target.value);
-                } else {
-                    props.setValue(null);
-                    setError(true)
-                }
-            }}
-        />
-    );
-}
 
 const MapWithNoSSR = dynamic(() => import('../components/map'), {
     ssr: false,
@@ -62,6 +39,7 @@ const MapWithNoSSR = dynamic(() => import('../components/map'), {
 export default function AddShopPage() {
 
     const { sendMessage } = useMessagesContext();
+    const { profile } = useUserContext();
 
     const router = useRouter();
 
@@ -137,7 +115,7 @@ export default function AddShopPage() {
     const socialInvalid = social_info.map((info) => info.value).some((x) => x === null);
 
     const handleSubmission = async () => {
-        const { data, error } = await DataService.addShop({
+        let newData: InsertShop = {
             name: shopName,
             description: shopDescription,
             location_coordinates: `${coordinates[0]} ${coordinates[1]}`,
@@ -150,7 +128,9 @@ export default function AddShopPage() {
             whatsapp: whatsapp,
             published: true,
             logo_path: logoFileName
-        });
+        };
+        if (profile?.role == 'admin') newData.owner = null;
+        const { data, error } = await DataService.addShop(newData);
         if (error) {
             sendMessage("error", error.message);
         } else {
@@ -172,7 +152,7 @@ export default function AddShopPage() {
                     ) : (
                         <>
                         <Typography sx={{maxWidth: "600px", textAlign: "center"}}>
-                            Antes que nada, necesitamos que inices sesión. Si aun no tienes cuenta crear una es muy sencillo, o puedes continua con tu cuenta de Google.
+                            Antes que nada, necesitamos que inices sesión. Si aun no tienes cuenta, crear una es muy sencillo con tu email y una contraseña. También puedes continuar con tu cuenta de Google.
                         </Typography>
                         <LoginWidget />
                         </>
@@ -185,7 +165,7 @@ export default function AddShopPage() {
                 <Center>
                     <label>
                         <Tooltip title={logoFileName ? 'Haz click para cambiarlo' : 'Haz click para subir tu logo'}>
-                            <Avatar sx={{ width: 256, height: 256 }}>
+                            <Avatar sx={{ width: 256, height: 256 }} className={logoFileName ? 'editLogo' : ''}>
                                 {uploading ? (<CircularProgress />) : logoFileName ? (
                                     <IKImage
                                         path={`shops/${logoFileName}`}
@@ -239,7 +219,7 @@ export default function AddShopPage() {
                     <Alert severity="info" sx={{ maxWidth: "700px" }}>
                         <b>Cómo rellenar esta sección:</b><br />
                         - Primero, dinos de que tipo de tienda se trata. ¿Vendes sólo online o dispones de una tienda física donde atender clientes?<br />
-                        - Segundo, arrastra el marcador en el mapa hasta la ubicación donde se encuentra tu tienda.
+                        - Segundo, arrastra el marcador en el mapa hasta la ubicación donde se encuentra tu tienda. También puedes hacer click directamente en la posición.
                         {' '}Si no tienes una tienda física, selecciona el centro de tu área de operaciones. De esta manera los usuarios podrán encontrarte
                         {' '}por proximidad incluso si no dispones de un espacio.
                     </Alert>

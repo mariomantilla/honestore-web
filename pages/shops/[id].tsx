@@ -1,5 +1,5 @@
 import { Shop } from "../../models";
-import { getShop, getShopsIds } from "../../lib/data";
+import { DataService, getShop, getShopsIds } from "../../lib/data";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -25,6 +25,10 @@ import { FavButton } from "../../components/favButton";
 import { IKImage } from "imagekitio-react";
 import WhatsApp from "@mui/icons-material/WhatsApp";
 import dynamic from "next/dynamic";
+import Alert from "@mui/material/Alert";
+import Center from "../../components/center";
+import { useUserContext } from "../../context/userData";
+import { useUser } from "@supabase/auth-helpers-react";
 
 
 export async function getStaticPaths() {
@@ -51,12 +55,36 @@ export async function getStaticProps({ params }: { params: { id: number } }) {
 }
 
 const MapWithNoSSR = dynamic(() => import('../../components/map'), {
-    ssr: false,
+	ssr: false,
 });
+
+const OwnerEditSection = ({ shop }: { shop: Shop }) => {
+
+	const user = useUser();
+	const { profile } = useUserContext();
+
+	let claimAlert = !shop.owner ? (
+		<Alert severity="info" sx={{ maxWidth: "700px" }}>
+			La información sobre esta tienda ha sido recopilada de fuentes públicas y podría ser errónea.
+			{' '}<b>¿Es tu tienda?</b> <Link href={`/shops/${shop.id}/claim`}>Reclámala</Link> y podrás editar y ampliar la información.
+		</Alert>
+	) : null;
+
+	let editButton = ((shop.owner && shop.owner == user?.id) || profile?.role == 'admin') ? (
+		<Button variant="contained" href={`/shops/${shop.id}/edit`}>Gestionar tienda</Button>
+	) : null ;
+
+	return <Center sx={{gap:2}}>
+		{claimAlert}
+		{editButton}
+	</Center>;
+
+}
 
 export default function ShopPage({ shop }: { shop: Shop }) {
 
-	const router = useRouter()
+	const router = useRouter();
+
 	if (router.isFallback) {
 		return <Container sx={{ textAlign: "center" }}><CircularProgress /></Container>
 	}
@@ -104,9 +132,6 @@ export default function ShopPage({ shop }: { shop: Shop }) {
 		<Chip icon={<LocationOff />} label="Solo online" />
 	) : '';
 
-	const mapCentercoordsArray = shop.location_coordinates ? shop.location_coordinates.split(' ').map((x) => parseFloat(x)) : undefined;
-	const mapCentercoords: [number, number] | undefined = mapCentercoordsArray ? [mapCentercoordsArray[0], mapCentercoordsArray[1]] : undefined;
-
 	return (
 		<>
 			<Head>
@@ -140,11 +165,12 @@ export default function ShopPage({ shop }: { shop: Shop }) {
 						<Typography sx={{ whiteSpace: "pre-wrap" }}>{shop.description}</Typography>
 					</Box>
 				</Box>
+				<OwnerEditSection shop={shop} />
 				<Divider />
-				<MapWithNoSSR shops={[shop]} center={mapCentercoords} />
+				<MapWithNoSSR shops={[shop]} center={DataService.shopCoordinates(shop)} locate={false} />
 				<Divider />
-				<Box sx={{ display: "flex", alignItems: "center", justifyContent: "evenly" }}>
-					<Box sx={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+				<Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-around", flexWrap: "wrap" }}>
+					<Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
 						<Image
 							src={banner}
 							width={300}
@@ -153,7 +179,7 @@ export default function ShopPage({ shop }: { shop: Shop }) {
 						/>
 						<Typography sx={{ padding: "0.5rem 0.8rem", fontWeight: "bold", textAlign: "center" }}>La comunidad de activistas del consumo ético</Typography>
 					</Box>
-					<Button href="/about" LinkComponent={Link} variant="contained">
+					<Button href="/about" LinkComponent={Link} variant="contained" sx={{ textAlign: "center" }}>
 						Descubrir más sobre Honestore
 					</Button>
 				</Box>

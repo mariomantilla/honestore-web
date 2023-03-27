@@ -1,8 +1,10 @@
 import Box from '@mui/material/Box'
-import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import { Auth } from '@supabase/auth-ui-react'
 import { ThemeSupa, ViewType } from '@supabase/auth-ui-shared'
-import { theme } from '../constants'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
+import { BASE_URL, theme } from '../constants'
+import { supabase } from '../lib/supabaseClient'
 import * as es from './login_es.json'
 
 ThemeSupa.honestore = {
@@ -19,12 +21,16 @@ ThemeSupa.honestore = {
 };
 
 export default function LoginWidget({ view }: { view?: ViewType }) {
-    const supabase = useSupabaseClient()
+    
+    const router = useRouter();
+    const [origin, setOrigin] = useState<string | undefined>(undefined);
 
-    const origin = typeof window !== "undefined" ? window.location.origin+window.location.pathname+window.location.search : undefined;
+    useEffect(() => {
+        setOrigin(BASE_URL + router.asPath);
+    }, [router.asPath]);
 
     return (
-        <Box sx={{ padding: "3rem", maxWidth: "400px" }}>
+        <Box sx={{ padding: "1rem", maxWidth: "400px" }}>
             <Auth
                 supabaseClient={supabase}
                 appearance={{ theme: ThemeSupa }}

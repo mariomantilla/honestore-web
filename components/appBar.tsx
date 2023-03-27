@@ -160,7 +160,7 @@ function ResponsiveAppBar() {
 		aria-labelledby="modal-modal-title"
 		aria-describedby="modal-modal-description"
 	>
-		<Paper elevation={3}>
+		<Paper elevation={3} sx={{padding: 2}}>
 			<LoginWidget />
 		</Paper>
 	</Modal>);

@@ -1,5 +1,5 @@
 import { User } from "@supabase/supabase-js";
-import { InsertShop, Shop } from "../models";
+import { InsertShop, Shop, UpdateShop } from "../models";
 import { supabase } from "./supabaseClient";
 
 export async function getShop(id: number): Promise<Shop | null> {
@@ -47,16 +47,26 @@ export namespace DataService {
         return supabase.from('favourites').delete().eq('shop', shop.id).eq('user', user.id);
     }
     
-    export const getShopLogo = (shop: Shop) => {
-        return `https://tbhtpkmrwtznqzsjlfmo.supabase.co/storage/v1/object/public/shops-content/${shop.logo}.jpg`
+    export const getProfile = (user: User) => {
+        return supabase.from('profiles').select('*').eq('id', user.id);
     }
 
     export const addShop = (data: InsertShop) => {
-        return supabase
-        .from('shops')
-        .insert([
-            data,
-        ]).select();
+        return supabase.from('shops').insert([data]).select();
+    }
+
+    export const editShop = (id: number, data: UpdateShop) => {
+        return supabase.from('shops').update(data).eq('id', id);
+    }
+
+    export const claimShop = (shop: Shop) => {
+        return supabase.from('shop_claims').insert({'shop': shop.id});
+    }
+
+    export const shopCoordinates = (shop: Shop) => {
+        const mapCentercoordsArray = shop.location_coordinates ? shop.location_coordinates.split(' ').map((x) => parseFloat(x)) : undefined;
+	    const mapCentercoords: [number, number] | undefined = mapCentercoordsArray ? [mapCentercoordsArray[0], mapCentercoordsArray[1]] : undefined;
+        return mapCentercoords;
     }
 
 }

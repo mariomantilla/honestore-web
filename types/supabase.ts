@@ -62,14 +62,40 @@ export interface Database {
         Row: {
           id: string
           name: string | null
+          role: string | null
         }
         Insert: {
           id: string
           name?: string | null
+          role?: string | null
         }
         Update: {
           id?: string
           name?: string | null
+          role?: string | null
+        }
+      }
+      shop_claims: {
+        Row: {
+          created_at: string | null
+          id: number
+          shop: number
+          updated_at: string
+          user: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: number
+          shop: number
+          updated_at?: string
+          user?: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: number
+          shop?: number
+          updated_at?: string
+          user?: string
         }
       }
       shops: {

@@ -57,58 +57,6 @@ const ShopCard = ({ shop }: { shop: Shop | null }) => {
                     </Typography>
                 </Box>
             </Box>
-            {/* {shop ? (
-                <Link href={'/shops/' + shop.id}>
-                    <CardMedia
-                        component="img"
-                        image={DataService.getShopLogo(shop)}
-                        alt={shop.name ?? ''}
-                        sx={{ height: { xs: "auto", sm: "256px" } }}
-                    />
-                </Link>
-            ) : (
-                <Skeleton variant='rectangular' height={256} width={"100%"} />
-            )} */}
-            {/* <CardHeader
-                avatar={shop ? (
-                    <Avatar
-                        sx={{ width: "80px", height: "80px" }}
-                        aria-label="información de tienda"
-                        src={DataService.getShopLogo(shop)}
-                        alt={shop.name ?? ''}
-                    />
-                ) : (
-                    <Skeleton variant='circular' height={80} width={80} />
-                )
-                }
-                action={shop ? (
-                    <FavButton shop={shop} />
-                ) : (
-                    <Skeleton width="20px" />
-                )}
-                title={shop ? (
-                    shop.name ?? ''
-                ) : (<Skeleton width="60%" />)}
-            // subheader="September 14, 2016"
-            />
-            <CardContent>
-                {/* <Typography component="div" sx={{ textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap" }}>
-                    {shop ? (
-                        <Link href={'/shops/' + shop.id}>{shop.name}</Link>
-                    ) : (
-                        <Skeleton width="60%" />
-                    )}
-                </Typography> */}
-            {/* <Typography variant="body2" color="text.secondary" sx={clampStyles(3)}>
-                    {shop ? shop.description : (
-                        <>
-                            <Skeleton width="90%" />
-                            <Skeleton width="100%" />
-                            <Skeleton width="85%" />
-                        </>
-                    )}
-                </Typography>
-            </CardContent> */}
         </Paper>
     );
 }
