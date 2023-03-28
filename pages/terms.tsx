@@ -5,24 +5,25 @@ import PolicyPage from "../components/policyPage";
 
 export default function TermsPage() {
     return (
-        <PolicyPage title="Términos y condiciones" desc="Esta página describe y regula el uso de la plataforma y la web y las condiciones en las que se ofrece el servicio. Por favor, léela detenidamente antes usar la app o el sitio web.">
+        <PolicyPage title="Términos y condiciones" lastEdit="28/03/2023" desc="Esta página describe y regula el uso de la plataforma y la web y las condiciones en las que se ofrece el servicio. Por favor, léela detenidamente antes usar la app o el sitio web.">
             <Policy title="Ámbito" id="scope">
                 <Typography>
-                    Honestore es una plataforma de búsqueda de tiendas y negocios (vendedores en general)
-                    por parte de los usuarios a través de una applicación movil.Para ello, se ofrecen
-                    ciertas funcionalidades tanto para los vendedores (añadir tiendas, modificar información,
-                    eliminar tiendas...), como para usuarios (búsqueda por palabras, por ubicación, tiendas favoritas...).
+                    Honestore es una plataforma de búsqueda de tiendas, negocios, asociaciones, ONGs, etc (tiendas en general)
+                    por parte de los usuarios a través de una applicación movil y una web. Para ello, se ofrecen
+                    ciertas funcionalidades tanto para los usuarios responsables de las tiendas (añadir tiendas, modificar información,
+                    eliminar tiendas...), como para resto de usuarios (búsqueda por palabras, por ubicación, tiendas favoritas...).
                 </Typography>
                 <Typography>
-                    Estos Términos y Condiciones son un contrato entre cualquier usuario (incluídos vendedores)
+                    Estos Términos y Condiciones son un contrato entre cualquier usuario (incluídos los responsables de las tiendas)
                     y la plataforma y regulan las condiciones en las que se ofrecen cada uno de los servicios.
                 </Typography>
             </Policy>
-            <Policy title="Datos de los vendedores" id="shopsData">
+            <Policy title="Datos de las tiendas" id="shopsData">
                 <Typography>
-                    La información sobre los vendedores dentro de la plataforma es suministrada por los representantes
-                    de los mismos. Para aportar dicha información deberás tener autorización expresa de la empresa
-                    o personas responsables. Dicha información deberá:
+                    La información sobre las tiendas dentro de la plataforma es suministrada o bien por los representantes
+                    de las mismos o por fuentes publicas (como perfiles en redes sociales). En los casos en los que la información se obtuvo
+                    de fuentes públicas, se indicará, ya que podría ser inexacta o errónea. Para aportar información sobre una tienda
+                    deberás tener autorización expresa de la empresa o personas responsables. Además, dicha información deberá:
                 </Typography>
                 <ul>
                     <li>Ser completa, veráz, exacta y estar actualizada</li>
@@ -46,7 +47,7 @@ export default function TermsPage() {
             </Policy>
             <Policy title="Limitaciones de uso" id="limits">
                 <Typography>
-                    El acceso a la información de la plataforma sólo puede realizarse a través de la app. Está
+                    El acceso a la información de la plataforma sólo puede realizarse a través de la app o web. Está
                     prohibido acceder a Honestore de cualquier manera automática y reiterada mediante robots,
                     scripts o arañas que de forma automática realicen múltiples peticiones a los servidores de
                     la plataforma. Está prohibido almacenar la información contenida en Honestore, sin autorización
@@ -58,8 +59,8 @@ export default function TermsPage() {
             </Policy>
             <Policy title="Limitación de Responsabilidad" id="responsibility">
                 <Typography>
-                    La plataforma no tiene control de la información publicada sobre vendedores,
-                    tiendas y negocios, sus datos de contacto, redes sociales, web, logos, fotos,
+                    La plataforma no tiene control de la información publicada por los usuarios sobre las tiendas,
+                    sus datos de contacto, redes sociales, web, logos, fotos,
                     descripciones, o cualquier otro. Por lo tanto la plataforma no se hace responsable
                     de dichos contenidos ni del uso que pueda realizar de ellos, asumiendo el usuario
                     cualquier riesgo derivado del uso de la información.
