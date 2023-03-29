@@ -10,11 +10,29 @@ import Link from "next/link";
 import Avatar from "@mui/material/Avatar";
 import { IKImage } from "imagekitio-react";
 import { DataService } from "../lib/data";
+import LocationOff from "@mui/icons-material/LocationOff";
+import Chip from "@mui/material/Chip";
 
 
 const MarkerIcon = new DivIcon({
     html: `<svg viewBox="0 0 24 24" fill="${theme.palette.primary.main}"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>`,
     className: "grabbable",
+    iconSize: [36, 36],
+    iconAnchor: [18, 36],
+    popupAnchor: [0, -36]
+});
+
+const ShopIcon = new DivIcon({
+    html: `<svg viewBox="0 0 24 24" fill="${theme.palette.primary.main}"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>`,
+    className: "",
+    iconSize: [36, 36],
+    iconAnchor: [18, 36],
+    popupAnchor: [0, -36]
+});
+
+const OnlineIcon = new DivIcon({
+    html: `<div></div>`,
+    className: "online",
     iconSize: [36, 36],
     iconAnchor: [18, 36],
     popupAnchor: [0, -36]
@@ -30,7 +48,7 @@ function ShopMarker({ shop }: { shop: Shop }) {
     return (
         <LeafletMarker
             position={center}
-            icon={MarkerIcon}
+            icon={shop.online ? OnlineIcon : ShopIcon}
         >
             <Popup>
                 <Box sx={{ display: "flex", gap: 1 }}>
@@ -51,6 +69,9 @@ function ShopMarker({ shop }: { shop: Shop }) {
                     <Box>
                     <Typography variant="h4" color="primary"><Link href={'/shops/' + shop.id}>{shop.name}</Link></Typography>
                     <Typography variant="body2" color="text.secondary" fontWeight="bold" sx={{margin: "0 !important"}}>{shop.address}</Typography>
+                    {shop.online ? (
+                        <Chip icon={<LocationOff />} label="Solo online" />
+                    ) : null }
                     </Box>
                 </Box>
             </Popup>

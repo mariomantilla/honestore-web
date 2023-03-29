@@ -104,6 +104,12 @@ input[type=file] {
   filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .3));
 }
 
+.leaflet-marker-icon.online div  {
+  width: 36px;
+  height: 36px;
+  background: radial-gradient(closest-side, #FB7168, transparent);
+}
+
 .leaflet-container a {
   color: unset !important;
 }

@@ -167,8 +167,10 @@ export default function ShopPage({ shop }: { shop: Shop }) {
 				</Box>
 				<OwnerEditSection shop={shop} />
 				<Divider />
-				<MapWithNoSSR shops={[shop]} center={DataService.shopCoordinates(shop)} locate={false} />
-				<Divider />
+				{shop.online ? null : (<>
+					<MapWithNoSSR shops={[shop]} center={DataService.shopCoordinates(shop)} locate={false} />
+					<Divider />
+				</>) }
 				<Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-around", flexWrap: "wrap" }}>
 					<Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
 						<Image
