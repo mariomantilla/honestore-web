@@ -65,7 +65,9 @@ const OwnerEditSection = ({ shop }: { shop: Shop }) => {
 
 	let claimAlert = !shop.owner ? (
 		<Alert severity="info" sx={{ maxWidth: "700px" }}>
-			La información sobre esta tienda ha sido recopilada de fuentes públicas y podría ser errónea.
+			La información sobre esta tienda ha sido recopilada de fuentes públicas y podría ser errónea. El logo puede tener derechos de
+			autor y/o licencias asociadas y solo se indica como distintivo de la marca sin que implique en ningun tipo de vinculación 
+			con la plataforma.
 			{' '}<b>¿Es tu tienda?</b> <Link href={`/shops/${shop.id}/claim`}>Reclámala</Link> y podrás editar y ampliar la información.
 		</Alert>
 	) : null;
@@ -146,8 +148,8 @@ export default function ShopPage({ shop }: { shop: Shop }) {
 						<IKImage
 							path={`shops/${shop.logo_path}`}
 							transformation={[{
-								height: "200px",
-								width: "200px"
+								height: "200",
+								width: "200"
 							}]}
 						/>
 					</Avatar>

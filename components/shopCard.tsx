@@ -36,15 +36,15 @@ const ShopCard = ({ shop }: { shop: Shop | null }) => {
                                 <IKImage
                                     path={`shops/${shop.logo_path}`}
                                     transformation={[{
-                                        height: "120px",
-                                        width: "120px"
+                                        height: "120",
+                                        width: "120"
                                     }]}
                                 />
                             </Avatar>
                         </Link>
                     ) : (<Skeleton variant='circular' height={120} width={120} />)}
                 </Box>
-                <Box sx={{ display: "flex", flexDirection: "column", rowGap: 1.2, flexGrow: 1, minWidth: 0 }}>
+                <Box sx={{ display: "flex", flexDirection: "column", rowGap: 0, flexGrow: 1, minWidth: 0 }}>
                     <Box sx={{ display: "flex" }}>
                         {shop ? (
                             <Typography variant="h4" className="singleLineEllipsis" sx={{ alignSelf: "center", flexGrow: 1 }}><Link href={'/shops/' + shop.id}>{shop.name}</Link></Typography>
