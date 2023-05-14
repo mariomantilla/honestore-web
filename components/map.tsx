@@ -1,7 +1,7 @@
 import { MapContainer, Marker as LeafletMarker, Popup, TileLayer, Tooltip, useMapEvents } from "react-leaflet";
 import 'leaflet/dist/leaflet.css';
 import { useEffect, useMemo, useRef, useState } from "react";
-import { DivIcon, LatLng, Marker } from "leaflet";
+import { DivIcon, LatLng, LatLngTuple, Marker } from "leaflet";
 import { theme } from "../constants";
 import { Shop } from "../models";
 import Typography from "@mui/material/Typography";
@@ -37,6 +37,8 @@ const OnlineIcon = new DivIcon({
     iconAnchor: [18, 36],
     popupAnchor: [0, -36]
 });
+
+const DefaultCenter: [number, number] = [41.3885578, 2.1654211];
 
 type NewPosCallback = (pos: LatLng) => void;
 
@@ -79,8 +81,8 @@ function ShopMarker({ shop }: { shop: Shop }) {
     )
 }
 
-function LocationMarker({ callback }: { callback: NewPosCallback }) {
-    const [position, setPosition] = useState<LatLng>(new LatLng(41.3885578, 2.1654211));
+function LocationMarker({ callback, center }: { callback: NewPosCallback, center: LatLngTuple }) {
+    const [position, setPosition] = useState<LatLng>(new LatLng(center[0], center[1]));
 
     useMapEvents({
         click(e) {
@@ -131,9 +133,10 @@ const Locate = () => {
 }
 
 export default function Map(props: { callback?: NewPosCallback, shops?: Shop[], center?: [number, number], locate?: boolean}) {
+    let center = props.center ?? DefaultCenter;
     return (
         <MapContainer
-            center={props.center ?? [41.3885578, 2.1654211]}
+            center={center}
             zoom={13}
             style={{ height: "400px", width: "100%" }}
             scrollWheelZoom={false}
@@ -143,7 +146,7 @@ export default function Map(props: { callback?: NewPosCallback, shops?: Shop[], 
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
             />
-            {props.callback ? <LocationMarker callback={props.callback} /> : ''}
+            {props.callback ? <LocationMarker callback={props.callback} center={center} /> : ''}
             {props.shops ? props.shops.map((shop) => <ShopMarker shop={shop} key={shop.id} />) : null}
         </MapContainer>
     )
