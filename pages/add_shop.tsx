@@ -269,7 +269,7 @@ export default function AddShopPage() {
                     <Alert severity="warning" sx={{ maxWidth: "700px", textAlign: "justify" }}>
                         <b>Antes de finalizar:</b>
                         {' '}Soy el propietario de la tienda y/o tengo autorización para publicar esta información.
-                        {' '}Al enviar este formulario entiendo que me soy el único responsable de la información que contiene.
+                        {' '}Al enviar este formulario entiendo que soy el único responsable de la información que contiene.
                         {' '}He leído y acepto los
                         {' '}<Link href="/terms" target="_blank" rel="noreferrer">Términos y Condiciones</Link> y la
                         {' '}<Link href="/privacy" target="_blank" rel="noreferrer">Política de Privacidad</Link>.
