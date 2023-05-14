@@ -146,6 +146,8 @@ export default function ShopPage({ shop }: { shop: Shop }) {
 				<Box sx={{ display: "flex", gap: 3, flexDirection: { xs: "column", sm: "row" }, padding: 2 }}>
 					<Avatar alt={shop.name ?? ''} sx={{ height: 200, width: 200, border: "1px solid #ccc", alignSelf: { xs: "center", sm: "inherit" } }}>
 						<IKImage
+							width={"200"}
+							height={"200"}
 							path={`shops/${shop.logo_path}`}
 							transformation={[{
 								height: "200",

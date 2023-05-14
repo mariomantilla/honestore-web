@@ -60,10 +60,12 @@ function ShopMarker({ shop }: { shop: Shop }) {
                             alt={shop.name ?? ''}
                         >
                             <IKImage
+                                width={"45"}
+                                height={"45"}
                                 path={`shops/${shop.logo_path}`}
                                 transformation={[{
-                                    height: "45px",
-                                    width: "45px"
+                                    height: "45",
+                                    width: "45"
                                 }]}
                             />
                         </Avatar>

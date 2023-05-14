@@ -58,10 +58,12 @@ export default function ClaimShopPage({ shop }: { shop: Shop }) {
             <Center>
                 <Avatar alt={shop.name ?? ''} sx={{ height: 200, width: 200, border: "1px solid #ccc", alignSelf: { xs: "center", sm: "inherit" }, marginBlock: 2 }}>
                     <IKImage
+                        width={"200"}
+                        height={"200"}
                         path={`shops/${shop.logo_path}`}
                         transformation={[{
-                            height: "200px",
-                            width: "200px"
+                            height: "200",
+                            width: "200"
                         }]}
                     />
                 </Avatar>

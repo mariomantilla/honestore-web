@@ -34,6 +34,8 @@ const ShopCard = ({ shop }: { shop: Shop | null }) => {
                                 alt={shop.name ?? ''}
                             >
                                 <IKImage
+                                    width={"120"}
+                                    height={"120"}
                                     path={`shops/${shop.logo_path}`}
                                     transformation={[{
                                         height: "120",

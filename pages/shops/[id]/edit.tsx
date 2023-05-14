@@ -27,7 +27,7 @@ import Tab from "@mui/material/Tab";
 import TitlePage from "../../../components/titlePage";
 import { Shop, UpdateShop } from "../../../models";
 import { useUserContext } from "../../../context/userData";
-import { socialInfoData } from "../socialInfo";
+import { socialInfoData } from "../../../constants/socialInfo";
 
 
 export async function getStaticPaths() {
@@ -178,6 +178,8 @@ const EditShopPage = ({ shop }: { shop: Shop }) => {
                                 <Avatar sx={{ width: 256, height: 256 }} className="editLogo">
                                     {uploading ? (<CircularProgress />) : logoFileName ? (
                                         <IKImage
+                                            width={"256"}
+                                            height={"256"}
                                             path={`shops/${logoFileName}`}
                                             transformation={[{
                                                 height: "256",

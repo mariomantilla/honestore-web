@@ -29,7 +29,7 @@ import { useRouter } from "next/router";
 import { ValidatedControlledInput } from "../components/validatedControlledInput";
 import { InsertShop } from "../models";
 import { useUserContext } from "../context/userData";
-import { socialInfoData } from "./shops/socialInfo";
+import { socialInfoData } from "../constants/socialInfo";
 
 
 const MapWithNoSSR = dynamic(() => import('../components/map'), {
@@ -169,6 +169,8 @@ export default function AddShopPage() {
                             <Avatar sx={{ width: 256, height: 256 }} className={logoFileName ? 'editLogo' : ''}>
                                 {uploading ? (<CircularProgress />) : logoFileName ? (
                                     <IKImage
+                                        width={"256"}
+                                        height={"256"}
                                         path={`shops/${logoFileName}`}
                                         transformation={[{
                                             height: "256",
