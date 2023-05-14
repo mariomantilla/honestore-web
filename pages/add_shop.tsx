@@ -170,8 +170,8 @@ export default function AddShopPage() {
                                     <IKImage
                                         path={`shops/${logoFileName}`}
                                         transformation={[{
-                                            height: "256px",
-                                            width: "256px"
+                                            height: "256",
+                                            width: "256"
                                         }]}
                                     />) : (
                                     <>Subir logo*</>
