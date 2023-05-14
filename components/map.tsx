@@ -86,7 +86,8 @@ function LocationMarker({ callback, center }: { callback: NewPosCallback, center
 
     useMapEvents({
         click(e) {
-            setPosition(e.latlng)
+            setPosition(e.latlng);
+            callback(e.latlng);
         },
     })
 
