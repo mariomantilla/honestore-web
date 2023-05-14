@@ -88,7 +88,7 @@ export default function AddShopPage() {
             label: "Web",
             value: web,
             setFunction: setWeb,
-            pattern: /^((https?):\/\/)?(www.)?[a-z0-9]+\.[a-z]+(\/[a-zA-Z0-9#]+\/?)*$/,
+            pattern: /^((https?):\/\/)?(www.)?[a-z0-9]+\.[a-z]+(\/[a-zA-Z0-9#]*\/?)*$/,
             helper: ""
         },
         {
@@ -107,7 +107,7 @@ export default function AddShopPage() {
             label: "Whatsapp",
             value: whatsapp,
             setFunction: setWhatsapp,
-            pattern: /^\+[0-9]{4,20}$/,
+            pattern: /^(\+[0-9]{4,20})?$/,
             helper: "Incluye la extensión para que funcione correctamente"
         }
     ]
