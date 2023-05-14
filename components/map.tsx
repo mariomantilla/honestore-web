@@ -65,7 +65,8 @@ function ShopMarker({ shop }: { shop: Shop }) {
                                 path={`shops/${shop.logo_path}`}
                                 transformation={[{
                                     height: "45",
-                                    width: "45"
+                                    width: "45",
+                                    dpr: "2"
                                 }]}
                             />
                         </Avatar>

@@ -174,7 +174,8 @@ export default function AddShopPage() {
                                         path={`shops/${logoFileName}`}
                                         transformation={[{
                                             height: "256",
-                                            width: "256"
+                                            width: "256",
+                                            dpr: "2"
                                         }]}
                                     />) : (
                                     <>Subir logo*</>

@@ -39,7 +39,8 @@ const ShopCard = ({ shop }: { shop: Shop | null }) => {
                                     path={`shops/${shop.logo_path}`}
                                     transformation={[{
                                         height: "120",
-                                        width: "120"
+                                        width: "120",
+                                        dpr: "2"
                                     }]}
                                 />
                             </Avatar>

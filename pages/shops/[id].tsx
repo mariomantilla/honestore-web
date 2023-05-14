@@ -126,7 +126,7 @@ export default function ShopPage({ shop }: { shop: Shop }) {
 	if (shop.whatsapp) {
 		let url: string = `https://wa.me/${shop.whatsapp}`;
 		actions.push(
-			<ShopExternalAction title="Abrir WhatsApp" url={url} key="map"><WhatsApp color='primary' /></ShopExternalAction>
+			<ShopExternalAction title="Abrir WhatsApp" url={url} key="whatsapp"><WhatsApp color='primary' /></ShopExternalAction>
 		)
 	}
 
@@ -151,7 +151,8 @@ export default function ShopPage({ shop }: { shop: Shop }) {
 							path={`shops/${shop.logo_path}`}
 							transformation={[{
 								height: "200",
-								width: "200"
+								width: "200",
+								dpr: "2"
 							}]}
 						/>
 					</Avatar>

@@ -63,7 +63,8 @@ export default function ClaimShopPage({ shop }: { shop: Shop }) {
                         path={`shops/${shop.logo_path}`}
                         transformation={[{
                             height: "200",
-                            width: "200"
+                            width: "200",
+                            dpr: "2"
                         }]}
                     />
                 </Avatar>
