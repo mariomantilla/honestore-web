@@ -16,7 +16,7 @@ export const ValidatedControlledInput = (props: { label: string, pattern: RegExp
             value={value}
             onChange={(event) => {
                 setValue(event.target.value);
-                if (event.target.value.match(props.pattern)) {
+                if (event.target.value === '' || event.target.value.match(props.pattern)) {
                     setError(false)
                     props.setValue(event.target.value);
                 } else {
