@@ -35,6 +35,7 @@ function Footer() {
             <Link href="/privacy">Política de privacidad</Link>
             <Link href="/feedback">Envíar comentarios</Link>
             <Link href="/add_shop">Incluye tu tienda</Link>
+            <Link href="/jointheteam">Únete al equipo</Link>
             <Link href="/files/DossierHonestore.pdf">Dossier de prensa</Link>
           </Box>
         </Box>
