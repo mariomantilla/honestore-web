@@ -1,6 +1,6 @@
 import { MapContainer, Marker as LeafletMarker, Popup, TileLayer, Tooltip, useMapEvents } from "react-leaflet";
 import 'leaflet/dist/leaflet.css';
-import { useEffect, useMemo, useRef, useState } from "react";
+import { RefObject, useEffect, useMemo, useRef, useState } from "react";
 import { DivIcon, LatLng, LatLngTuple, Marker } from "leaflet";
 import { theme } from "../constants";
 import { Shop } from "../models";
@@ -84,7 +84,7 @@ function ShopMarker({ shop }: { shop: Shop }) {
     )
 }
 
-function LocationMarker({ callback, center }: { callback: NewPosCallback, center: LatLngTuple }) {
+function LocationMarker({ callback, center, markerRef }: { callback: NewPosCallback, center: LatLngTuple, markerRef?: RefObject<Marker> }) {
     const [position, setPosition] = useState<LatLng>(new LatLng(center[0], center[1]));
 
     useMapEvents({
@@ -94,11 +94,11 @@ function LocationMarker({ callback, center }: { callback: NewPosCallback, center
         },
     })
 
-    const markerRef = useRef<Marker>(null);
+    if (!markerRef) markerRef = useRef<Marker>(null);
     const eventHandlers = useMemo(
         () => ({
             dragend() {
-                const marker = markerRef.current
+                const marker = markerRef?.current
                 if (marker != null) {
                     let newPos = marker.getLatLng();
                     setPosition(newPos);
@@ -136,21 +136,23 @@ const Locate = () => {
     return null
 }
 
-export default function Map(props: { callback?: NewPosCallback, shops?: Shop[], center?: [number, number], locate?: boolean}) {
+export default function Map(props: { callback?: NewPosCallback, shops?: Shop[], center?: [number, number], locate?: boolean, locationMarker?: RefObject<Marker>, mapRef?: any}) {
     let center = props.center ?? DefaultCenter;
+    let mapRef = props.mapRef ? props.mapRef : useRef(); 
     return (
         <MapContainer
             center={center}
             zoom={13}
             style={{ height: "400px", width: "100%" }}
             scrollWheelZoom={false}
+            ref={mapRef}
         >
             {props.locate !== false ? <Locate /> : null }
             <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
             />
-            {props.callback ? <LocationMarker callback={props.callback} center={center} /> : ''}
+            {props.callback ? <LocationMarker callback={props.callback} center={center} markerRef={props.locationMarker} /> : ''}
             {props.shops ? props.shops.map((shop) => <ShopMarker shop={shop} key={shop.id} />) : null}
         </MapContainer>
     )

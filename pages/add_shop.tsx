@@ -5,7 +5,7 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Stepper from "@mui/material/Stepper"
 import { useUser } from "@supabase/auth-helpers-react";
-import { useState } from "react"
+import { useRef, useState } from "react"
 import Center from "../components/center";
 import LoginWidget from "../components/loginWidget";
 import Container from "@mui/material/Container";
@@ -23,13 +23,14 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Radio from "@mui/material/Radio";
 import Link from "next/link";
-import { Typography } from "@mui/material";
+import { Divider, Typography } from "@mui/material";
 import { DataService } from "../lib/data";
 import { useRouter } from "next/router";
 import { ValidatedControlledInput } from "../components/validatedControlledInput";
 import { InsertShop } from "../models";
 import { useUserContext } from "../context/userData";
 import { socialInfoData } from "../constants/socialInfo";
+import { Marker } from "leaflet";
 
 
 const MapWithNoSSR = dynamic(() => import('../components/map'), {
@@ -51,7 +52,7 @@ export default function AddShopPage() {
     const [shopDescription, setShopDescription] = useState('');
 
     const [online, setOnline] = useState(false);
-    const [coordinates, setCoordinates] = useState([0, 0]);
+    const [coordinates, setCoordinates] = useState<[number, number]>([0, 0]);
 
     const [instagram, setInstagram] = useState<string | null>('');
     const [address, setAddress] = useState<string | null>('');
@@ -59,6 +60,12 @@ export default function AddShopPage() {
     const [email, setEmail] = useState<string | null>('');
     const [phone, setPhone] = useState<string | null>('');
     const [whatsapp, setWhatsapp] = useState<string | null>('');
+
+    const [fieldLat, setFieldLat] = useState<string>('');
+    const [fieldLng, setFieldLng] = useState<string>('');
+
+    const locationMarkerRef = useRef<Marker>(null);
+    const mapRef = useRef<any>(null);
 
     const user = useUser();
 
@@ -223,7 +230,7 @@ export default function AddShopPage() {
                     <Alert severity="info" sx={{ maxWidth: "700px" }}>
                         <b>Cómo rellenar esta sección:</b><br />
                         - Primero, dinos de que tipo de tienda se trata. ¿Vendes sólo online o dispones de una tienda física donde atender clientes?<br />
-                        - Segundo, arrastra el marcador en el mapa hasta la ubicación donde se encuentra tu tienda. También puedes hacer click directamente en la posición.
+                        - Segundo, arrastra el marcador en el mapa hasta la ubicación donde se encuentra tu tienda. También puedes hacer click directamente en la posición o escribir las coordenadas en los campos latitud y longitud.
                         {' '}Si no tienes una tienda física, selecciona el centro de tu área de operaciones. De esta manera los usuarios podrán encontrarte
                         {' '}por proximidad incluso si no dispones de un espacio.
                     </Alert>
@@ -242,8 +249,40 @@ export default function AddShopPage() {
                             <FormControlLabel value="false" control={<Radio />} label="Tienda física" />
                         </RadioGroup>
                     </FormControl>
+                    <Divider sx={{width: "90%", marginBottom: 1.7, marginTop: 0.3}} />
+                    <Box sx={{display: "flex", gap: 1}}>
+                        <TextField
+                            variant="filled"
+                            label={"Latitud"}
+                            value={fieldLat??''}
+                            onChange={(event) => {
+                                setFieldLat(event.target.value)
+                            }}
+                        />
+                        <TextField
+                            variant="filled"
+                            label={"Longitud"}
+                            value={fieldLng??''}
+                            onChange={(event) => {
+                                setFieldLng(event.target.value);
+                            }}
+                        />
+                        <Button
+                            variant="contained"
+                            disabled={Number.isNaN(parseFloat(fieldLat)) || Number.isNaN(parseFloat(fieldLng))}
+                            onClick={() => {
+                                let lat = parseFloat(fieldLat)
+                                let lng = parseFloat(fieldLng)
+                                if (!Number.isNaN(lat) && !Number.isNaN(lng)) {
+                                    setCoordinates([lat, lng]);
+                                    locationMarkerRef.current?.setLatLng([lat, lng]);
+                                    mapRef.current?.flyTo([lat, lng]);
+                                }
+                            }}
+                        >Ir</Button>
+                    </Box>
                 </Center>
-                <MapWithNoSSR callback={(coordinates) => setCoordinates([coordinates.lat, coordinates.lng])} />
+                <MapWithNoSSR callback={(coordinates) => setCoordinates([coordinates.lat, coordinates.lng])} locationMarker={locationMarkerRef} mapRef={mapRef} />
                 <Center sx={{ marginTop: 2 }}>
                     <Button variant="contained" onClick={handleNext} disabled={coordinates.every((x) => x == 0)}>Siguiente</Button>
                 </Center>
