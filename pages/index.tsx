@@ -39,7 +39,7 @@ export default function Home() {
 					Buscar tiendas sostenibles
 				</Button>
 				<Button variant="contained" startIcon={<Store />} LinkComponent={Link} href="/add_shop" sx={{textAlign: "center"}}>
-					¿Tienes una tienda? Anádela
+					¿Tienes una tienda? Añádela
 				</Button>
 				<Button variant="contained" startIcon={<Diversity1 />} LinkComponent={Link} href="/signup" sx={{textAlign: "center"}}>
 					Únete a la comunidad
