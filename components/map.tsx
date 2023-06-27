@@ -94,7 +94,9 @@ function LocationMarker({ callback, center, markerRef }: { callback: NewPosCallb
         },
     })
 
-    if (!markerRef) markerRef = useRef<Marker>(null);
+    const localRef = useRef<Marker>(null);
+
+    if (!markerRef) markerRef = localRef;
     const eventHandlers = useMemo(
         () => ({
             dragend() {
@@ -106,7 +108,7 @@ function LocationMarker({ callback, center, markerRef }: { callback: NewPosCallb
                 }
             },
         }),
-        [callback],
+        [callback, markerRef],
     )
 
     return (
@@ -138,7 +140,8 @@ const Locate = () => {
 
 export default function Map(props: { callback?: NewPosCallback, shops?: Shop[], center?: [number, number], locate?: boolean, locationMarker?: RefObject<Marker>, mapRef?: any}) {
     let center = props.center ?? DefaultCenter;
-    let mapRef = props.mapRef ? props.mapRef : useRef(); 
+    let localRef =  useRef();
+    let mapRef = props.mapRef ? props.mapRef : localRef; 
     return (
         <MapContainer
             center={center}
