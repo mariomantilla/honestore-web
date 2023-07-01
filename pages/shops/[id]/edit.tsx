@@ -274,7 +274,7 @@ const EditShopPage = ({ shop }: { shop: Shop }) => {
             </TabPanel>
             <Center sx={{flexDirection: "row", gap: 2}}>
                 <Button variant="contained" disabled={invalid} onClick={handleSubmission}>Guardar</Button>
-                <Button variant="contained" href={"/shops/"+shop.id.toString()}>Ir a la tienda</Button>
+                <Button variant="contained" href={"/shops/"+shop.slug}>Ir a la tienda</Button>
             </Center>
         </TitlePage>
     )

@@ -3,13 +3,50 @@ export type Json =
   | number
   | boolean
   | null
-  | { [key: string]: Json }
+  | { [key: string]: Json | undefined }
   | Json[]
 
 export interface Database {
   public: {
     Tables: {
-      articles: {
+      favourites: {
+        Row: {
+          created_at: string | null
+          id: number
+          shop: number
+          updated_at: string | null
+          user: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: number
+          shop: number
+          updated_at?: string | null
+          user: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: number
+          shop?: number
+          updated_at?: string | null
+          user?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "favourites_shop_fkey"
+            columns: ["shop"]
+            referencedRelation: "shops"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "favourites_user_fkey"
+            columns: ["user"]
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      posts: {
         Row: {
           author: string
           body: string
@@ -34,29 +71,14 @@ export interface Database {
           title?: string
           updated_at?: string
         }
-      }
-      favourites: {
-        Row: {
-          created_at: string | null
-          id: number
-          shop: number
-          updated_at: string | null
-          user: string
-        }
-        Insert: {
-          created_at?: string | null
-          id?: number
-          shop: number
-          updated_at?: string | null
-          user: string
-        }
-        Update: {
-          created_at?: string | null
-          id?: number
-          shop?: number
-          updated_at?: string | null
-          user?: string
-        }
+        Relationships: [
+          {
+            foreignKeyName: "posts_author_fkey"
+            columns: ["author"]
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       profiles: {
         Row: {
@@ -74,6 +96,14 @@ export interface Database {
           name?: string | null
           role?: string | null
         }
+        Relationships: [
+          {
+            foreignKeyName: "profiles_id_fkey"
+            columns: ["id"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       shop_claims: {
         Row: {
@@ -97,6 +127,20 @@ export interface Database {
           updated_at?: string
           user?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: "shop_claims_shop_fkey"
+            columns: ["shop"]
+            referencedRelation: "shops"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "shop_claims_user_fkey"
+            columns: ["user"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       shops: {
         Row: {
@@ -118,6 +162,7 @@ export interface Database {
           owner_name: string | null
           phone: string | null
           published: boolean
+          slug: string
           updated_at: string
           web: string | null
           whatsapp: string | null
@@ -141,6 +186,7 @@ export interface Database {
           owner_name?: string | null
           phone?: string | null
           published?: boolean
+          slug?: string
           updated_at?: string
           web?: string | null
           whatsapp?: string | null
@@ -164,10 +210,19 @@ export interface Database {
           owner_name?: string | null
           phone?: string | null
           published?: boolean
+          slug?: string
           updated_at?: string
           web?: string | null
           whatsapp?: string | null
         }
+        Relationships: [
+          {
+            foreignKeyName: "shops_owner_fkey"
+            columns: ["owner"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       tagged_shops: {
         Row: {
@@ -191,6 +246,20 @@ export interface Database {
           tag?: number
           updated_at?: string | null
         }
+        Relationships: [
+          {
+            foreignKeyName: "tagged_shops_shop_fkey"
+            columns: ["shop"]
+            referencedRelation: "shops"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tagged_shops_tag_fkey"
+            columns: ["tag"]
+            referencedRelation: "tags"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       tags: {
         Row: {
@@ -211,6 +280,7 @@ export interface Database {
           name?: string | null
           updateted_at?: string | null
         }
+        Relationships: []
       }
     }
     Views: {
@@ -250,6 +320,7 @@ export interface Database {
               owner_name: string | null
               phone: string | null
               published: boolean
+              slug: string
               updated_at: string
               web: string | null
               whatsapp: string | null
@@ -292,6 +363,7 @@ export interface Database {
           owner_name: string | null
           phone: string | null
           published: boolean
+          slug: string
           updated_at: string
           web: string | null
           whatsapp: string | null
@@ -320,10 +392,17 @@ export interface Database {
           owner_name: string | null
           phone: string | null
           published: boolean
+          slug: string
           updated_at: string
           web: string | null
           whatsapp: string | null
         }[]
+      }
+      slugify: {
+        Args: {
+          value: string
+        }
+        Returns: string
       }
       unaccent: {
         Args: {

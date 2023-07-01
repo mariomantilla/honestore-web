@@ -28,7 +28,7 @@ const ShopCard = ({ shop }: { shop: Shop | null }) => {
             <Box sx={{ display: "flex", flexDirection: "row", columnGap: 2, padding: 1.5 }}>
                 <Box sx={{ flexShrink: 0 }}>
                     {shop ? (
-                        <Link href={'/shops/' + shop.id}>
+                        <Link href={'/shops/' + shop.slug}>
                             <Avatar
                                 sx={{ width: "120px", height: "120px" }}
                                 alt={shop.name ?? ''}
@@ -50,7 +50,7 @@ const ShopCard = ({ shop }: { shop: Shop | null }) => {
                 <Box sx={{ display: "flex", flexDirection: "column", rowGap: 0, flexGrow: 1, minWidth: 0 }}>
                     <Box sx={{ display: "flex" }}>
                         {shop ? (
-                            <Typography variant="h4" className="singleLineEllipsis" sx={{ alignSelf: "center", flexGrow: 1 }}><Link href={'/shops/' + shop.id}>{shop.name}</Link></Typography>
+                            <Typography variant="h4" className="singleLineEllipsis" sx={{ alignSelf: "center", flexGrow: 1 }}><Link href={'/shops/' + shop.slug}>{shop.name}</Link></Typography>
 
                         ) : (<Skeleton width="60%" sx={{ alignSelf: "center", flexGrow: 1 }} />)}
                         {shop ? (<FavButton shop={shop} />) : (<Skeleton width="20px" />)}

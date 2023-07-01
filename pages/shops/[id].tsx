@@ -1,5 +1,5 @@
 import { Shop } from "../../models";
-import { DataService, getShop, getShopsIds } from "../../lib/data";
+import { DataService, getShop, getShopBySlug } from "../../lib/data";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -29,18 +29,21 @@ import Alert from "@mui/material/Alert";
 import Center from "../../components/center";
 import { useUserContext } from "../../context/userData";
 import { useUser } from "@supabase/auth-helpers-react";
+import { BASE_URL } from "../../constants";
 
 
 export async function getStaticPaths() {
-	let ids: number[] = await getShopsIds();
+	let shopsRequest = await DataService.getAllShops();
+	let shops: Shop[] = shopsRequest.data ?? [];
 	return {
-		paths: ids?.map((sid) => `/shops/${sid}`) ?? [],
+		paths: shops.map((s) => `/shops/${s.id}`).concat(shops.map((s) => `/shops/${s.slug}`)),
 		fallback: true, // can also be true or 'blocking'
 	}
 }
 
-export async function getStaticProps({ params }: { params: { id: number } }) {
-	let shop = await getShop(params.id);
+export async function getStaticProps({ params }: { params: { id: string } }) {
+	let isId = parseInt(params.id).toString() == params.id;
+	let shop = isId ? await getShop(parseInt(params.id)) : await getShopBySlug(params.id);
 	if (!shop) {
 		return {
 			notFound: true,
@@ -134,13 +137,16 @@ export default function ShopPage({ shop }: { shop: Shop }) {
 		<Chip icon={<LocationOff />} label="Solo online" />
 	) : '';
 
+	const canonicalUrl = `${BASE_URL}/shops/${shop.slug}`;
+
 	return (
 		<>
 			<Head>
 				<title>{shop.name + " en Honestore"}</title>
 				<meta name="description" content={shop.description ?? ''} />
-				<meta property="og:title" content={shop.name + " en Honestore"} />
-				<meta property="og:description" content={shop.description ?? ''} />
+				<meta key="meta-og-title" property="og:title" content={shop.name + " en Honestore"} />
+				<meta key="meta-og-desc" property="og:description" content={shop.description ?? ''} />
+				<link href={canonicalUrl} rel="canonical" key="head-canonical" />
 			</Head>
 			<Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
 				<Box sx={{ display: "flex", gap: 3, flexDirection: { xs: "column", sm: "row" }, padding: 2 }}>

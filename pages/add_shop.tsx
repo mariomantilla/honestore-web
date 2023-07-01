@@ -143,7 +143,7 @@ export default function AddShopPage() {
             sendMessage("error", error.message);
         } else {
             sendMessage("success", "Tienda añadida correctamente");
-            router.push(`/shops/${data[0].id}`);
+            router.push(`/shops/${data[0].slug}`);
         }
     }
 

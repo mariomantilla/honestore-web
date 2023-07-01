@@ -54,7 +54,7 @@ function ShopMarker({ shop }: { shop: Shop }) {
         >
             <Popup>
                 <Box sx={{ display: "flex", gap: 1 }}>
-                    <Link href={'/shops/' + shop.id}>
+                    <Link href={'/shops/' + shop.slug}>
                         <Avatar
                             sx={{ width: "45px", height: "45px" }}
                             alt={shop.name ?? ''}
@@ -72,7 +72,7 @@ function ShopMarker({ shop }: { shop: Shop }) {
                         </Avatar>
                     </Link>
                     <Box>
-                    <Typography variant="h4" color="primary"><Link href={'/shops/' + shop.id}>{shop.name}</Link></Typography>
+                    <Typography variant="h4" color="primary"><Link href={'/shops/' + shop.slug}>{shop.name}</Link></Typography>
                     <Typography variant="body2" color="text.secondary" fontWeight="bold" sx={{margin: "0 !important"}}>{shop.address}</Typography>
                     {shop.online ? (
                         <Chip icon={<LocationOff />} label="Solo online" />

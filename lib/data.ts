@@ -14,6 +14,18 @@ export async function getShop(id: number): Promise<Shop | null> {
     return data ? data[0] : null;
 };
 
+export async function getShopBySlug(slug: string): Promise<Shop | null> {
+    let { data, error, status } = await supabase
+    .from("shops")
+    .select("*")
+    .eq("slug", slug);
+
+    if (error) {
+    throw error;
+    }
+    return data ? data[0] : null;
+};
+
 export async function getShopsIds(): Promise<number[]> {
     let { data, error, status } = await supabase
     .from("shops")
@@ -26,6 +38,10 @@ export async function getShopsIds(): Promise<number[]> {
 };
 
 export namespace DataService {
+
+    export const getAllShops = () => {
+        return supabase.from('shops').select('*')
+    }
 
     export const newShops = ()  => {
         return supabase.from('shops').select('*').order('created_at', {ascending: false}).limit(12);

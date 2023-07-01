@@ -1,7 +1,8 @@
 
 import type { NextApiResponse } from 'next'
 import { BASE_URL } from '../constants';
-import { getShopsIds } from '../lib/data';
+import { DataService, getShopsIds } from '../lib/data';
+import { Shop } from '../models';
 
 const Sitemap = () => {
     return null;
@@ -9,8 +10,9 @@ const Sitemap = () => {
 
 export const getServerSideProps = async ({ res }: { res: NextApiResponse }) => {
 
-    let ids: number[] = await getShopsIds(); // some remote API call maybe!
-    const dynamicPaths = ids.map(shopId => `${BASE_URL}/shops/${shopId}`)
+    let shopsRequest = await DataService.getAllShops();
+	let shops: Shop[] = shopsRequest.data ?? [];
+    const dynamicPaths = shops.map(s => `${BASE_URL}/shops/${s.slug}`)
     const sitemap = dynamicPaths.join("\n");
 
     res.setHeader('Content-Type', 'text');

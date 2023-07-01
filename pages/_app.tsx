@@ -57,14 +57,14 @@ function MyApp({
         <link rel="icon" href="/favicon.png" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="author" content="Honestore" />
-        <meta property="og:title" content="Honestore: La comunidad de activistas del consumo ético" />
-        <meta property="og:description" content="Honestore es una comunidad de personas que queremos consumir de forma más responsable.
+        <meta key="meta-og-title" property="og:title" content="Honestore: La comunidad de activistas del consumo ético" />
+        <meta  key="meta-og-desc" property="og:description" content="Honestore es una comunidad de personas que queremos consumir de forma más responsable.
   Formamos una red de usuarios y tiendas con un foco en la sostenibilidad, cuidado por el medio ambiente, derechos de los trabajadores e impacto social.
   Como usuario, en la app puedes encontrar tiendas que te gustan y venden productos que encajan con tus valores cerca de ti.
   Guarda tus tiendas favoritas para tenerlas siempre a mano y compártelas con tu familia y amigos." />
         <meta property="og:image" content="https://honestore.app/images/logo2000.jpg" />
         <meta property="og:url" content={canonicalUrl} />
-        <link href={canonicalUrl} rel="canonical" />
+        <link href={canonicalUrl} rel="canonical" key="head-canonical" />
         <link rel="shortcut icon" type="image/x-icon" href="/favicon.png" />
       </Head>
       <ThemeProvider theme={theme}>
