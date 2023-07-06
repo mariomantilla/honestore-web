@@ -3,7 +3,7 @@ import type { AppProps } from 'next/app'
 
 import { SessionContextProvider, Session } from '@supabase/auth-helpers-react'
 import { SearchProvider } from "../context/search";
-import { ReactElement, ReactNode, useState } from 'react'
+import { ReactElement, ReactNode, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { Analytics } from '@vercel/analytics/react';
 import { ThemeProvider } from '@mui/material/styles';
@@ -21,6 +21,8 @@ import { UserProvider } from '../context/userData';
 import AlertComponent from '../components/alerts';
 import { MessagesProvider } from '../context/messages';
 import { IKContext } from 'imagekitio-react';
+import mixpanel from 'mixpanel-browser';
+import CookieBanner from '../components/cookieBanner';
 
 const AndroidBar = dynamic(() => import('../components/androidBar'), {
   ssr: false,
@@ -45,6 +47,39 @@ function MyApp({
 
   const canonicalUrl = (BASE_URL + (router.asPath === "/" ? "" : router.asPath)).split("?")[0];
   const getLayout = Component.getLayout || ((page) => page)
+
+  mixpanel.init('09a8489cc7aa57b32a5a31d6e0740db8', {
+    debug: false,
+    track_pageview: true,
+    persistence: 'localStorage',
+    opt_out_tracking_by_default: true,
+    opt_out_persistence_by_default: true
+  });
+
+  useEffect(() => {
+    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event == 'SIGNED_OUT') {
+        mixpanel.reset();
+      }
+      if (event == 'SIGNED_IN') {
+        mixpanel.opt_in_tracking();
+        mixpanel.identify(session?.user.id.toString());
+      }
+    });
+
+    return () => authListener.subscription.unsubscribe(); // Cleanup the listener when component unmounts
+  }, []);
+
+  useEffect(() => {
+    const handleRouteChange = (url: string) => {
+        //Send track event when new pages is loaded
+        mixpanel.track_pageview();
+    }
+    router.events.on('routeChangeComplete', handleRouteChange)
+    return () => {
+        router.events.off('routeChangeComplete', handleRouteChange)
+    }
+  }, [router.events])
 
   return (
     <SessionContextProvider supabaseClient={supabase} initialSession={pageProps.initialSession}>
@@ -91,6 +126,7 @@ function MyApp({
             <AlertComponent />
           </MessagesProvider>
           <Footer />
+          <CookieBanner />
         </Box>
       </ThemeProvider>
       <Analytics />

@@ -33,6 +33,7 @@ function Footer() {
           <Box sx={{ display: "flex", flexGrow: 1, flexDirection: "column", color: "white", fontSize: 18, gap: 1, textAlign: {xs: "center", sm: "right"}, flexBasis: "max-content", flexShrink: 0}}>
             <Link href="/terms">Términos y condiciones</Link>
             <Link href="/privacy">Política de privacidad</Link>
+            <Link href="/cookies">Política de cookies</Link>
             <Link href="/feedback">Envíar comentarios</Link>
             <Link href="/add_shop">Incluye tu tienda</Link>
             <Link href="/jointheteam">Únete al equipo</Link>
