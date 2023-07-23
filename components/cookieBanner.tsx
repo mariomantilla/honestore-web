@@ -15,7 +15,7 @@ function CookieBanner() {
   };
 
   useEffect(() => {
-    // setOpen(mixpanel.has_opted_out_tracking());
+    setOpen(mixpanel.has_opted_out_tracking());
   });
 
   return (
