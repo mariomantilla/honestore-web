@@ -46,6 +46,27 @@ export interface Database {
           }
         ]
       }
+      feedback: {
+        Row: {
+          comments: string | null
+          created_at: string | null
+          id: number
+          rating: number | null
+        }
+        Insert: {
+          comments?: string | null
+          created_at?: string | null
+          id?: number
+          rating?: number | null
+        }
+        Update: {
+          comments?: string | null
+          created_at?: string | null
+          id?: number
+          rating?: number | null
+        }
+        Relationships: []
+      }
       posts: {
         Row: {
           author: string

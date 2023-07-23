@@ -60,13 +60,12 @@ function SearchInput(props: InputBaseProps) {
 	const buttonStyles: SxProps = {
 		backgroundColor: alpha("#fff", .80),
 		marginLeft: "-1.5rem",
-		marginRight: "auto",
 		'&:hover': {
 			backgroundColor: "#fff"
 		},
 		color: theme.palette.primary.main,
 		transition: "opacity 500ms",
-		opacity: text ? 1 : 0
+		opacity: 1
 	}
 
 
@@ -86,6 +85,15 @@ function SearchInput(props: InputBaseProps) {
 		<IconButton onClick={() => { updateSearch(text) }} sx={buttonStyles} size={"small"} >
 			<SearchIcon />
 		</IconButton>
+		<Button
+			variant="contained"
+			color="secondary"
+			sx={{ display: { xs: "none", sm: "inherit" }, flexShrink: 0, marginRight: "auto" }}
+			LinkComponent={Link}
+			href="/search"
+		>
+			Ver tiendas
+		</Button>
 	</>
 	);
 

@@ -23,6 +23,7 @@ import { MessagesProvider } from '../context/messages';
 import { IKContext } from 'imagekitio-react';
 import mixpanel from 'mixpanel-browser';
 import CookieBanner from '../components/cookieBanner';
+import Feedback from '../components/feedback';
 
 const AndroidBar = dynamic(() => import('../components/androidBar'), {
   ssr: false,
@@ -121,6 +122,7 @@ function MyApp({
                     {getLayout(<Component {...pageProps} />)}
                   </Container>
                 </IKContext>
+                <Feedback />
               </UserProvider>
             </SearchProvider>
             <AlertComponent />

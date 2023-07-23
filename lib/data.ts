@@ -62,6 +62,10 @@ export namespace DataService {
     export const removeFavourite = (user: User, shop: Shop) => {
         return supabase.from('favourites').delete().eq('shop', shop.id).eq('user', user.id);
     }
+
+    export const addFeedback = (rating: number, comments: string) => {
+        return supabase.from('feedback').insert({'rating':rating, 'comments': comments});
+    }
     
     export const getProfile = (user: User) => {
         return supabase.from('profiles').select('*').eq('id', user.id);

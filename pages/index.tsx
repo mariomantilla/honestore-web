@@ -47,11 +47,6 @@ export default function Home() {
 			</Box>
 			<Divider />
 			<NewShops sx={{marginTop: "1.5rem"}} />
-			<Fab color="primary" aria-label="add" sx={{ position: "fixed", bottom: "2em", right: "2em" }}>
-				<Link href="/add_shop" style={{ lineHeight: "normal" }}>
-					<AddIcon sx={{ color: "white" }} />
-				</Link>
-			</Fab>
 		</>
 	)
 }
