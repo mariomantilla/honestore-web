@@ -2,19 +2,20 @@ import * as React from 'react';
 import { Button, Snackbar } from '@mui/material';
 import Link from 'next/link';
 import mixpanel from 'mixpanel-browser';
+import { useEffect, useState } from 'react';
 
 
 function CookieBanner() {
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(true);
 
   const consent = () => {
-    mixpanel.opt_in_tracking();
+    // mixpanel.opt_in_tracking();
     setOpen(false);
   };
 
-  React.useEffect(() => {
-    setOpen(mixpanel.has_opted_out_tracking());
+  useEffect(() => {
+    // setOpen(mixpanel.has_opted_out_tracking());
   });
 
   return (
