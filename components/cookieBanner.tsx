@@ -10,7 +10,7 @@ function CookieBanner() {
   const [open, setOpen] = useState(true);
 
   const consent = () => {
-    // mixpanel.opt_in_tracking();
+    mixpanel.opt_in_tracking();
     setOpen(false);
   };
 
