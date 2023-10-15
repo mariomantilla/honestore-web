@@ -47,14 +47,13 @@ export async function getStaticPaths() {
 	let shopsRequest = await DataService.getAllShops();
 	let shops: Shop[] = shopsRequest.data ?? [];
 	return {
-		paths: shops.map((s) => `/shops/${s.id}`).concat(shops.map((s) => `/shops/${s.slug}`)),
+		paths: shops.map((s) => `/shops/${s.slug}`),
 		fallback: true, // can also be true or 'blocking'
 	}
 }
 
 export async function getStaticProps({ params }: { params: { id: string } }) {
-	let isId = parseInt(params.id).toString() == params.id;
-	let shop = isId ? await getShop(parseInt(params.id)) : await getShopBySlug(params.id);
+	let shop = await getShopBySlug(params.id);
 	if (!shop) {
 		return {
 			notFound: true,

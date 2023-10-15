@@ -60,92 +60,33 @@ import turtle from '../resources/animals/turtle.svg'
 import wolf from '../resources/animals/wolf.svg'
 import zebra from '../resources/animals/zebra.svg'
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import { useEffect, useState } from "react";
+
+const avatarsImgs = [
+    aligator, ant, ant2, bat, bear, bee, bird, bug, butterfly, butterfly2, butterfly3, camel,
+    cat, caterpiller, cheetah, chicken, cow, cuccoon, dinosaur, dog, dolphin, dove, duck,
+    eagle, elephant, fish, flamingo, fly, fly2, fox, frog, giraffe, gorilla, grasshopper, hippo,
+    horse, insect, kangaroo, koala, leopard, lion, monkey, mouse, panda, parrot, penguin, seaDog,
+    shark, sheep, snake, spider, spider2, squirrel, starfish, tiger, turtle, wolf, zebra
+]
+
+function uuidToInteger(uuid: string, options: number): number {
+    // Remove dashes and convert the UUID to a hexadecimal string
+    const hexString = uuid.replace(/-/g, '');
+    // Convert the hexadecimal string to a decimal integer
+    const decimalInteger = parseInt(hexString, 16);
+    // Take a modulo operation to get a number between 0 and the number of avatars
+    return decimalInteger % options;
+}
 
 
 export default function UserAvatar({uuid, size=32}: {uuid?: string | null, size?: number}) {
 
-    const avatars = [
-        <AccountCircle width={size} height={size} />,
-        <Image src={aligator} alt="Avatar" width={size} height={size} />,
-        <Image src={ant} alt="Avatar" width={size} height={size} />,
-        <Image src={ant2} alt="Avatar" width={size} height={size} />,
-        <Image src={bat} alt="Avatar" width={size} height={size} />,
-        <Image src={bear} alt="Avatar" width={size} height={size} />,
-        <Image src={bee} alt="Avatar" width={size} height={size} />,
-        <Image src={bird} alt="Avatar" width={size} height={size} />,
-        <Image src={bug} alt="Avatar" width={size} height={size} />,
-        <Image src={butterfly} alt="Avatar" width={size} height={size} />,
-        <Image src={butterfly2} alt="Avatar" width={size} height={size} />,
-        <Image src={butterfly3} alt="Avatar" width={size} height={size} />,
-        <Image src={camel} alt="Avatar" width={size} height={size} />,
-        <Image src={cat} alt="Avatar" width={size} height={size} />,
-        <Image src={caterpiller} alt="Avatar" width={size} height={size} />,
-        <Image src={cheetah} alt="Avatar" width={size} height={size} />,
-        <Image src={chicken} alt="Avatar" width={size} height={size} />,
-        <Image src={cow} alt="Avatar" width={size} height={size} />,
-        <Image src={cuccoon} alt="Avatar" width={size} height={size} />,
-        <Image src={dinosaur} alt="Avatar" width={size} height={size} />,
-        <Image src={dog} alt="Avatar" width={size} height={size} />,
-        <Image src={dolphin} alt="Avatar" width={size} height={size} />,
-        <Image src={dove} alt="Avatar" width={size} height={size} />,
-        <Image src={duck} alt="Avatar" width={size} height={size} />,
-        <Image src={eagle} alt="Avatar" width={size} height={size} />,
-        <Image src={elephant} alt="Avatar" width={size} height={size} />,
-        <Image src={fish} alt="Avatar" width={size} height={size} />,
-        <Image src={flamingo} alt="Avatar" width={size} height={size} />,
-        <Image src={fly} alt="Avatar" width={size} height={size} />,
-        <Image src={fly2} alt="Avatar" width={size} height={size} />,
-        <Image src={fox} alt="Avatar" width={size} height={size} />,
-        <Image src={frog} alt="Avatar" width={size} height={size} />,
-        <Image src={giraffe} alt="Avatar" width={size} height={size} />,
-        <Image src={gorilla} alt="Avatar" width={size} height={size} />,
-        <Image src={grasshopper} alt="Avatar" width={size} height={size} />,
-        <Image src={hippo} alt="Avatar" width={size} height={size} />,
-        <Image src={horse} alt="Avatar" width={size} height={size} />,
-        <Image src={insect} alt="Avatar" width={size} height={size} />,
-        <Image src={kangaroo} alt="Avatar" width={size} height={size} />,
-        <Image src={koala} alt="Avatar" width={size} height={size} />,
-        <Image src={leopard} alt="Avatar" width={size} height={size} />,
-        <Image src={lion} alt="Avatar" width={size} height={size} />,
-        <Image src={monkey} alt="Avatar" width={size} height={size} />,
-        <Image src={mouse} alt="Avatar" width={size} height={size} />,
-        <Image src={panda} alt="Avatar" width={size} height={size} />,
-        <Image src={parrot} alt="Avatar" width={size} height={size} />,
-        <Image src={penguin} alt="Avatar" width={size} height={size} />,
-        <Image src={seaDog} alt="Avatar" width={size} height={size} />,
-        <Image src={shark} alt="Avatar" width={size} height={size} />,
-        <Image src={sheep} alt="Avatar" width={size} height={size} />,
-        <Image src={snake} alt="Avatar" width={size} height={size} />,
-        <Image src={spider} alt="Avatar" width={size} height={size} />,
-        <Image src={spider2} alt="Avatar" width={size} height={size} />,
-        <Image src={squirrel} alt="Avatar" width={size} height={size} />,
-        <Image src={starfish} alt="Avatar" width={size} height={size} />,
-        <Image src={tiger} alt="Avatar" width={size} height={size} />,
-        <Image src={turtle} alt="Avatar" width={size} height={size} />,
-        <Image src={wolf} alt="Avatar" width={size} height={size} />,
-        <Image src={zebra} alt="Avatar" width={size} height={size} />
-    ]
-
-    function uuidToInteger(uuid: string): number {
-        // Remove dashes and convert the UUID to a hexadecimal string
-        const hexString = uuid.replace(/-/g, '');
-        // Convert the hexadecimal string to a decimal integer
-        const decimalInteger = parseInt(hexString, 16);
-        // Take a modulo operation to get a number between 0 and the number of avatars
-        return decimalInteger % avatars.length;
-    }
-
-    const [number, setNumber] = useState(0);
-
-    useEffect(() => {
-        if (uuid) {
-            setNumber(uuidToInteger(uuid))
-        }
-    }, [uuid]);
+    const defaultAvatar =  <AccountCircle width={size} height={size} />
+    const avatars = avatarsImgs.map((x, i) => <Image src={x} key={i} alt="Avatar" width={size} height={size} />)
+    const n = uuid ? uuidToInteger(uuid, avatars.length) : null ;
     
     return (
-        <>{avatars[number]}</>
+        <>{n ? avatars[n] : defaultAvatar}</>
     );
 
 }
