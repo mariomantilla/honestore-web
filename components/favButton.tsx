@@ -8,7 +8,7 @@ import { useUserContext } from "../context/userData";
 import { DataService } from "../lib/data";
 import { Shop } from "../models";
 
-export const FavButton = ({ shop, size }: { shop: Shop, size?: 'medium' | 'large' | undefined}) => {
+export const FavButton = ({ shop, size, callback }: { shop: Shop, size?: 'medium' | 'large' | undefined, callback?: (isFav: boolean) => void}) => {
     
     const user = useUser();
     const { userFavouriteShopsIds, addFavourite, removeFavourite } = useUserContext();
@@ -26,6 +26,7 @@ export const FavButton = ({ shop, size }: { shop: Shop, size?: 'medium' | 'large
         else {
             DataService.addFavourite(user, shop).then((r) => {if (!r.error) addFavourite(shop.id)});
         }
+        if (callback) callback(!isFav);
     }
 
     return (

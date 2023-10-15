@@ -27,7 +27,7 @@ export default function AndroidBar() {
         if (!hideAndroidBar) {
             setOpen(true);
         }
-    })
+    }, [])
 
     return (
         <Paper sx={{ position: "static", top: 0, zIndex: 10, display: isMobile.Android() && open ? 'inherit' : 'none' }} elevation={8}>

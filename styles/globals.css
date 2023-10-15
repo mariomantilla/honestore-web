@@ -128,3 +128,19 @@ input[type=file] {
   align-items: center;
   justify-content: center;
 }
+
+.noscrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.noscrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.viewMore {
+  text-decoration: underline;
+  font-size: 0.9em;
+  cursor: pointer;
+}

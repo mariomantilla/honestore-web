@@ -1,11 +1,11 @@
 import { User } from "@supabase/supabase-js";
-import { InsertShop, Shop, UpdateShop } from "../models";
+import { InsertShop, Shop, ShopTags, UpdateShop, Comment } from "../models";
 import { supabase } from "./supabaseClient";
 
-export async function getShop(id: number): Promise<Shop | null> {
+export async function getShop(id: number): Promise<ShopTags | null> {
     let { data, error, status } = await supabase
     .from("shops")
-    .select("*")
+    .select("*, tags(*)")
     .eq("id", id);
 
     if (error) {
@@ -14,10 +14,10 @@ export async function getShop(id: number): Promise<Shop | null> {
     return data ? data[0] : null;
 };
 
-export async function getShopBySlug(slug: string): Promise<Shop | null> {
+export async function getShopBySlug(slug: string): Promise<ShopTags | null> {
     let { data, error, status } = await supabase
     .from("shops")
-    .select("*")
+    .select("*, tags(*)")
     .eq("slug", slug);
 
     if (error) {
@@ -43,16 +43,28 @@ export namespace DataService {
         return supabase.from('shops').select('*')
     }
 
-    export const newShops = ()  => {
-        return supabase.from('shops').select('*').order('created_at', {ascending: false}).limit(12);
+    export const newShops = () => {
+        return supabase.from('shops').select('*, tags(*)').order('created_at', {ascending: false}).limit(12);
     }
 
     export const searchShops = (query: string)  => {
-        return supabase.rpc('search_shops', { search: query });
+        return supabase.rpc('search_shops', { search: query }).select('*, tags(*)');
+    }
+
+    export const getCategories = () => {
+        return supabase.from('categories').select('*');
     }
 
     export const getFavourites = (user: User)  => {
-        return supabase.from('shops').select('*, favourites!inner(user)').eq('favourites.user', user.id);
+        return supabase.from('shops').select('*, favourites!inner(user), tags(*)').eq('favourites.user', user.id);
+    }
+
+    export const getShopsByOwner = (user: User)  => {
+        return supabase.from('shops').select('*, tags(*)').eq('owner', user.id);
+    }
+
+    export const getFavCount = (shop: Shop)  => {
+        return supabase.from('favourites').select('count').eq('shop', shop.id);
     }
     
     export const addFavourite = (user: User, shop: Shop) => {
@@ -61,6 +73,14 @@ export namespace DataService {
 
     export const removeFavourite = (user: User, shop: Shop) => {
         return supabase.from('favourites').delete().eq('shop', shop.id).eq('user', user.id);
+    }
+
+    export const addComment = (text: string, shop: Shop, user: User) => {
+        return supabase.from('comments').insert({'shop': shop.id, 'user': user.id, 'text': text});
+    }
+
+    export const removeComment = (comment: Comment) => {
+        return supabase.from('comments').delete().eq('id', comment.id);
     }
 
     export const addFeedback = (rating: number, comments: string) => {
@@ -87,6 +107,10 @@ export namespace DataService {
         const mapCentercoordsArray = shop.location_coordinates ? shop.location_coordinates.split(' ').map((x) => parseFloat(x)) : undefined;
 	    const mapCentercoords: [number, number] | undefined = mapCentercoordsArray ? [mapCentercoordsArray[0], mapCentercoordsArray[1]] : undefined;
         return mapCentercoords;
+    }
+
+    export const getComments = (shop: Shop) => {
+        return supabase.from('comments').select('*, user(*)').eq('shop', shop.id).order('created_at', { ascending: false });
     }
 
 }

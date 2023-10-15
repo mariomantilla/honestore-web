@@ -18,7 +18,7 @@ export default function PrivacyPage() {
 
     useEffect(() => {
         setConsent(mixpanel.has_opted_in_tracking());
-    });
+    }, []);
 
     return (
         <PolicyPage title="Política de Cookies" lastEdit="06/07/2023" desc="Esta Política de Cookies describe el uso de cookies y otros mecanismos de almacenamiento local en Honestore. Al utilizar nuestro sitio web, aceptas el uso de cookies de acuerdo con esta política. Te recomendamos que leas detenidamente esta política para comprender cómo utilizamos las cookies y cómo puedes gestionarlas.">

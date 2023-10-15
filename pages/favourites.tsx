@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { privatePageLayout } from "../helpers/privatePageLayout";
-import { Shop } from "../models";
+import { Shop, ShopTags } from "../models";
 import { NextPageWithLayout } from "./_app";
 import { DataService } from "../lib/data";
 import ShopList from "../components/shopList";
@@ -10,7 +10,7 @@ import TitlePage from "../components/titlePage";
 
 const FavouritesPage: NextPageWithLayout = () => {
 
-    const [shops, setShops] = useState<(Shop | null)[]>([null, null, null]);
+    const [shops, setShops] = useState<(ShopTags | null)[]>([null, null, null]);
     const user = useUser();
     const { userFavouriteShopsIds } = useUserContext();
 

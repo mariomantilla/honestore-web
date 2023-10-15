@@ -24,6 +24,8 @@ import { supabase } from '../lib/supabaseClient';
 import { useEffect, useState } from 'react';
 import { theme } from '../constants';
 import Loader from './loader';
+import UserAvatar from './userAvatar';
+import { useUserContext } from '../context/userData';
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -147,7 +149,7 @@ function ResponsiveAppBar() {
 					<Divider key="div1" />,
 					<MenuItem key="account" onClick={handleMenuClose} component={Link} href="/account">Cuenta</MenuItem>,
 					<MenuItem key="favs" onClick={handleMenuClose} component={Link} href="/favourites">Favoritos</MenuItem>,
-					<MenuItem key="shops">Mis tiendas</MenuItem>,
+					<MenuItem key="shops" onClick={handleMenuClose} component={Link} href="/my_shops">Mis tiendas</MenuItem>,
 					<Divider key="div2" />,
 					<MenuItem key="logout" onClick={() => { handleMenuClose(); supabase.auth.signOut(); }}>Cerrar Sesión</MenuItem>
 				]
@@ -200,7 +202,7 @@ function ResponsiveAppBar() {
 							onClick={handleProfileMenuOpen}
 							color="inherit"
 						>
-							<AccountCircle />
+							<UserAvatar uuid={user?.id} />
 						</IconButton>
 					</Toolbar>
 				</Container>

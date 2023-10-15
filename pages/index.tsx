@@ -14,6 +14,7 @@ import { Diversity1, NavigateNext, Store } from '@mui/icons-material';
 import IconButton from '@mui/material/IconButton';
 import { buttonStyles } from '../constants';
 import NewShops from '../components/newShops';
+import Categories from '../components/categories';
 
 
 export default function Home() {
@@ -45,6 +46,8 @@ export default function Home() {
 					Únete a la comunidad
 				</Button>
 			</Box>
+			<Divider />
+			<Categories />
 			<Divider />
 			<NewShops sx={{marginTop: "1.5rem"}} />
 		</>

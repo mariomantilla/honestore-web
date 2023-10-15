@@ -2,12 +2,12 @@ import Box, { BoxProps } from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
 import { DataService } from "../lib/data";
-import { Shop } from "../models";
+import { Shop, ShopTags } from "../models";
 import ShopList from "./shopList";
 
 export default function NewShops({ children, ...props }: BoxProps) {
 
-    const [shops, setShops] = useState<(Shop | null)[]>(new Array(12).fill(null));
+    const [shops, setShops] = useState<(ShopTags | null)[]>(new Array(12).fill(null));
 
     useEffect(() => {
         DataService.newShops().then((resp) => setShops(resp.data ?? []));
@@ -20,7 +20,7 @@ export default function NewShops({ children, ...props }: BoxProps) {
 
     return (
         <Box {...props}>
-            <Typography variant='h3'>Novedades</Typography>
+            <Typography variant='h3' sx={{textAlign: "center"}}>Novedades</Typography>
             <ShopList shops={shops}></ShopList>
         </Box>
     );

@@ -11,7 +11,7 @@ export const socialInfoData = {
     },
     web: {
         label: "Web",
-        pattern: /^((https?):\/\/)?(www.)?([a-z0-9\-]+(.?))+\.[a-z]+(\/[a-zA-Z0-9#]*\/?)*$/,
+        pattern: /^((https?):\/\/)(www.)?([a-z0-9\-]+(.?))+\.[a-z]+(\/[a-zA-Z0-9#]*\/?)*$/,
         helper: ""
     },
     email: {

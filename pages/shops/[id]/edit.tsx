@@ -20,7 +20,6 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Radio from "@mui/material/Radio";
 import Tabs from "@mui/material/Tabs";
 import { DataService, getShop, getShopsIds } from "../../../lib/data";
-import { useRouter } from "next/router";
 import { privatePageLayout } from "../../../helpers/privatePageLayout";
 import { ValidatedControlledInput } from "../../../components/validatedControlledInput";
 import Tab from "@mui/material/Tab";
@@ -141,7 +140,7 @@ const EditShopPage = ({ shop }: { shop: Shop }) => {
             name: shopName,
             description: shopDescription,
             location_coordinates: coordinates ? `${coordinates[0]} ${coordinates[1]}` : null,
-            web: web,
+            web: web?.startsWith('http') ? web : 'https://'+web ,
             instagram: instagram,
             phone: phone,
             online: online,

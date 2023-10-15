@@ -1,12 +1,12 @@
 import * as React from 'react';
 import Grid from '@mui/material/Unstable_Grid2';
 import ShopCard from './shopCard';
-import { Shop } from '../models';
+import { Shop, ShopTags } from '../models';
 import Typography from '@mui/material/Typography';
 import Image from 'next/image';
 import logoSad from '../public/logo-sad.png'
 
-export default function ShopList(props: { shops: (Shop|null)[] }) {
+export default function ShopList(props: { shops: (ShopTags|null)[] }) {
     return (
         <Grid container spacing={1.5}>
             { props.shops.length ? props.shops.map((shop, i) => (

@@ -40,8 +40,8 @@ export default function Feedback() {
     }
 
     return (
-        <div style={{ position: "fixed", bottom: "2em", right: "2em", display: "flex", flexDirection: "column", justifyContent: "end", gap: "1rem" }}>
-            <Card sx={{ width: 350, display: open ? 'unset' : 'none' }} elevation={5}>
+        <div style={{ position: "fixed", bottom: "2em", right: "2em", display: "flex", flexDirection: "column", justifyContent: "end", gap: "1rem", zIndex: 9999 }}>
+            <Card sx={{ width: {xs: "100vw", sm: 350}, display: open ? 'unset' : 'none', position: {xs: "absolute", sm: "unset"}, right: {xs: "-2rem", sm: "unset"}, bottom: {xs: "-2rem", sm: "unset"}, height: {xs: "100vh", sm: "unset"} }} elevation={5}>
                 <IconButton color="primary" sx={{top: "10px", right: "10px", position: "absolute"}} onClick={() => {setOpen(false)}}>
                     <Close />
                 </IconButton>

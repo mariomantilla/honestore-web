@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Shop } from "../models";
+import { Shop, ShopTags } from "../models";
 import { DataService } from "../lib/data";
 import ShopList from "../components/shopList";
 import { useSearchContext } from "../context/search";
@@ -20,7 +20,7 @@ const MapWithNoSSR = dynamic(() => import('../components/map'), {
 const SearchPage = () => {
 
     const [loading, setLoading] = useState(true);
-    const [shops, setShops] = useState<Shop[]>([]);
+    const [shops, setShops] = useState<ShopTags[]>([]);
     const [tab, setTab] = useState<"list" | "map">('list');
     const { searchQuery } = useSearchContext();
 

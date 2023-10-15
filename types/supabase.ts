@@ -9,6 +9,67 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
+      categories: {
+        Row: {
+          created_at: string
+          id: number
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      comments: {
+        Row: {
+          created_at: string
+          id: number
+          shop: number
+          text: string
+          updated_at: string | null
+          user: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          shop: number
+          text: string
+          updated_at?: string | null
+          user?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          shop?: number
+          text?: string
+          updated_at?: string | null
+          user?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "comments_shop_fkey"
+            columns: ["shop"]
+            referencedRelation: "shops"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "comments_user_fkey"
+            columns: ["user"]
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       favourites: {
         Row: {
           created_at: string | null
@@ -103,16 +164,19 @@ export interface Database {
       }
       profiles: {
         Row: {
+          avatar: number | null
           id: string
           name: string | null
           role: string | null
         }
         Insert: {
+          avatar?: number | null
           id: string
           name?: string | null
           role?: string | null
         }
         Update: {
+          avatar?: number | null
           id?: string
           name?: string | null
           role?: string | null
@@ -245,6 +309,43 @@ export interface Database {
           }
         ]
       }
+      shops_categories: {
+        Row: {
+          category: number
+          created_at: string
+          id: number
+          shop: number
+          updated_at: string
+        }
+        Insert: {
+          category: number
+          created_at?: string
+          id?: number
+          shop: number
+          updated_at?: string
+        }
+        Update: {
+          category?: number
+          created_at?: string
+          id?: number
+          shop?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "shops_categories_category_fkey"
+            columns: ["category"]
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "shops_categories_shop_fkey"
+            columns: ["shop"]
+            referencedRelation: "shops"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       tagged_shops: {
         Row: {
           created_at: string | null
@@ -285,21 +386,24 @@ export interface Database {
       tags: {
         Row: {
           created_at: string | null
+          description: string
           id: number
-          name: string | null
-          updateted_at: string | null
+          name: string
+          updated_at: string | null
         }
         Insert: {
           created_at?: string | null
+          description: string
           id?: number
-          name?: string | null
-          updateted_at?: string | null
+          name: string
+          updated_at?: string | null
         }
         Update: {
           created_at?: string | null
+          description?: string
           id?: number
-          name?: string | null
-          updateted_at?: string | null
+          name?: string
+          updated_at?: string | null
         }
         Relationships: []
       }
