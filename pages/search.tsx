@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Shop, ShopTags } from "../models";
 import { DataService } from "../lib/data";
 import ShopList from "../components/shopList";
-import { useSearchContext } from "../context/search";
+import { useSearchContext, viewsOptions } from "../context/search";
 import OverrideHead from "../components/head";
 import List from "@mui/icons-material/List";
 import Map from "@mui/icons-material/Map";
@@ -21,24 +21,25 @@ const SearchPage = () => {
 
     const [loading, setLoading] = useState(true);
     const [shops, setShops] = useState<ShopTags[]>([]);
-    const [tab, setTab] = useState<"list" | "map">('list');
-    const { searchQuery } = useSearchContext();
+    const { searchQuery, category, tags, view, updateView, extractingParams } = useSearchContext();
 
     useEffect(() => {
-        DataService.searchShops(searchQuery).then((shops) => {
-            setShops(shops.data ?? []);
-            setLoading(false);
-        });
-    }, [searchQuery]);
+        if (!extractingParams) {
+            DataService.searchShops(searchQuery, category, tags).then((shops) => {
+                setShops(shops.data ?? []);
+                setLoading(false);
+            });
+        }
+    }, [searchQuery, category, tags, extractingParams]);
 
     return (
         <Box sx={{display: "flex", flexDirection: "column", gap: 2}}>
             <OverrideHead title="Buscar tiendas en Honestore" />
             <Center>
                 <ToggleButtonGroup
-                    value={tab}
+                    value={view}
                     exclusive
-                    onChange={(a, b) => { setTab(b) }}
+                    onChange={(a, b) => { updateView(b) }}
                     aria-label="vista de tiendas"
                 >
                     <ToggleButton value="list" aria-label="mostrar lista" sx={{gap: 1}}>
@@ -51,7 +52,7 @@ const SearchPage = () => {
                     </ToggleButton>
                 </ToggleButtonGroup>
             </Center>
-            {tab == 'list' ? (
+            {view == viewsOptions.list ? (
                 <ShopList shops={loading ? new Array(10).fill(null) : shops } />
             ) : (
                 <MapWithNoSSR shops={shops} />

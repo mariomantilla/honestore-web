@@ -5,6 +5,18 @@ import { DataService } from "../lib/data";
 import { Category } from "../models";
 import { IKImage } from "imagekitio-react";
 import Skeleton from "@mui/material/Skeleton";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { IconDefinition, faCookieBite, faShirt, faUtensils, faSoap } from '@fortawesome/free-solid-svg-icons'
+import { theme } from "../constants";
+import Link from "next/link";
+import { useSearchContext } from "../context/search";
+
+const icons: { [key: number]: IconDefinition} = {
+    1: faCookieBite,
+    2: faShirt,
+    3: faUtensils,
+    4: faSoap
+}
 
 
 export default function Categories({ children, ...props }: BoxProps) {
@@ -23,10 +35,10 @@ export default function Categories({ children, ...props }: BoxProps) {
     return (
         <Box {...props}>
             <Typography variant='h3' sx={{textAlign: "center"}}>Explora por categorias</Typography>
-            <Box sx={{display: "flex", gap: 3, padding: 2, justifyContent: "center", flexWrap: "wrap"}}>
+            <Box sx={{display: "flex", gap: 5, padding: 2, paddingTop: 0, justifyContent: "space-evenly", flexWrap: "wrap"}}>
                 {categories.map((c, i) => (
                     <Box key={i} sx={{display: "flex", flexDirection: "column", alignItems: "center", gap:1}}>
-                        {c ? (
+                        {/* {c ? (
                             <IKImage
                             width={"200"}
                             height={"200"}
@@ -40,8 +52,19 @@ export default function Categories({ children, ...props }: BoxProps) {
                         />
                         ) : (
                             <Skeleton width="250px" height="250px" />
-                        ) }
-                        <Typography sx={{fontSize: 18}}>{c?.name}</Typography>
+                        ) } */}
+                        <Box sx={{padding: 3}}>
+                            {c? (
+                                <Link href={`/search?category=${c.id}`}>
+                                    <FontAwesomeIcon icon={icons[c.id]} fontSize={60} color={theme.palette.primary.main} />
+                                </Link>
+                            ):<Skeleton variant="circular" width="60px" height="60px" />}
+                        </Box>
+                        {c? (
+                                <Link href={`/search?category=${c.id}`}>
+                                    <Typography sx={{fontSize: 18}}>{c?.name}</Typography>
+                                </Link>
+                        ):<Skeleton width="200px" height={"18px"} />}
                     </Box>
                 ))}
             </Box>

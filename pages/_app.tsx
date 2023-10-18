@@ -24,6 +24,7 @@ import { IKContext } from 'imagekitio-react';
 import mixpanel from 'mixpanel-browser';
 import CookieBanner from '../components/cookieBanner';
 import Feedback from '../components/feedback';
+import { GlobalConfigProvider } from '../context/globalConfig';
 
 const AndroidBar = dynamic(() => import('../components/androidBar'), {
   ssr: false,
@@ -110,23 +111,25 @@ function MyApp({
           flexDirection: "column"
         }}>
           <AndroidBar />
+          <GlobalConfigProvider>
           <MessagesProvider>
             <SearchProvider>
               <UserProvider>
                 <ResponsiveAppBar />
-                <IKContext
-                  urlEndpoint={process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT}
-                  publicKey={process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY} // optional
-                  authenticationEndpoint={imageKitAuthenticationEndpoint}>
-                  <Container maxWidth="lg" sx={{ flex: 1 }}>
-                    {getLayout(<Component {...pageProps} />)}
-                  </Container>
-                </IKContext>
+                  <IKContext
+                    urlEndpoint={process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT}
+                    publicKey={process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY} // optional
+                    authenticationEndpoint={imageKitAuthenticationEndpoint}>
+                    <Container maxWidth="lg" sx={{ flex: 1 }}>
+                      {getLayout(<Component {...pageProps} />)}
+                    </Container>
+                  </IKContext>
                 <Feedback />
               </UserProvider>
             </SearchProvider>
             <AlertComponent />
           </MessagesProvider>
+          </GlobalConfigProvider>
           <Footer />
           <CookieBanner />
         </Box>

@@ -1,5 +1,5 @@
 import { User } from "@supabase/supabase-js";
-import { InsertShop, Shop, ShopTags, UpdateShop, Comment } from "../models";
+import { InsertShop, Shop, ShopTags, UpdateShop, Comment, Tag, Category } from "../models";
 import { supabase } from "./supabaseClient";
 
 export async function getShop(id: number): Promise<ShopTags | null> {
@@ -37,6 +37,8 @@ export async function getShopsIds(): Promise<number[]> {
     return data?.map((s) => s.id)??[];
 };
 
+type potentialShopsSelects = "*, tags(*), categories(*)" | "*, tags!inner(*), categories(*)" | "*, tags(*), categories!inner(*)" | "*, tags!inner(*), categories!inner(*)"
+
 export namespace DataService {
 
     export const getAllShops = () => {
@@ -47,12 +49,26 @@ export namespace DataService {
         return supabase.from('shops').select('*, tags(*)').order('created_at', {ascending: false}).limit(12);
     }
 
-    export const searchShops = (query: string)  => {
-        return supabase.rpc('search_shops', { search: query }).select('*, tags(*)');
+    export const searchShops = (query: string, category: Category | null, tags: Tag[])  => {
+        let select = '*';
+        let baseQuery = supabase.rpc('search_shops', { search: query });
+        if (tags.length) {
+            baseQuery = baseQuery.in('tags.id', (tags??[]).map(t => t.id));
+            select += ', tags!inner(*)'
+        } else select += ', tags(*)'
+        if (category) {
+            baseQuery = baseQuery.eq('categories.id', category.id);
+            select += ', categories!inner(*)'
+        } else select += ', categories(*)'
+        return baseQuery.select(select as potentialShopsSelects);
     }
 
     export const getCategories = () => {
         return supabase.from('categories').select('*');
+    }
+
+    export const getTags = () => {
+        return supabase.from('tags').select('*');
     }
 
     export const getFavourites = (user: User)  => {
@@ -104,7 +120,7 @@ export namespace DataService {
     }
 
     export const shopCoordinates = (shop: Shop) => {
-        const mapCentercoordsArray = shop.location_coordinates ? shop.location_coordinates.split(' ').map((x) => parseFloat(x)) : undefined;
+        const mapCentercoordsArray = shop.location_coordinates ? shop.location_coordinates.split(' ').map((x: string) => parseFloat(x)) : undefined;
 	    const mapCentercoords: [number, number] | undefined = mapCentercoordsArray ? [mapCentercoordsArray[0], mapCentercoordsArray[1]] : undefined;
         return mapCentercoords;
     }

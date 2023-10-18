@@ -1,4 +1,5 @@
 import { createTheme, SxProps } from "@mui/material/styles";
+import { esES } from '@mui/material/locale';
 import { Open_Sans } from "@next/font/google";
 
 export const BASE_URL: string = process.env.NEXT_PUBLIC_BASE_URL??'';
@@ -65,7 +66,7 @@ export const theme = createTheme({
             main: "#521E1E"
         }
     }
-});
+}, esES);
 
 
 export const buttonStyles: SxProps = {

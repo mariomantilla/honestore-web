@@ -25,7 +25,14 @@ import { useEffect, useState } from 'react';
 import { theme } from '../constants';
 import Loader from './loader';
 import UserAvatar from './userAvatar';
-import { useUserContext } from '../context/userData';
+import Box from '@mui/material/Box';
+import Autocomplete from '@mui/material/Autocomplete';
+import TextField, { TextFieldProps } from '@mui/material/TextField';
+import { useGlobalConfigContext } from '../context/globalConfig';
+import Select from '@mui/material/Select';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import { Category } from '../models';
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -99,6 +106,101 @@ function SearchInput(props: InputBaseProps) {
 	</>
 	);
 
+}
+
+const StyledTagsFilter = styled(TextField)(({ theme }) => ({
+	'& .MuiInputBase-root': {
+		backgroundColor: alpha(theme.palette.common.white, 0.15),
+		borderRadius: "5px", //theme.shape.borderRadius,
+		padding: theme.spacing(0.5, 1.5, 0.5, 1.5)
+	},
+	'& .MuiInputBase-input': {
+		color: '#ffffff',
+		padding: theme.spacing(1, 1, 1, 2),
+		transition: theme.transitions.create('width'),
+		width: '100%',
+		minWidth: "100px !important"
+	},
+	'& .MuiButtonBase-root': {
+		color: "#ffffff"
+	},
+	'& .MuiOutlinedInput-notchedOutline, .Mui-focused .MuiOutlinedInput-notchedOutline' :{
+		borderWidth: 0,
+		outline: 0,
+	}
+}));
+
+const StyledCategoryFilter = styled(Select)(({ theme }) => ({
+	backgroundColor: alpha(theme.palette.common.white, 0.15),
+	borderRadius: "5px", //theme.shape.borderRadius,
+	padding: theme.spacing(0.5, 1.5, 0.5, 1.5),
+	'& .MuiInputBase-input': {
+		color: '#ffffff',
+		padding: theme.spacing(1, 1, 1, 0),
+		transition: theme.transitions.create('width'),
+		width: '100%',
+		minWidth: "100px !important",
+		fontSize: '0.9rem'
+	},
+	'& .MuiButtonBase-root': {
+		color: "#ffffff"
+	},
+	'& .MuiSelect-icon': {
+		color: "#ffffff"
+	},
+	'& .MuiOutlinedInput-notchedOutline, .Mui-focused .MuiOutlinedInput-notchedOutline' :{
+		borderWidth: 0,
+		outline: 0,
+	}
+}));
+
+function FiltersBar() {
+
+	const { tags: selectedTags, updateTags, category, updateCategory } = useSearchContext();
+	const { tags, categories } = useGlobalConfigContext();
+	const router = useRouter();
+
+	const catsById = categories.reduce((result: { [key: string]: Category }, cat) => {
+		result[cat.id.toString()] = cat;
+		return result;
+	}, {});
+
+	return (
+		<Container maxWidth="lg" sx={{
+			display: router.pathname == '/search' ? "flex" : "none",
+			justifyContent: "center",
+			paddingBottom: 1,
+			flexWrap: "wrap",
+			gap: 2
+		}}>
+			<StyledCategoryFilter
+				renderValue={v => v ? catsById[v as string].name : 'Categoría'}
+				value={category?.id??''}
+				displayEmpty={true}
+				onChange={e => updateCategory(e.target.value != '' ? catsById[e.target.value as string] : null)}
+			>
+				<MenuItem value={''}>Todas</MenuItem>
+				{categories.map(c => (
+					<MenuItem key={c.id} value={c.id}>{c.name}</MenuItem>
+				))}
+			</StyledCategoryFilter>
+			<Autocomplete
+				multiple
+				limitTags={2}
+				id="filterByImpact"
+				options={tags}
+				value={selectedTags}
+				onChange={(e, val) => updateTags(val)}
+				getOptionLabel={(option) => option.name}
+				renderInput={(params) => (
+					<StyledTagsFilter {...params} placeholder="Añadir Filtro" />
+				)}
+				filterSelectedOptions={true}
+				isOptionEqualToValue={(a,b) => a.id == b.id}
+				sx={{ minWidth: '300px'}}
+			/>
+		</Container>
+	);
 }
 
 function ResponsiveAppBar() {
@@ -206,6 +308,7 @@ function ResponsiveAppBar() {
 						</IconButton>
 					</Toolbar>
 				</Container>
+				<FiltersBar />
 				<Loader />
 			</AppBar>
 			{renderMenu}

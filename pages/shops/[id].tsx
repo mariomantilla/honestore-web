@@ -390,7 +390,6 @@ export default function ShopPage({ shop }: { shop: ShopTags }) {
 								}]}
 							/>
 						</Avatar>
-						<OwnerEditSection shop={shop} />
 						<Box sx={{ display: "flex", gap: 1, alignItems: "baseline", flexWrap: "wrap", justifyContent: "center" }}>
 							{tagsChips}
 						</Box>
@@ -409,6 +408,7 @@ export default function ShopPage({ shop }: { shop: ShopTags }) {
 						<ViewMoreText text={shop.description} lines={6} />
 					</Box>
 				</Box>
+				<OwnerEditSection shop={shop} />
 				<Divider />
 				<CommentCarrousel comments={comments} />
 				<Divider />
