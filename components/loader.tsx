@@ -12,7 +12,6 @@ export default function Loader() {
         const startLoading = (url: string) => setIsLoading(true);
         const endLoading = (url: string) => setIsLoading(false);
 
-
         router.events.on("routeChangeStart", startLoading);
         router.events.on("routeChangeComplete", endLoading);
         router.events.on("routeChangeError", endLoading);

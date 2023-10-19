@@ -59,7 +59,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 function SearchInput(props: InputBaseProps) {
 
-	const { searchQuery, updateSearch } = useSearchContext();
+	const { searchQuery, updateUrl } = useSearchContext();
 	const [text, setText] = useState('');
 
 	useEffect(() => {
@@ -86,12 +86,12 @@ function SearchInput(props: InputBaseProps) {
 				fullWidth
 				value={text}
 				onChange={(e) => setText(e.target.value)}
-				onKeyDown={(e) => { if (e.key == 'Enter') updateSearch(text) }}
+				onKeyDown={(e) => { if (e.key == 'Enter') updateUrl({newQuery: text}) }}
 				{...props}
 			/>
 
 		</Search>
-		<IconButton onClick={() => { updateSearch(text) }} sx={buttonStyles} size={"small"} >
+		<IconButton onClick={() => { updateUrl({newQuery: text}) }} sx={buttonStyles} size={"small"} >
 			<SearchIcon />
 		</IconButton>
 		<Button
@@ -156,7 +156,7 @@ const StyledCategoryFilter = styled(Select)(({ theme }) => ({
 
 function FiltersBar() {
 
-	const { tags: selectedTags, updateTags, category, updateCategory } = useSearchContext();
+	const { tags: selectedTags, category, updateUrl } = useSearchContext();
 	const { tags, categories } = useGlobalConfigContext();
 	const router = useRouter();
 
@@ -177,7 +177,11 @@ function FiltersBar() {
 				renderValue={v => v ? catsById[v as string].name : 'Categoría'}
 				value={category?.id??''}
 				displayEmpty={true}
-				onChange={e => updateCategory(e.target.value != '' ? catsById[e.target.value as string] : null)}
+				onChange={e => {
+					updateUrl({
+						newCat: e.target.value != '' ? catsById[e.target.value as string] : null
+					})
+				}}
 			>
 				<MenuItem value={''}>Todas</MenuItem>
 				{categories.map(c => (
@@ -190,7 +194,7 @@ function FiltersBar() {
 				id="filterByImpact"
 				options={tags}
 				value={selectedTags}
-				onChange={(e, val) => updateTags(val)}
+				onChange={(e, val) => updateUrl({newTags: val})}
 				getOptionLabel={(option) => option.name}
 				renderInput={(params) => (
 					<StyledTagsFilter {...params} placeholder="Añadir Filtro" />

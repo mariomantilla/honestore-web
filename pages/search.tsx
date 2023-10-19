@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Shop, ShopTags } from "../models";
+import { ShopTags } from "../models";
 import { DataService } from "../lib/data";
 import ShopList from "../components/shopList";
 import { useSearchContext, viewsOptions } from "../context/search";
@@ -19,18 +19,23 @@ const MapWithNoSSR = dynamic(() => import('../components/map'), {
 
 const SearchPage = () => {
 
-    const [loading, setLoading] = useState(true);
+    const { searchQuery, tags, category, view, updateParams } = useSearchContext();
     const [shops, setShops] = useState<ShopTags[]>([]);
-    const { searchQuery, category, tags, view, updateView, extractingParams } = useSearchContext();
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        if (!extractingParams) {
-            DataService.searchShops(searchQuery, category, tags).then((shops) => {
+        let isSubscribed = true;
+        DataService.searchShops(searchQuery, category, tags).then((shops) => {
+            if (isSubscribed) {
                 setShops(shops.data ?? []);
                 setLoading(false);
-            });
+            }
+        });
+        return () => {
+            isSubscribed = false;
         }
-    }, [searchQuery, category, tags, extractingParams]);
+    }, [searchQuery, category, tags]);
+
 
     return (
         <Box sx={{display: "flex", flexDirection: "column", gap: 2}}>
@@ -39,7 +44,7 @@ const SearchPage = () => {
                 <ToggleButtonGroup
                     value={view}
                     exclusive
-                    onChange={(a, b) => { updateView(b) }}
+                    onChange={(a, b) => { updateParams({newView: b}) }}
                     aria-label="vista de tiendas"
                 >
                     <ToggleButton value="list" aria-label="mostrar lista" sx={{gap: 1}}>
@@ -52,12 +57,12 @@ const SearchPage = () => {
                     </ToggleButton>
                 </ToggleButtonGroup>
             </Center>
-            {view == viewsOptions.list ? (
-                <ShopList shops={loading ? new Array(10).fill(null) : shops } />
-            ) : (
-                <MapWithNoSSR shops={shops} />
-            ) }
-            
+            { view == viewsOptions.list ? (
+                    <ShopList shops={loading ? new Array(10).fill(null) : shops } />
+                ) : (
+                    <MapWithNoSSR shops={shops} />
+                ) 
+            }
         </Box>
     );
 }
