@@ -366,7 +366,7 @@ export default function ShopPage({ shop }: { shop: ShopTagsCategories }) {
 
 	const categoriesChips = shop ?
 		shop.categories.map((c: Category, i: number) => (
-			<Chip label={c.name} />
+			<Chip key={c.id} label={c.name} />
 		))
 	: [] ;
 

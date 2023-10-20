@@ -2,7 +2,7 @@ import Box, { BoxProps } from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
 import { DataService } from "../lib/data";
-import { Shop, ShopTags } from "../models";
+import { ShopTags } from "../models";
 import ShopList from "./shopList";
 
 export default function NewShops({ children, ...props }: BoxProps) {
@@ -10,7 +10,7 @@ export default function NewShops({ children, ...props }: BoxProps) {
     const [shops, setShops] = useState<(ShopTags | null)[]>(new Array(12).fill(null));
 
     useEffect(() => {
-        DataService.newShops().then((resp) => setShops(resp.data ?? []));
+        DataService.newShops().then((resp) => setShops(resp.data as ShopTags[]?? []));
     }, []);
 
     props.sx = {

@@ -13,7 +13,7 @@ const MyShopsPage: NextPageWithLayout = () => {
     const user = useUser();
 
     useEffect(() => {
-        if (user) DataService.getShopsByOwner(user).then((shops) => setShops(shops.data ?? []));
+        if (user) DataService.getShopsByOwner(user).then((shops) => setShops(shops.data as ShopTags[] ?? []));
     }, [user]);
 
     return (

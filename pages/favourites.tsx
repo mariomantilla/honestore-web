@@ -15,7 +15,7 @@ const FavouritesPage: NextPageWithLayout = () => {
     const { userFavouriteShopsIds } = useUserContext();
 
     useEffect(() => {
-        if (user) DataService.getFavourites(user).then((shops) => setShops(shops.data ?? []));
+        if (user) DataService.getFavourites(user).then((shops) => setShops(shops.data as ShopTags[] ?? []));
     }, [user]);
 
     return (

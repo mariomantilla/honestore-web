@@ -27,7 +27,7 @@ const SearchPage = () => {
         let isSubscribed = true;
         DataService.searchShops(searchQuery, category, tags).then((shops) => {
             if (isSubscribed) {
-                setShops(shops.data ?? []);
+                setShops(shops.data as ShopTags[] ?? []);
                 setLoading(false);
             }
         });
