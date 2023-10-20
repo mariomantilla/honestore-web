@@ -8,11 +8,11 @@ import MenuItem from '@mui/material/MenuItem';
 import Image from 'next/image';
 import logo from '../public/images/logo2000.jpg'
 import Link from 'next/link';
-import { useSearchContext } from "../context/search";
+import { useSearchContext, viewsOptions } from "../context/search";
 import { alpha, styled, SxProps } from '@mui/material/styles';
 import InputBase, { InputBaseProps } from '@mui/material/InputBase/InputBase';
 import IconButton from '@mui/material/IconButton';
-import AccountCircle from '@mui/icons-material/AccountCircle';
+import Map from '@mui/icons-material/Map';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import Modal from '@mui/material/Modal';
@@ -25,14 +25,13 @@ import { useEffect, useState } from 'react';
 import { theme } from '../constants';
 import Loader from './loader';
 import UserAvatar from './userAvatar';
-import Box from '@mui/material/Box';
 import Autocomplete from '@mui/material/Autocomplete';
-import TextField, { TextFieldProps } from '@mui/material/TextField';
+import TextField from '@mui/material/TextField';
 import { useGlobalConfigContext } from '../context/globalConfig';
 import Select from '@mui/material/Select';
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
 import { Category } from '../models';
+import List from '@mui/icons-material/List';
+import Tooltip from '@mui/material/Tooltip';
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -156,7 +155,7 @@ const StyledCategoryFilter = styled(Select)(({ theme }) => ({
 
 function FiltersBar() {
 
-	const { tags: selectedTags, category, updateUrl } = useSearchContext();
+	const { tags: selectedTags, category, view, updateUrl } = useSearchContext();
 	const { tags, categories } = useGlobalConfigContext();
 	const router = useRouter();
 
@@ -203,6 +202,13 @@ function FiltersBar() {
 				isOptionEqualToValue={(a,b) => a.id == b.id}
 				sx={{ minWidth: '300px'}}
 			/>
+			<Tooltip title={view == viewsOptions.list ? 'Ver mapa' : 'Ver lista' }>
+				<Button variant='contained' color='secondary' onClick={() => {
+					updateUrl({newView: view == viewsOptions.list ? viewsOptions.map : viewsOptions.list }) 
+				}}>
+					{ view == viewsOptions.list ? <Map /> : <List /> }
+				</Button>
+			</Tooltip>
 		</Container>
 	);
 }

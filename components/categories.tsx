@@ -3,19 +3,20 @@ import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
 import { DataService } from "../lib/data";
 import { Category } from "../models";
-import { IKImage } from "imagekitio-react";
 import Skeleton from "@mui/material/Skeleton";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { IconDefinition, faCookieBite, faShirt, faUtensils, faSoap } from '@fortawesome/free-solid-svg-icons'
-import { theme } from "../constants";
 import Link from "next/link";
-import { useSearchContext } from "../context/search";
+import bath from "../resources/categories/bath.svg"
+import food from "../resources/categories/food.svg"
+import shirt from "../resources/categories/shirt.svg"
+import waiter from "../resources/categories/waiter.svg"
+import SvgIcon from "@mui/material/SvgIcon";
+import Image from "next/image"
 
-const icons: { [key: number]: IconDefinition} = {
-    1: faCookieBite,
-    2: faShirt,
-    3: faUtensils,
-    4: faSoap
+const icons: { [key: number]: any} = {
+    1: food,
+    2: shirt,
+    3: waiter,
+    4: bath
 }
 
 
@@ -38,27 +39,12 @@ export default function Categories({ children, ...props }: BoxProps) {
             <Box sx={{display: "flex", gap: 5, padding: 2, paddingTop: 0, justifyContent: "space-evenly", flexWrap: "wrap"}}>
                 {categories.map((c, i) => (
                     <Box key={i} sx={{display: "flex", flexDirection: "column", alignItems: "center", gap:1}}>
-                        {/* {c ? (
-                            <IKImage
-                            width={"200"}
-                            height={"200"}
-                            path={`categories/${c.id}.jpeg`}
-                            transformation={[{
-                                height: "200",
-                                width: "200",
-                                dpr: "2"
-                            }]}
-                            style={{borderRadius: 25}}
-                        />
-                        ) : (
-                            <Skeleton width="250px" height="250px" />
-                        ) } */}
-                        <Box sx={{padding: 3}}>
+                        <Box sx={{padding: 2}}>
                             {c? (
                                 <Link href={`/search?category=${c.id}`}>
-                                    <FontAwesomeIcon icon={icons[c.id]} fontSize={60} color={theme.palette.primary.main} />
+                                    <Image src={icons[c.id]} alt={c.name} width={90} />
                                 </Link>
-                            ):<Skeleton variant="circular" width="60px" height="60px" />}
+                            ):<Skeleton variant="circular" width="90px" height="90px" />}
                         </Box>
                         {c? (
                                 <Link href={`/search?category=${c.id}`}>

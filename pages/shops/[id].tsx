@@ -1,4 +1,4 @@
-import { CommentUser, Profile, Shop, ShopTags, Tag } from "../../models";
+import { Category, CommentUser, Profile, Shop, ShopTags, ShopTagsCategories, Tag } from "../../models";
 import { DataService, getShop, getShopBySlug } from "../../lib/data";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -38,7 +38,7 @@ import TagChip from "../../components/tagChip";
 import { clampStyles } from "../../helpers/lineClamp";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Card from "@mui/material/Card";
-import { CardActions, CardContent, IconButton, Skeleton, TextField } from "@mui/material";
+import { CardActions, CardContent, Chip, IconButton, Skeleton, TextField } from "@mui/material";
 import { localDate } from "../../helpers/datetime";
 import UserAvatar from "../../components/userAvatar";
 
@@ -294,7 +294,7 @@ const FavsDisplay = ({shop}: {shop: Shop}) => {
 	)
 }
 
-export default function ShopPage({ shop }: { shop: ShopTags }) {
+export default function ShopPage({ shop }: { shop: ShopTagsCategories }) {
 
 	const router = useRouter();
 	const [comments, setComments] = useState<(CommentUser | null)[]>([null, null, null]);
@@ -354,13 +354,19 @@ export default function ShopPage({ shop }: { shop: ShopTags }) {
 
 	const onlineChip = shop && shop.online ? (
 		<Tooltip title="Solo online">
-			<LocationOff color="primary" />
+			<LocationOff color="primary" sx={{alignSelf: "baseline"}} />
 		</Tooltip>
 	) : '';
 
 	const tagsChips = shop && Array.isArray(shop.tags) ?
 		shop.tags.map((t: Tag, i: number) => (
 			<TagChip key={i} name={t.name} description={t.description} />
+		))
+	: [] ;
+
+	const categoriesChips = shop ?
+		shop.categories.map((c: Category, i: number) => (
+			<Chip label={c.name} />
 		))
 	: [] ;
 
@@ -400,9 +406,10 @@ export default function ShopPage({ shop }: { shop: ShopTags }) {
 							<FavsDisplay shop={shop} />
 						</Box>
 						{shop.address ? (<Typography variant="body2" color="text.secondary" fontWeight="bold">{shop.address}</Typography>) : ''}
-						<Box sx={{ display: "flex", gap: 2.5, alignItems: "baseline", flexWrap: "wrap" }}>
+						<Box sx={{ display: "flex", gap: 2.5, alignItems: "center", flexWrap: "wrap" }}>
 							{actions}
 							{onlineChip}
+							{categoriesChips}
 						</Box>
 						<Divider />
 						<ViewMoreText text={shop.description} lines={6} />

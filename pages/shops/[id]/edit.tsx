@@ -24,9 +24,14 @@ import { privatePageLayout } from "../../../helpers/privatePageLayout";
 import { ValidatedControlledInput } from "../../../components/validatedControlledInput";
 import Tab from "@mui/material/Tab";
 import TitlePage from "../../../components/titlePage";
-import { Shop, UpdateShop } from "../../../models";
+import { Category, Shop, ShopTags, ShopTagsCategories, Tag, UpdateShop } from "../../../models";
 import { useUserContext } from "../../../context/userData";
 import { socialInfoData } from "../../../constants/socialInfo";
+import Link from "next/link";
+import FormGroup from "@mui/material/FormGroup";
+import Checkbox from "@mui/material/Checkbox";
+import { useGlobalConfigContext } from "../../../context/globalConfig";
+import { Autocomplete, Typography } from "@mui/material";
 
 
 export async function getStaticPaths() {
@@ -65,7 +70,7 @@ const TabPanel = (props: { children: React.ReactNode, value: string, index: stri
 }
 
 
-const EditShopPage = ({ shop }: { shop: Shop }) => {
+const EditShopPage = ({ shop }: { shop: ShopTagsCategories }) => {
 
     const { sendMessage } = useMessagesContext();
     const { profile } = useUserContext();
@@ -85,6 +90,10 @@ const EditShopPage = ({ shop }: { shop: Shop }) => {
     const [email, setEmail] = useState<string | null>(shop.email ?? '');
     const [phone, setPhone] = useState<string | null>(shop.phone ?? '');
     const [whatsapp, setWhatsapp] = useState<string | null>(shop.whatsapp ?? '');
+
+    const [newCategories, setNewCategories] = useState<Category[]>(shop.categories);
+
+    const { categories, tags } = useGlobalConfigContext();
 
     const user = useUser();
 
@@ -136,6 +145,16 @@ const EditShopPage = ({ shop }: { shop: Shop }) => {
     const invalid = social_info.map((info) => info.value).some((x) => x === null) || shopName == '' || shopDescription == '';
 
     const handleSubmission = async () => {
+        newCategories.filter(c => !shop.categories.map(x => x.id).includes(c.id)).map(c => {
+            DataService.addCategory(shop, c).then(resp => {
+                if (resp.error) sendMessage('error', 'Error guardando categorías')
+            })
+        });
+        shop.categories.filter(c => !newCategories.map(x => x.id).includes(c.id)).map(c => {
+            DataService.removeCategory(shop, c).then(resp => {
+                if (resp.error) sendMessage('error', 'Error guardando categorías')
+            })
+        });
         let newData: UpdateShop = {
             name: shopName,
             description: shopDescription,
@@ -150,7 +169,6 @@ const EditShopPage = ({ shop }: { shop: Shop }) => {
             published: true,
             logo_path: logoFileName
         };
-        if (profile?.role == 'admin') newData.owner = null;
         const { data, error } = await DataService.editShop(shop.id, newData);
         if (error) {
             sendMessage("error", error.message);
@@ -160,6 +178,8 @@ const EditShopPage = ({ shop }: { shop: Shop }) => {
         }
     }
 
+    const shopTagsIDs = (shop.tags as Tag[]).map(t => t.id)
+                                 
     return (
         <TitlePage title={`Gestionar ${shop.name}`}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -167,6 +187,7 @@ const EditShopPage = ({ shop }: { shop: Shop }) => {
                     <Tab label="Información básica" value="info" />
                     <Tab label="Localización" value="location" />
                     <Tab label="Contacto y redes sociales" value="contact" />
+                    <Tab label="Sostenibildiad" value="sustainability" />
                 </Tabs>
             </Box>
             <TabPanel value={tab} index="info">
@@ -209,6 +230,19 @@ const EditShopPage = ({ shop }: { shop: Shop }) => {
                         onChange={(event) => {
                             setShopName(event.target.value);
                         }}
+                    />
+                    <Autocomplete
+                        multiple
+                        limitTags={2}
+                        options={categories}
+                        value={newCategories}
+                        onChange={(e, val) => setNewCategories(val)}
+                        getOptionLabel={(option) => option.name}
+                        renderInput={(params) => (
+                            <TextField {...params} placeholder="Añadir categorías" />
+                        )}
+                        filterSelectedOptions={true}
+                        isOptionEqualToValue={(a,b) => a.id == b.id}
                     />
                     <TextField
                         variant="filled"
@@ -270,6 +304,36 @@ const EditShopPage = ({ shop }: { shop: Shop }) => {
                         </Grid>
                     ))}
                 </Grid>
+            </TabPanel>
+            <TabPanel value={tab} index="sustainability">
+                <Center>
+                    <Alert severity="info" sx={{ maxWidth: "700px" }}>
+                        <b>¿Cuáles son los ámbitos sociales y medioambientales en los que tu comercio destaca?</b><br />
+                        Escoje de entre las siguientes opciones las que más se adapten. Recuerda que la información debe ser
+                        {' '}veráz, cualquier información falsa va en contra de nuestros <Link href="/terms">Términos y condiciones</Link>.
+                        <br />
+                    </Alert>
+                </Center>
+                <Container maxWidth="sm">
+                    <FormGroup sx={{padding: 3, gap: 2}}>
+                        {tags.map(t => (
+                            <FormControlLabel
+                                key={t.id}
+                                control={<Checkbox defaultChecked={shopTagsIDs.includes(t.id)} onChange={(e, c) => {
+                                    const action = c ? DataService.addTag : DataService.removeTag;
+                                    action(shop, t).then((resp) => {
+                                        if (resp.error) {
+                                            sendMessage("error", "Error al guardar")
+                                        } else {
+
+                                        }
+                                    })
+                                }} />}
+                                label={<Typography><b>{t.name}:</b> {t.description}</Typography>}
+                            />
+                        ))}
+                    </FormGroup>
+                </Container>
             </TabPanel>
             <Center sx={{flexDirection: "row", gap: 2}}>
                 <Button variant="contained" disabled={invalid} onClick={handleSubmission}>Guardar</Button>

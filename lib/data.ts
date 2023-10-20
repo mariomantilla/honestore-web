@@ -1,29 +1,29 @@
 import { User } from "@supabase/supabase-js";
-import { InsertShop, Shop, ShopTags, UpdateShop, Comment, Tag, Category } from "../models";
+import { InsertShop, Shop, ShopTags, UpdateShop, Comment, Tag, Category, ShopTagsCategories } from "../models";
 import { supabase } from "./supabaseClient";
 
-export async function getShop(id: number): Promise<ShopTags | null> {
+export async function getShop(id: number): Promise<ShopTagsCategories | null> {
     let { data, error, status } = await supabase
     .from("shops")
-    .select("*, tags(*)")
+    .select("*, tags(*), categories(*)")
     .eq("id", id);
 
     if (error) {
     throw error;
     }
-    return data ? data[0] : null;
+    return data ? data[0] as ShopTagsCategories : null;
 };
 
-export async function getShopBySlug(slug: string): Promise<ShopTags | null> {
+export async function getShopBySlug(slug: string): Promise<ShopTagsCategories | null> {
     let { data, error, status } = await supabase
     .from("shops")
-    .select("*, tags(*)")
+    .select("*, tags(*), categories(*)")
     .eq("slug", slug);
 
     if (error) {
     throw error;
     }
-    return data ? data[0] : null;
+    return data ? data[0] as ShopTagsCategories: null;
 };
 
 export async function getShopsIds(): Promise<number[]> {
@@ -89,6 +89,22 @@ export namespace DataService {
 
     export const removeFavourite = (user: User, shop: Shop) => {
         return supabase.from('favourites').delete().eq('shop', shop.id).eq('user', user.id);
+    }
+
+    export const addTag = (shop: Shop, tag: Tag) => {
+        return supabase.from('tagged_shops').insert({'shop': shop.id, 'tag': tag.id});
+    }
+
+    export const removeTag = (shop: Shop, tag: Tag) => {
+        return supabase.from('tagged_shops').delete().eq('shop', shop.id).eq('tag', tag.id);
+    }
+
+    export const addCategory = (shop: Shop, category: Category) => {
+        return supabase.from('shops_categories').insert({'shop': shop.id, 'category': category.id});
+    }
+
+    export const removeCategory = (shop: Shop, category: Category) => {
+        return supabase.from('shops_categories').delete().eq('shop', shop.id).eq('category', category.id);
     }
 
     export const addComment = (text: string, shop: Shop, user: User) => {

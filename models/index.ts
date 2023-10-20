@@ -3,7 +3,8 @@ import { Database } from "../types/supabase";
 
 export type Shop = Database["public"]["Tables"]["shops"]["Row"]
 export type Tag = Database["public"]["Tables"]["tags"]["Row"]
-export type ShopTags = Shop & {tags: Tag | Tag[] | null}
+export type ShopTags = Shop & {tags: Tag[]}
+export type ShopTagsCategories = ShopTags & {categories: Category[]}
 export type InsertShop = Database["public"]["Tables"]["shops"]["Insert"]
 export type UpdateShop = Database["public"]["Tables"]["shops"]["Update"]
 

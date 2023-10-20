@@ -1,6 +1,6 @@
 import Typography from "@mui/material/Typography";
 import Link from "next/link";
-import { Shop, ShopTags, Tag } from "../models";
+import { ShopTags, Tag } from "../models";
 
 import Skeleton from "@mui/material/Skeleton";
 import { FavButton } from "./favButton";
@@ -57,7 +57,7 @@ const ShopCard = ({ shop }: { shop: ShopTags | null }) => {
                     </Typography>
                 </Box>
             </Box>
-            <Box sx={{ display: "flex", flexDirection: "row", padding: 1.5}}>
+            <Box sx={{ display: "flex", flexDirection: "row", padding: 1.5, gap: 1}}>
                 {tagsChips}
             </Box>
         </Paper>

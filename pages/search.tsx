@@ -40,23 +40,6 @@ const SearchPage = () => {
     return (
         <Box sx={{display: "flex", flexDirection: "column", gap: 2}}>
             <OverrideHead title="Buscar tiendas en Honestore" />
-            <Center>
-                <ToggleButtonGroup
-                    value={view}
-                    exclusive
-                    onChange={(a, b) => { updateParams({newView: b}) }}
-                    aria-label="vista de tiendas"
-                >
-                    <ToggleButton value="list" aria-label="mostrar lista" sx={{gap: 1}}>
-                        <List />
-                        <Typography sx={{textTransform: "none"}}>Lista</Typography>
-                    </ToggleButton>
-                    <ToggleButton value="map" aria-label="mostrar mapa" sx={{gap: 1}}>
-                        <Map />
-                        <Typography sx={{textTransform: "none"}}>Mapa</Typography>
-                    </ToggleButton>
-                </ToggleButtonGroup>
-            </Center>
             { view == viewsOptions.list ? (
                     <ShopList shops={loading ? new Array(10).fill(null) : shops } />
                 ) : (
