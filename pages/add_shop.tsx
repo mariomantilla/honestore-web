@@ -50,7 +50,7 @@ export default function AddShopPage() {
 
     const [activeStep, setActiveStep] = useState(0);
     const [uploading, setUploading] = useState(false);
-    const [logoFileName, setLogoFileName] = useState('profile-pic-red2_lhut-Ebk7.png');
+    const [logoFileName, setLogoFileName] = useState();
     const [shopName, setShopName] = useState('');
     const [shopDescription, setShopDescription] = useState('');
 
