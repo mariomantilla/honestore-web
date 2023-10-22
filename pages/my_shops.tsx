@@ -17,7 +17,7 @@ const MyShopsPage: NextPageWithLayout = () => {
     }, [user]);
 
     return (
-        <TitlePage title="Mis Tiendas">
+        <TitlePage title="Mis comercios">
             <ShopList shops={shops}></ShopList>
         </TitlePage>
     );

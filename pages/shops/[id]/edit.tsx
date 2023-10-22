@@ -173,7 +173,7 @@ const EditShopPage = ({ shop }: { shop: ShopTagsCategories }) => {
         if (error) {
             sendMessage("error", error.message);
         } else {
-            sendMessage("success", "Tienda editada correctamente");
+            sendMessage("success", "comercio editado correctamente");
             fetch('/api/updateShop?id=' + shop.id.toString()).then((res) => res.json());
         }
     }
@@ -223,7 +223,7 @@ const EditShopPage = ({ shop }: { shop: ShopTagsCategories }) => {
                     </Center>
                     <TextField
                         variant="filled"
-                        label="Nombre de la tienda"
+                        label="Nombre del comercio"
                         required={true}
                         fullWidth
                         value={shopName}
@@ -248,7 +248,7 @@ const EditShopPage = ({ shop }: { shop: ShopTagsCategories }) => {
                         variant="filled"
                         multiline
                         minRows={6}
-                        label="Describe tu tienda"
+                        label="Describe tu comercio"
                         fullWidth
                         value={shopDescription}
                         onChange={(event) => {
@@ -262,15 +262,15 @@ const EditShopPage = ({ shop }: { shop: ShopTagsCategories }) => {
                     <Center>
                         <Alert severity="info" sx={{ maxWidth: "700px" }}>
                             <b>Cómo rellenar esta sección:</b><br />
-                            - Primero, dinos de que tipo de tienda se trata. ¿Vendes sólo online o dispones de una tienda física donde atender clientes?<br />
-                            - Segundo, arrastra el marcador en el mapa hasta la ubicación donde se encuentra tu tienda. También puedes hacer click directamente en la posición.
-                            {' '}Si no tienes una tienda física, selecciona el centro de tu área de operaciones. De esta manera los usuarios podrán encontrarte
+                            - Primero, dinos de que tipo de comercio se trata. ¿Vendes sólo online o dispones de un local físico donde atender clientes?<br />
+                            - Segundo, arrastra el marcador en el mapa hasta la ubicación donde se encuentra tu comercio. También puedes hacer click directamente en la posición.
+                            {' '}Si no tienes un local físico, selecciona el centro de tu área de operaciones. De esta manera los usuarios podrán encontrarte
                             {' '}por proximidad incluso si no dispones de un espacio.
                         </Alert>
                     </Center>
                     <Center>
                         <FormControl>
-                            <FormLabel id="online-radio-buttons-group-label">¿Qué tipo de tienda és?</FormLabel>
+                            <FormLabel id="online-radio-buttons-group-label">¿Qué tipo de comercio és?</FormLabel>
                             <RadioGroup
                                 row
                                 aria-labelledby="online-radio-buttons-group-label"
@@ -279,7 +279,7 @@ const EditShopPage = ({ shop }: { shop: ShopTagsCategories }) => {
                                 onChange={(e, v) => setOnline(v === "true")}
                             >
                                 <FormControlLabel value="true" control={<Radio />} label="Solo venta online" />
-                                <FormControlLabel value="false" control={<Radio />} label="Tienda física" />
+                                <FormControlLabel value="false" control={<Radio />} label="Comercio con local físico" />
                             </RadioGroup>
                         </FormControl>
                     </Center>
@@ -319,7 +319,7 @@ const EditShopPage = ({ shop }: { shop: ShopTagsCategories }) => {
                         {tags.map(t => (
                             <FormControlLabel
                                 key={t.id}
-                                control={<Checkbox defaultChecked={shopTagsIDs.includes(t.id)} onChange={(e, c) => {
+                                control={<Checkbox checked={shopTagsIDs.includes(t.id)} onChange={(e, c) => {
                                     const action = c ? DataService.addTag : DataService.removeTag;
                                     action(shop, t).then((resp) => {
                                         if (resp.error) {
@@ -337,7 +337,7 @@ const EditShopPage = ({ shop }: { shop: ShopTagsCategories }) => {
             </TabPanel>
             <Center sx={{flexDirection: "row", gap: 2}}>
                 <Button variant="contained" disabled={invalid} onClick={handleSubmission}>Guardar</Button>
-                <Button variant="contained" href={"/shops/"+shop.slug}>Ir a la tienda</Button>
+                <Button variant="contained" href={"/shops/"+shop.slug}>Ir al comercio</Button>
             </Center>
         </TitlePage>
     )

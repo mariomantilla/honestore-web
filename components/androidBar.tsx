@@ -34,8 +34,8 @@ export default function AndroidBar() {
             <Container maxWidth="lg" sx={{ padding: "15px", display: "flex", gap: {xs: 1, sm: 4}, alignItems: "center", justifyContent: "center", flexDirection: {xs: "column", sm: "row"}, textAlign: "center" }}>
                 ¿Utilizas Android? !Descarga la app!
                 <Button variant="contained" href="/download" LinkComponent={Link}>Descargar</Button>
+                <Button onClick={hide} sx={{textTransform: "unset"}}>En otro momento</Button>
             </Container>
-            <Button onClick={hide}>X</Button>
         </Paper>
     )
 }

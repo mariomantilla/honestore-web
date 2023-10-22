@@ -37,10 +37,10 @@ export default function Home() {
 			<Divider />
 			<Box sx={{ padding: "2rem", display: "flex", justifyContent: "space-evenly", flexWrap: "wrap", gap: "1rem" }}>
 				<Button variant="contained" startIcon={<Search />} LinkComponent={Link} href="/search" sx={{textAlign: "center"}}>
-					Buscar tiendas sostenibles
+					Buscar comercios sostenibles
 				</Button>
 				<Button variant="contained" startIcon={<Store />} LinkComponent={Link} href="/add_shop" sx={{textAlign: "center"}}>
-					¿Tienes una tienda? Añádela
+					¿Tienes un comercio? Añádelo
 				</Button>
 				<Button variant="contained" startIcon={<Diversity1 />} LinkComponent={Link} href="/signup" sx={{textAlign: "center"}}>
 					Únete a la comunidad

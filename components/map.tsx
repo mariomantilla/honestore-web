@@ -119,7 +119,7 @@ function LocationMarker({ callback, center, markerRef }: { callback: NewPosCallb
             ref={markerRef}
             icon={MarkerIcon}
         >
-            <Tooltip direction="bottom">Arrástrame hasta la ubicación de tu tienda</Tooltip>
+            <Tooltip direction="bottom">Arrástrame hasta la ubicación de tu comercio</Tooltip>
         </LeafletMarker>
     )
 }

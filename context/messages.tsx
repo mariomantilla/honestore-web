@@ -4,9 +4,9 @@ type TypesOfMessages = 'success' | 'info' | 'warning' | 'error';
 
 type messagesContextType = {
     msgType: TypesOfMessages;
-    message: string,
+    message: ReactNode,
     show: boolean,
-    sendMessage: (msgType: TypesOfMessages, message: string) => void,
+    sendMessage: (msgType: TypesOfMessages, message: ReactNode) => void,
     hideMessage: (event?: React.SyntheticEvent | Event, reason?: string) => void
 };
 
@@ -30,14 +30,14 @@ type Props = {
 
 export function MessagesProvider({ children }: Props) {
     const [msgType, setMsgType] = useState<TypesOfMessages>('success');
-    const [message, setMessage] = useState<string>('');
+    const [message, setMessage] = useState<ReactNode>('');
     const [show, setShow] = useState<boolean>(false);
 
     const value = {
         msgType: msgType,
         message: message,
         show: show,
-        sendMessage: (msgType: TypesOfMessages, message: string) => {
+        sendMessage: (msgType: TypesOfMessages, message: ReactNode) => {
             setMsgType(msgType);
             setMessage(message);
             setShow(true);

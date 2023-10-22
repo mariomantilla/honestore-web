@@ -78,15 +78,15 @@ const OwnerEditSection = ({ shop }: { shop: Shop }) => {
 
 	let claimAlert = !shop.owner ? (
 		<Alert severity="info" sx={{ maxWidth: "700px" }}>
-			La información sobre esta tienda ha sido recopilada de fuentes públicas y podría ser errónea. El logo puede tener derechos de
+			La información sobre este comercio ha sido recopilada de fuentes públicas y podría ser errónea. El logo puede tener derechos de
 			autor y/o licencias asociadas y solo se indica como distintivo de la marca sin que implique en ningun tipo de vinculación 
 			con la plataforma.
-			{' '}<b>¿Es tu tienda?</b> <Link href={`/shops/${shop.id}/claim`}>Reclámala</Link> y podrás editar y ampliar la información.
+			{' '}<b>¿Es tu comercio?</b> <Link href={`/shops/${shop.id}/claim`}>Reclámala</Link> y podrás editar y ampliar la información.
 		</Alert>
 	) : null;
 
 	let editButton = ((shop.owner && shop.owner == user?.id) || profile?.role == 'admin') ? (
-		<Button variant="contained" href={`/shops/${shop.id}/edit`}>Gestionar tienda</Button>
+		<Button variant="contained" href={`/shops/${shop.id}/edit`}>Gestionar comercio</Button>
 	) : null ;
 
 	return <Center sx={{gap:2}}>
@@ -406,7 +406,7 @@ export default function ShopPage({ shop }: { shop: ShopTagsCategories }) {
 							<FavsDisplay shop={shop} />
 						</Box>
 						{shop.address ? (<Typography variant="body2" color="text.secondary" fontWeight="bold">{shop.address}</Typography>) : ''}
-						<Box sx={{ display: "flex", gap: 2.5, alignItems: "center", flexWrap: "wrap" }}>
+						<Box sx={{ display: "flex", gap: 2, alignItems: "center", flexWrap: "wrap" }}>
 							{actions}
 							{onlineChip}
 							{categoriesChips}

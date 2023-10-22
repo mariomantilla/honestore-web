@@ -23,31 +23,34 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Radio from "@mui/material/Radio";
 import Link from "next/link";
-import { Divider, Typography } from "@mui/material";
+import { Autocomplete, Checkbox, Divider, FormGroup, Typography, styled } from "@mui/material";
 import { DataService } from "../lib/data";
 import { useRouter } from "next/router";
 import { ValidatedControlledInput } from "../components/validatedControlledInput";
-import { InsertShop } from "../models";
+import { Category, InsertShop, Tag } from "../models";
 import { useUserContext } from "../context/userData";
 import { socialInfoData } from "../constants/socialInfo";
 import { Marker } from "leaflet";
+import { useGlobalConfigContext } from "../context/globalConfig";
+
 
 
 const MapWithNoSSR = dynamic(() => import('../components/map'), {
     ssr: false,
 });
 
-
 export default function AddShopPage() {
 
     const { sendMessage } = useMessagesContext();
+    const { categories, tags } = useGlobalConfigContext();
+    const user = useUser();
     const { profile } = useUserContext();
 
     const router = useRouter();
 
     const [activeStep, setActiveStep] = useState(0);
     const [uploading, setUploading] = useState(false);
-    const [logoFileName, setLogoFileName] = useState();
+    const [logoFileName, setLogoFileName] = useState('profile-pic-red2_lhut-Ebk7.png');
     const [shopName, setShopName] = useState('');
     const [shopDescription, setShopDescription] = useState('');
 
@@ -64,17 +67,29 @@ export default function AddShopPage() {
     const [fieldLat, setFieldLat] = useState<string>('');
     const [fieldLng, setFieldLng] = useState<string>('');
 
+    const [shopCategories, setShopCategories] = useState<Category[]>([]);
+    const [shopTags, setShopTags] = useState<Tag[]>([]);
+
     const locationMarkerRef = useRef<Marker>(null);
     const mapRef = useRef<any>(null);
 
-    const user = useUser();
+
+    const [updating, setUpdating] = useState<boolean>(false);
 
     const handlePrev = () => {
         setActiveStep(activeStep - 1);
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+        })
     }
 
     const handleNext = () => {
         setActiveStep(activeStep + 1);
+        window.scrollTo({
+            top: 0,
+            behavior: "auto",
+        })
     }
 
     let social_info = [
@@ -138,12 +153,21 @@ export default function AddShopPage() {
             logo_path: logoFileName
         };
         if (profile?.role == 'admin') newData.owner = null;
+        setUpdating(true);
         const { data, error } = await DataService.addShop(newData);
         if (error) {
             sendMessage("error", error.message);
         } else {
-            sendMessage("success", "Tienda añadida correctamente");
-            router.push(`/shops/${data[0].slug}`);
+            shopCategories.map(async c => {
+                await DataService.addCategory(data[0], c);
+            })
+            shopTags.map(async t => {
+                await DataService.addTag(data[0], t);
+            })
+            sendMessage("success", "Comercio añadido correctamente");
+            fetch('/api/updateShop?id=' + data[0].id.toString()).then((res) => {
+                router.push(`/shops/${data[0].slug}`);
+            });
         }
     }
 
@@ -151,7 +175,7 @@ export default function AddShopPage() {
         (
             <Box key="1">
                 <Center>
-                    <Typography variant="h2">Vamos a añadir tu tienda! Sólo 4 pasos.</Typography>
+                    <Typography variant="h2">Vamos a añadir tu comercio! Sólo 5 pasos.</Typography>
                     {user ? (
                         <Box sx={{ display: "flex", flexDirection: "column", gap: 2, alignItems: "center" }}>
                             Continuar como {user.email}
@@ -162,7 +186,7 @@ export default function AddShopPage() {
                         <Typography sx={{maxWidth: "600px", textAlign: "center"}}>
                             Antes que nada, necesitamos que inices sesión. Si aun no tienes cuenta, crear una es muy sencillo con tu email y una contraseña. También puedes continuar con tu cuenta de Google.
                         </Typography>
-                        <LoginWidget />
+                        <LoginWidget view="sign_up" />
                         </>
                     )}
                 </Center>
@@ -201,7 +225,7 @@ export default function AddShopPage() {
                 </Center>
                 <TextField
                     variant="filled"
-                    label="Nombre de la tienda"
+                    label="Nombre del comercio"
                     required={true}
                     fullWidth
                     value={shopName}
@@ -209,11 +233,24 @@ export default function AddShopPage() {
                         setShopName(event.target.value);
                     }}
                 />
+                <Autocomplete
+                    multiple
+                    limitTags={2}
+                    options={categories}
+                    value={shopCategories}
+                    onChange={(e, val) => setShopCategories(val)}
+                    getOptionLabel={(option) => option.name}
+                    renderInput={(params) => (
+                        <TextField {...params} placeholder="Añadir categorías" />
+                    )}
+                    filterSelectedOptions={true}
+                    isOptionEqualToValue={(a,b) => a.id == b.id}
+                />
                 <TextField
                     variant="filled"
                     multiline
                     minRows={6}
-                    label="Describe tu tienda"
+                    label="Describe tu comercio"
                     fullWidth
                     value={shopDescription}
                     onChange={(event) => {
@@ -229,15 +266,15 @@ export default function AddShopPage() {
                 <Center>
                     <Alert severity="info" sx={{ maxWidth: "700px" }}>
                         <b>Cómo rellenar esta sección:</b><br />
-                        - Primero, dinos de que tipo de tienda se trata. ¿Vendes sólo online o dispones de una tienda física donde atender clientes?<br />
-                        - Segundo, arrastra el marcador en el mapa hasta la ubicación donde se encuentra tu tienda. También puedes hacer click directamente en la posición o escribir las coordenadas en los campos latitud y longitud.
-                        {' '}Si no tienes una tienda física, selecciona el centro de tu área de operaciones. De esta manera los usuarios podrán encontrarte
+                        - Primero, dinos de que tipo de comercio se trata. ¿Vendes sólo online o dispones de un local físico donde atender clientes?<br />
+                        - Segundo, arrastra el marcador en el mapa hasta la ubicación donde se encuentra tu comercio. También puedes hacer click directamente en la posición o escribir las coordenadas en los campos latitud y longitud.
+                        {' '}Si no tienes una local físico, selecciona el centro de tu área de operaciones. De esta manera los usuarios podrán encontrarte
                         {' '}por proximidad incluso si no dispones de un espacio.
                     </Alert>
                 </Center>
                 <Center>
                     <FormControl>
-                        <FormLabel id="online-radio-buttons-group-label">¿Qué tipo de tienda és?</FormLabel>
+                        <FormLabel id="online-radio-buttons-group-label">¿Qué tipo de comercio és?</FormLabel>
                         <RadioGroup
                             row
                             aria-labelledby="online-radio-buttons-group-label"
@@ -246,7 +283,7 @@ export default function AddShopPage() {
                             onChange={(e, v) => setOnline(v === "true")}
                         >
                             <FormControlLabel value="true" control={<Radio />} label="Solo venta online" />
-                            <FormControlLabel value="false" control={<Radio />} label="Tienda física" />
+                            <FormControlLabel value="false" control={<Radio />} label="Comercio con local físico" />
                         </RadioGroup>
                     </FormControl>
                     <Divider sx={{width: "90%", marginBottom: 1.7, marginTop: 0.3}} />
@@ -308,10 +345,38 @@ export default function AddShopPage() {
         ), (
             <Box key="4">
                 <Center>
+                    <Alert severity="info" sx={{ maxWidth: "700px" }}>
+                        <b>¿Cuáles son los ámbitos sociales y medioambientales en los que tu comercio destaca?</b><br />
+                        Escoje de entre las siguientes opciones las que más se adapten. Recuerda que la información debe ser
+                        {' '}veráz, cualquier información falsa va en contra de nuestros <Link href="/terms">Términos y condiciones</Link>.
+                        <br />
+                    </Alert>
+                </Center>
+                <Container maxWidth="sm">
+                    <FormGroup sx={{padding: 3, gap: 2}}>
+                        {tags.map(t => (
+                            <FormControlLabel
+                                key={t.id}
+                                control={<Checkbox checked={shopTags.map(t => t.id).includes(t.id)} onChange={(e, c) => {
+                                    const newTags = c ? shopTags.concat([t]) : shopTags.filter(x => x.id!=t.id);
+                                    setShopTags(newTags);
+                                }} />}
+                                label={<Typography><b>{t.name}:</b> {t.description}</Typography>}
+                            />
+                        ))}
+                    </FormGroup>
+                </Container>
+                <Center sx={{ marginTop: 2 }}>
+                    <Button variant="contained" onClick={handleNext}>Siguiente</Button>
+                </Center>
+            </Box>
+        ), (
+            <Box key="5">
+                <Center>
                     <Typography variant="h2">Listo! Ya hemos terminado</Typography>
                     <Alert severity="warning" sx={{ maxWidth: "700px", textAlign: "justify" }}>
                         <b>Antes de finalizar:</b>
-                        {' '}Soy el propietario de la tienda y/o tengo autorización para publicar esta información.
+                        {' '}Soy el propietario del comercio y/o tengo autorización para publicar esta información.
                         {' '}Al enviar este formulario entiendo que soy el único responsable de la información que contiene.
                         {' '}He leído y acepto los
                         {' '}<Link href="/terms" target="_blank" rel="noreferrer">Términos y Condiciones</Link> y la
@@ -323,28 +388,40 @@ export default function AddShopPage() {
         )
     ];
 
+    const labels = [
+        {l: "Crea un cuenta", o: "o inicia sesión"},
+        {l: "Información básica"},
+        {l: "Localización"},
+        {l: "Contacto y redes sociales"},
+        {l: "Sostenibilidad"},
+    ]
+
+
     return (
         <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
-            <Stepper activeStep={activeStep} alternativeLabel>
-                <Step>
-                    <StepLabel optional={"o inicia sesión"}>Crea un cuenta</StepLabel>
-                </Step>
-                <Step>
-                    <StepLabel>Información básica</StepLabel>
-                </Step>
-                <Step>
-                    <StepLabel>Localización</StepLabel>
-                </Step>
-                <Step>
-                    <StepLabel>Contacto y redes sociales</StepLabel>
-                </Step>
-            </Stepper>
-            <Center>
-                {steps[activeStep]}
-            </Center>
-            <Box sx={{ display: "flex", justifyContent: "center" }}>
-                {activeStep > 0 ? (<Button onClick={handlePrev}>Atrás</Button>) : ''}
-            </Box>
+            { updating ? (<Center>
+                <Typography variant="h3">Actualizando datos...</Typography>
+                <CircularProgress size="5rem" sx={{marginTop: 3}} />
+            </Center>) : (
+            <>
+                <Center sx={{display: {xs: "flex", sm: "none"}}}>
+                    { activeStep <5 ? <Typography variant="h3">Paso {activeStep+1} de 5: {labels[activeStep].l}</Typography> : null }
+                </Center>
+                <Stepper activeStep={activeStep} alternativeLabel sx={{display: {xs: "none", sm: "flex"}}}>
+                    { labels.map((l, i) => (
+                        <Step key={i}>
+                            <StepLabel optional={l.o}>{l.l}</StepLabel>
+                        </Step>
+                    )) }
+                </Stepper>
+                <Center>
+                    {steps[activeStep]}
+                </Center>
+                <Box sx={{ display: "flex", justifyContent: "center" }}>
+                    {activeStep > 0 ? (<Button onClick={handlePrev}>Atrás</Button>) : ''}
+                </Box>
+            </>
+            ) }
         </Box>
     )
 }

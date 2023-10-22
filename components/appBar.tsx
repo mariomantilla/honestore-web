@@ -80,7 +80,7 @@ function SearchInput(props: InputBaseProps) {
 	return (<>
 		<Search>
 			<StyledInputBase
-				placeholder="Buscar tiendas..."
+				placeholder="Buscar comercios..."
 				inputProps={{ 'aria-label': 'buscar' }}
 				fullWidth
 				value={text}
@@ -100,7 +100,7 @@ function SearchInput(props: InputBaseProps) {
 			LinkComponent={Link}
 			href="/search"
 		>
-			Ver tiendas
+			Ver comercios
 		</Button>
 	</>
 	);
@@ -261,7 +261,7 @@ function ResponsiveAppBar() {
 					<Divider key="div1" />,
 					<MenuItem key="account" onClick={handleMenuClose} component={Link} href="/account">Cuenta</MenuItem>,
 					<MenuItem key="favs" onClick={handleMenuClose} component={Link} href="/favourites">Favoritos</MenuItem>,
-					<MenuItem key="shops" onClick={handleMenuClose} component={Link} href="/my_shops">Mis tiendas</MenuItem>,
+					<MenuItem key="shops" onClick={handleMenuClose} component={Link} href="/my_shops">Mis comercios</MenuItem>,
 					<Divider key="div2" />,
 					<MenuItem key="logout" onClick={() => { handleMenuClose(); supabase.auth.signOut(); }}>Cerrar Sesión</MenuItem>
 				]
@@ -270,7 +270,7 @@ function ResponsiveAppBar() {
 					<MenuItem key="login" onClick={handleOpenLogin}>Inicia sesión</MenuItem>,
 					<MenuItem key="singup" onClick={handleOpenLogin}>Crear cuenta</MenuItem>,
 					<Divider key="div" />,
-					<MenuItem key="addShop" onClick={handleMenuClose} component={Link} href="/add_shop">Añade tu tienda gratis</MenuItem>,
+					<MenuItem key="addShop" onClick={handleMenuClose} component={Link} href="/add_shop">Añade tu comercio gratis</MenuItem>,
 				]
 			)}
 		</Menu>
@@ -303,7 +303,7 @@ function ResponsiveAppBar() {
 							LinkComponent={Link}
 							href="/add_shop"
 						>
-							Añade tu tienda gratis
+							Añade tu comercio gratis
 						</Button>
 						<IconButton
 							size="large"

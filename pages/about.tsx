@@ -46,7 +46,7 @@ export default function AboutPage() {
                     <Grid item sm={12} md={6} sx={{ display: "flex", justifyContent: "center", alignItems: { xs: "center", md: "end" }, flexDirection: "column" }}>
                         <Typography variant="h2" component="h2">Juntos, hacemos más</Typography>
                         <Typography variant="h4" sx={{ textAlign: { xs: "center", md: "right" } }} component="div">
-                            Somos una red de personas y tiendas unidas por cambiar hacia un consumo consciente y basado en valores sociales y medioambientales.
+                            Somos una red de personas y comercios unidas por cambiar hacia un consumo consciente y basado en valores sociales y medioambientales.
                         </Typography>
                         <AddContact />
                     </Grid>
@@ -75,7 +75,7 @@ export default function AboutPage() {
                     <Grid item sm={12} md={6} sx={{ display: "flex", justifyContent: "center", alignItems: { xs: "center", md: "end" }, flexDirection: "column" }}>
                         <Typography variant="h2" component="h2">Buscador de emprendimientos</Typography>
                         <Typography variant="h4" sx={{ textAlign: { xs: "center", md: "right" } }} component="div">
-                            Encuentra tiendas cercanas en el mapa, guarda tus preferidas en favoritos,
+                            Encuentra comercios cercanos en el mapa, guarda tus preferidas en favoritos,
                             accede a sus datos y redes sociales o compartir la localización a una aplicación de navegación.
                         </Typography>
                         <Box sx={{ display: "flex", gap: 2, marginTop: 3 }}>

@@ -7,7 +7,7 @@ export default function JoinTheTeamPage() {
     let desc = `
     En Honestore, creemos en un mundo donde cada elección de compra cuenta.
     Nuestro proyecto se centra en reunir a personas comprometidas con la causa de consumir de forma más responsable, 
-    creando una red sólida de usuarios y tiendas con un enfoque claro en la sostenibilidad, el cuidado del medio ambiente, 
+    creando una red sólida de usuarios y comercios con un enfoque claro en la sostenibilidad, el cuidado del medio ambiente, 
     los derechos de los trabajadores y el impacto social.
 
     Explora nuestras opciones de colaboración y encuentra la que mejor se adapte a tus necesidades y valores. 
@@ -19,7 +19,7 @@ export default function JoinTheTeamPage() {
             <Typography variant="h3" sx={{ padding: "0.5em" }}>Relaciones externas</Typography>
             <Typography>
             Buscamos un colaborador apasionado para Honestore, un proyecto revolucionario en consumo responsable. Únete y ayúdanos a crear una comunidad enfocada en la sostenibilidad.
-            Honestore es un proyecto en fase MVP que impulsa el consumo responsable. Estamos construyendo una plataforma para conectar a las personas con tiendas locales y sostenibles que priorizan el medio ambiente y el impacto social.
+            Honestore es un proyecto en fase MVP que impulsa el consumo responsable. Estamos construyendo una plataforma para conectar a las personas con comercios locales y sostenibles que priorizan el medio ambiente y el impacto social.
             </Typography>
             <Typography>
             💡 ¿Cuál sería tu rol? 🤝💼

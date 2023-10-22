@@ -39,7 +39,7 @@ const SearchPage = () => {
 
     return (
         <Box sx={{display: "flex", flexDirection: "column", gap: 2}}>
-            <OverrideHead title="Buscar tiendas en Honestore" />
+            <OverrideHead title="Buscar comercios en Honestore" />
             { view == viewsOptions.list ? (
                     <ShopList shops={loading ? new Array(10).fill(null) : shops } />
                 ) : (

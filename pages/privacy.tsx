@@ -15,7 +15,7 @@ export default function PrivacyPage() {
                 </Typography>
                 <Typography>
                     Esta política solo afecta a los datos de carácter <b>personal</b>. Entendemos por información personal aquella
-                    información que identifica directa o indirectamente a una persona individual (no incluye información sobre tiendas
+                    información que identifica directa o indirectamente a una persona individual (no incluye información sobre comercios
                     o negocios), como el nombre/apellidos, dirección postal, email o número de teléfono. También toda información
                     asociada a estos datos personales.
                 </Typography>
@@ -78,7 +78,7 @@ export default function PrivacyPage() {
                     </li>
                     <li>
                         Servicios de localización de tu dispositivo, si así lo autorizas
-                        (cuando buscas tiendas cercanas usando la localización)
+                        (cuando buscas comercios cercanos usando la localización)
                     </li>
                     <li>Servicios de terceros a los que tu envías la información (formularios de contacto)</li>
                 </ul>
@@ -96,7 +96,7 @@ export default function PrivacyPage() {
                     <li>Proporcionarte resultados cercanos a ti (usando tus datos de ubicación)</li>
                     <li>Contactar contigo para solicitar más información sobre fallos o comentarios recibidos enviados por ti</li>
                     <li>
-                        Identificate como propietario de una tienda (a través de tu email) para poder
+                        Identificate como propietario de un comercio (a través de tu email) para poder
                         hacer cambios en los datos asociados a ella y comunicarnos contigo en relación a ella
                     </li>
                 </ul>

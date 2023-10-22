@@ -8,21 +8,21 @@ export default function TermsPage() {
         <PolicyPage title="Términos y condiciones" lastEdit="28/03/2023" desc="Esta página describe y regula el uso de la plataforma y la web y las condiciones en las que se ofrece el servicio. Por favor, léela detenidamente antes usar la app o el sitio web.">
             <Policy title="Ámbito" id="scope">
                 <Typography>
-                    Honestore es una plataforma de búsqueda de tiendas, negocios, asociaciones, ONGs, etc (tiendas en general)
+                    Honestore es una plataforma de búsqueda de tiendas, negocios, asociaciones, ONGs, etc (comercios en general)
                     por parte de los usuarios a través de una applicación movil y una web. Para ello, se ofrecen
-                    ciertas funcionalidades tanto para los usuarios responsables de las tiendas (añadir tiendas, modificar información,
-                    eliminar tiendas...), como para resto de usuarios (búsqueda por palabras, por ubicación, tiendas favoritas...).
+                    ciertas funcionalidades tanto para los usuarios responsables de los comercios (añadir comercios, modificar información,
+                    eliminar comercios...), como para resto de usuarios (búsqueda por palabras, por ubicación, comercios favoritos...).
                 </Typography>
                 <Typography>
-                    Estos Términos y Condiciones son un contrato entre cualquier usuario (incluídos los responsables de las tiendas)
+                    Estos Términos y Condiciones son un contrato entre cualquier usuario (incluídos los responsables de los comercios)
                     y la plataforma y regulan las condiciones en las que se ofrecen cada uno de los servicios.
                 </Typography>
             </Policy>
-            <Policy title="Datos de las tiendas" id="shopsData">
+            <Policy title="Datos de los comercios" id="shopsData">
                 <Typography>
-                    La información sobre las tiendas dentro de la plataforma es suministrada o bien por los representantes
+                    La información sobre los comercios dentro de la plataforma es suministrada o bien por los representantes
                     de las mismos o por fuentes publicas (como perfiles en redes sociales). En los casos en los que la información se obtuvo
-                    de fuentes públicas, se indicará, ya que podría ser inexacta o errónea. Para aportar información sobre una tienda
+                    de fuentes públicas, se indicará, ya que podría ser inexacta o errónea. Para aportar información sobre un comercio
                     deberás tener autorización expresa de la empresa o personas responsables. Además, dicha información deberá:
                 </Typography>
                 <ul>
@@ -32,12 +32,12 @@ export default function TermsPage() {
                     <li>Cumplir con todos los requisitos legales aplicables</li>
                 </ul>
                 <Typography>
-                    Además, cuando envías los datos de tu tienda o negocio, nos autorizas a contactarte para verificar los
+                    Además, cuando envías los datos de tu comercio o negocio, nos autorizas a contactarte para verificar los
                     datos o solicitar datos adicionales, y a solicitar, si así se considera necesario, documentación que
                     acredite que tienes autorización expresa del vendedor.
                 </Typography>
                 <Typography>
-                    Honestore se reserva el derecho de eliminar cualquier tienda o parte de la información relativa sin
+                    Honestore se reserva el derecho de eliminar cualquier comercio o parte de la información relativa sin
                     previo aviso a su proprio criterio.
                 </Typography>
                 <Typography>
@@ -59,7 +59,7 @@ export default function TermsPage() {
             </Policy>
             <Policy title="Limitación de Responsabilidad" id="responsibility">
                 <Typography>
-                    La plataforma no tiene control de la información publicada por los usuarios sobre las tiendas,
+                    La plataforma no tiene control de la información publicada por los usuarios sobre los comercios,
                     sus datos de contacto, redes sociales, web, logos, fotos,
                     descripciones, o cualquier otro. Por lo tanto la plataforma no se hace responsable
                     de dichos contenidos ni del uso que pueda realizar de ellos, asumiendo el usuario

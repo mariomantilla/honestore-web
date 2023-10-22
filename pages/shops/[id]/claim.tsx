@@ -74,7 +74,7 @@ export default function ClaimShopPage({ shop }: { shop: Shop }) {
                             Estas registrado como <b>{user.email}</b>.
                         </Typography>
                         <Typography>
-                            {' '}¿Eres el dueño de esta tienda y quieres asociarla con tu cuenta para poder gestionarla?
+                            {' '}¿Eres el dueño de este comercio y quieres asociarlo con tu cuenta para poder gestionarlo?
                             {' '}Primero necesitaremos pedirte algunos datos para verificarlo. Para comenzar haz click en &quot;reclamar&quot;
                             {' '}y nos pondremos en contacto contigo al email que aparece arriba para confirmar que tu eres el dueño.
                         </Typography>
