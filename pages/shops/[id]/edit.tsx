@@ -2,7 +2,7 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { useUser } from "@supabase/auth-helpers-react";
-import { useState } from "react"
+import { useRef, useState } from "react"
 import Center from "../../../components/center";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
@@ -32,6 +32,7 @@ import FormGroup from "@mui/material/FormGroup";
 import Checkbox from "@mui/material/Checkbox";
 import { useGlobalConfigContext } from "../../../context/globalConfig";
 import { Autocomplete, Typography } from "@mui/material";
+import { useRouter } from "next/router";
 
 
 export async function getStaticPaths() {
@@ -75,6 +76,8 @@ const EditShopPage = ({ shop }: { shop: ShopTagsCategories }) => {
     const { sendMessage } = useMessagesContext();
     const { profile } = useUserContext();
 
+    const router = useRouter();
+
     const [tab, setTab] = useState("info");
     const [uploading, setUploading] = useState(false);
     const [logoFileName, setLogoFileName] = useState(shop.logo_path);
@@ -92,6 +95,7 @@ const EditShopPage = ({ shop }: { shop: ShopTagsCategories }) => {
     const [whatsapp, setWhatsapp] = useState<string | null>(shop.whatsapp ?? '');
 
     const [newCategories, setNewCategories] = useState<Category[]>(shop.categories);
+    const [newTags, setNewTags] = useState<Tag[]>(shop.tags);
 
     const { categories, tags } = useGlobalConfigContext();
 
@@ -155,11 +159,21 @@ const EditShopPage = ({ shop }: { shop: ShopTagsCategories }) => {
                 if (resp.error) sendMessage('error', 'Error guardando categorías')
             })
         });
+        newTags.filter(t => !shop.tags.map(x => x.id).includes(t.id)).map(t => {
+            DataService.addTag(shop, t).then(resp => {
+                if (resp.error) sendMessage('error', 'Error guardando etiquetas')
+            })
+        });
+        shop.tags.filter(t => !newTags.map(x => x.id).includes(t.id)).map(t => {
+            DataService.removeTag(shop, t).then(resp => {
+                if (resp.error) sendMessage('error', 'Error guardando etiquetas')
+            })
+        });
         let newData: UpdateShop = {
             name: shopName,
             description: shopDescription,
             location_coordinates: coordinates ? `${coordinates[0]} ${coordinates[1]}` : null,
-            web: web?.startsWith('http') ? web : 'https://'+web ,
+            web: web == '' || web?.startsWith('http') ? web : 'https://'+web ,
             instagram: instagram,
             phone: phone,
             online: online,
@@ -173,8 +187,11 @@ const EditShopPage = ({ shop }: { shop: ShopTagsCategories }) => {
         if (error) {
             sendMessage("error", error.message);
         } else {
-            sendMessage("success", "comercio editado correctamente");
-            fetch('/api/updateShop?id=' + shop.id.toString()).then((res) => res.json());
+            sendMessage("success", "Comercio editado correctamente");
+            fetch('/api/updateShop?id=' + shop.id.toString()).then((res) => {
+                router.push("/shops/"+shop.slug)
+            }).catch(e => sendMessage('error', e.toString()));
+
         }
     }
 
@@ -319,15 +336,10 @@ const EditShopPage = ({ shop }: { shop: ShopTagsCategories }) => {
                         {tags.map(t => (
                             <FormControlLabel
                                 key={t.id}
-                                control={<Checkbox checked={shopTagsIDs.includes(t.id)} onChange={(e, c) => {
-                                    const action = c ? DataService.addTag : DataService.removeTag;
-                                    action(shop, t).then((resp) => {
-                                        if (resp.error) {
-                                            sendMessage("error", "Error al guardar")
-                                        } else {
-
-                                        }
-                                    })
+                                control={<Checkbox checked={newTags.map(x => x.id).includes(t.id)}
+                                onChange={(e, c) => {
+                                    const resutingTags = c ? newTags.concat([t]) : newTags.filter(x => x.id!=t.id);
+                                    setNewTags(resutingTags);
                                 }} />}
                                 label={<Typography><b>{t.name}:</b> {t.description}</Typography>}
                             />
@@ -336,8 +348,8 @@ const EditShopPage = ({ shop }: { shop: ShopTagsCategories }) => {
                 </Container>
             </TabPanel>
             <Center sx={{flexDirection: "row", gap: 2}}>
-                <Button variant="contained" disabled={invalid} onClick={handleSubmission}>Guardar</Button>
-                <Button variant="contained" href={"/shops/"+shop.slug}>Ir al comercio</Button>
+                <Button variant="contained" disabled={invalid} onClick={handleSubmission}>Guardar y volver</Button>
+                <Button variant="contained" href={"/shops/"+shop.slug}>Cancelar</Button>
             </Center>
         </TitlePage>
     )

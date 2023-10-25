@@ -142,7 +142,7 @@ export default function AddShopPage() {
             name: shopName,
             description: shopDescription,
             location_coordinates: `${coordinates[0]} ${coordinates[1]}`,
-            web: web,
+            web: web == '' || web?.startsWith('http') ? web : 'https://'+web,
             instagram: instagram,
             phone: phone,
             online: online,

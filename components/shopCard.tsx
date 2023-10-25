@@ -23,7 +23,7 @@ const ShopCard = ({ shop }: { shop: ShopTags | null }) => {
     return (
         <Paper elevation={2} sx={{display: "flex", flexDirection: "column", height: "100%"}}>
             <Box sx={{ display: "flex", flexDirection: "row", columnGap: 2, padding: 1.5, paddingBottom: 0 }}>
-                <Box sx={{ flexShrink: 0 }}>
+                <Box sx={{ flexShrink: 0, display: {xs: "none", sm: "block"} }}>
                     {shop ? (
                         <Link href={'/shops/' + shop.slug}>
                             <Avatar
@@ -44,6 +44,27 @@ const ShopCard = ({ shop }: { shop: ShopTags | null }) => {
                         </Link>
                     ) : (<Skeleton variant='circular' height={120} width={120} />)}
                 </Box>
+                <Box sx={{ flexShrink: 0, display: {xs: "block", sm: "none"} }}>
+                    {shop ? (
+                        <Link href={'/shops/' + shop.slug}>
+                            <Avatar
+                                sx={{ width: "60px", height: "60px" }}
+                                alt={shop.name ?? ''}
+                            >
+                                <IKImage
+                                    width={"60"}
+                                    height={"60"}
+                                    path={`shops/${shop.logo_path}`}
+                                    transformation={[{
+                                        height: "60",
+                                        width: "60",
+                                        dpr: "2"
+                                    }]}
+                                />
+                            </Avatar>
+                        </Link>
+                    ) : (<Skeleton variant='circular' height={120} width={120} />)}
+                </Box>
                 <Box sx={{ display: "flex", flexDirection: "column", rowGap: 0, flexGrow: 1, minWidth: 0 }}>
                     <Box sx={{ display: "flex" }}>
                         {shop ? (
@@ -57,7 +78,15 @@ const ShopCard = ({ shop }: { shop: ShopTags | null }) => {
                     </Typography>
                 </Box>
             </Box>
-            <Box sx={{ display: "flex", flexDirection: "row", padding: 1.5, gap: 1}}>
+            <Box sx={{
+                display: "flex",
+                flexDirection: "row",
+                padding: 1.5,
+                gap: 1,
+                overflow: "hidden",
+                flexWrap: "wrap-reverse",
+                maxHeight: "3.2rem"
+             }}>
                 {tagsChips}
             </Box>
         </Paper>

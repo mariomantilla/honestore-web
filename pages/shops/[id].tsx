@@ -114,7 +114,7 @@ const ViewMoreText = ({ text, lines, fontSize = "1rem" }: { text: string | null,
 
 	return (
 		<Box sx={{display: "flex", gap: 1, flexDirection: "column"}}>
-			<Typography sx={Object.assign(open ? clampStyles(60) : clampStyles(lines), {fontSize: fontSize})} ref={elementRef}>{text}</Typography>
+			<Typography sx={Object.assign(open ? clampStyles(60) : clampStyles(lines), {fontSize: fontSize, whiteSpaces: "pre-wrap"})} ref={elementRef}>{text}</Typography>
 			{ visible ? (open ? 
 			<i className="viewMore" onClick={() => {setOpen(false)}} style={{alignSelf: "flex-end"}}>Leer menos</i> 
 			:  <i className="viewMore" onClick={() => {setOpen(true)}} style={{alignSelf: "flex-end"}}>Leer más</i> 
@@ -124,7 +124,7 @@ const ViewMoreText = ({ text, lines, fontSize = "1rem" }: { text: string | null,
 
 }
 
-const CommentCard = ({comment}: {comment: CommentUser | null}) => {
+const CommentCard = ({comment, update}: {comment: CommentUser | null, update: Function}) => {
 
 	const user = comment?.user as Profile | null;
 	const [deleted, setDeleted] = useState(false);
@@ -133,7 +133,7 @@ const CommentCard = ({comment}: {comment: CommentUser | null}) => {
 	const handleDelete = () => {
 		if (comment) {
 			DataService.removeComment(comment).then((r) => {
-				if (!r.error) setDeleted(true);
+				if (!r.error) update();
 			});
 		}
 	}
@@ -215,7 +215,7 @@ const AddComment = ({shop, callback}: {shop: Shop, callback: Function}) => {
 	);
 }
 
-const CommentCarrousel = ({comments}: {comments: (CommentUser | null)[]}) => {
+const CommentCarrousel = ({comments, update}: {comments: (CommentUser | null)[], update: Function}) => {
 
 	const [showLeft, setShowLeft] = useState(false);
 	const [showRight, setShowRight] = useState(false);
@@ -239,7 +239,8 @@ const CommentCarrousel = ({comments}: {comments: (CommentUser | null)[]}) => {
         checkScroll();
     }, [comments]);
 
-	return (
+	return comments.length == 0 ? null : (
+		<>
 		<Box sx={{overflowX: "scroll", padding: "5px", display: "flex", scrollBehavior: "smooth"}} className="noscrollbar" ref={elementRef} onScroll={checkScroll}>
 			<Box sx={{
 				flex: 1, position: "sticky", zIndex: 1,
@@ -253,11 +254,8 @@ const CommentCarrousel = ({comments}: {comments: (CommentUser | null)[]}) => {
 			</Box>
 			<Box sx={{display: "flex", gap: 2, width: "max-content", margin: "0 -35px"}}>
 				{comments.map((c, i) => (
-					<CommentCard key={i} comment={c} />
+					<CommentCard key={i} comment={c} update={update} />
 				))}
-				{comments.length == 0 ? (
-					<Box sx={{display: "flex", alignItems: "center", height: "100px"}}>Aún no hay opiniones</Box>
-				) : ''}
 			</Box>
 			<Box sx={{
 				flex: 1, position: "sticky",
@@ -269,6 +267,8 @@ const CommentCarrousel = ({comments}: {comments: (CommentUser | null)[]}) => {
 				</IconButton>
 			</Box>
 		</Box>
+		<Divider />
+		</>
 	);
 }
 
@@ -417,8 +417,7 @@ export default function ShopPage({ shop }: { shop: ShopTagsCategories }) {
 				</Box>
 				<OwnerEditSection shop={shop} />
 				<Divider />
-				<CommentCarrousel comments={comments} />
-				<Divider />
+				<CommentCarrousel comments={comments} update={updateComments} />
 				<AddComment shop={shop} callback={updateComments}></AddComment>
 				<Divider />
 				{shop.online ? null : (<>
