@@ -143,7 +143,7 @@ const CommentCard = ({comment, update}: {comment: CommentUser | null, update: Fu
 			<CardActions sx={{borderTop: "1px solid #eee"}}>
 				<Box sx={{padding: 1, display: "flex", gap: 2, width: "100%"}}>
 					{ comment ? (
-						<UserAvatar uuid={user?.id} size={38} />
+						<UserAvatar profile={user} size={38} />
 					) : (<Skeleton variant="circular" width={40} height={40} />) }
 					<Box sx={{display: "flex", flexDirection: "column", flexGrow: "1"}}>
 						{ comment ? (<b>{user?.name}</b>) : (<Skeleton sx={{width: "200px", maxWidth: "50vw"}} />) }

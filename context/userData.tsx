@@ -8,13 +8,15 @@ type userContextType = {
     profile: Profile | null;
     addFavourite: (id: number) => void;
     removeFavourite: (id: number) => void;
+    setProfile: (profile: Profile) => void;
 };
 
 const userContextDefaultValues: userContextType = {
     userFavouriteShopsIds: [],
     profile: null,
     addFavourite: (id) => {},
-    removeFavourite: (id) => {}
+    removeFavourite: (id) => {},
+    setProfile: (profile) => {}
 };
 
 const UserContext = createContext<userContextType>(userContextDefaultValues);
@@ -46,7 +48,8 @@ export function UserProvider({ children }: Props) {
             userFavouriteShopsIds: favs,
             profile: profile,
             addFavourite: (id) => setFavs(favs.concat([id])),
-            removeFavourite: (id) => setFavs(favs.filter((x) => x != id))
+            removeFavourite: (id) => setFavs(favs.filter((x) => x != id)),
+            setProfile: setProfile
         });
     }, [favs, profile]);
 

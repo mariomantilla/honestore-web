@@ -5,7 +5,7 @@ import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
 import Center from "../components/center";
 import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import Modal from "@mui/material/Modal";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
@@ -14,33 +14,48 @@ import { NextPageWithLayout } from "./_app";
 import { privatePageLayout } from "../helpers/privatePageLayout";
 import TitlePage from "../components/titlePage";
 import { useMessagesContext } from "../context/messages";
+import Avatar from "@mui/material/Avatar";
+import CircularProgress from "@mui/material/CircularProgress";
+import { IKImage, IKUpload } from "imagekitio-react";
+import Tooltip from "@mui/material/Tooltip";
+import UserAvatar from "../components/userAvatar";
+import { useUserContext } from "../context/userData";
+import { Profile } from "../models";
+
+
+const avatarSize = 128;
 
 
 const AccountPage: NextPageWithLayout = () => {
 
     const user = useUser();
+    const { profile, setProfile } = useUserContext();
     const { sendMessage } = useMessagesContext();
     const supabase = useSupabaseClient()
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
+    const [bio, setBio] = useState('');
     const [password, setPassword] = useState('');
-    const [modified, setModified] = useState(false);
+    const [modifiedUser, setModifiedUser] = useState(false);
+    const [modifiedProfile, setModifiedProfile] = useState(false);
     const [deleteOpen, setDeleteOpen] = useState(false);
+    const [uploading, setUploading] = useState(false);
+    const [avatarFileName, setAvatarFileName] = useState<string|null>(null);
     const handleOpenDelete = () => setDeleteOpen(true);
     const handleCloseDelete = () => setDeleteOpen(false);
     const router = useRouter();
 
     useEffect(() => {
         setEmail(user?.email??'');
-        const getAndSetName = async (id: string) => {
-            const { data, error } = await supabase.from('profiles').select('name').eq('id', id);
-            if (error) sendMessage('error', error.message);
-            else {
-                setName(data[0].name);
-            }
+    }, [user]);
+
+    useEffect(() => {
+        if (profile) {
+            setName(profile.name??'');
+            setAvatarFileName(profile.avatar??'')
+            setBio(profile.bio??'')
         }
-        if (user) getAndSetName(user.id);
-    }, [user, supabase, sendMessage]);
+    }, [profile])
 
 
     const handleDelete = async () => {
@@ -58,14 +73,20 @@ const AccountPage: NextPageWithLayout = () => {
         if (error) {
             sendMessage('error', error.message);
         } else {
+            setModifiedUser(false);
             setPassword('');
-            const resp = await supabase.from('profiles').update({ name: name }).eq('id', user?.id)
-            if (resp.error) { 
-                sendMessage('error', resp.error.message);
-            } else {
-                setModified(false);
-                sendMessage('success', 'Guardado correctamente. Recuerda que para cambiar tu email deberás confirmar tu nueva dirección.');
-            }
+            sendMessage('success', 'Guardado correctamente.'+ (email != user?.email ? ' Recuerda que para cambiar tu email deberás confirmar tu nueva dirección.' : ''));
+        }
+    };
+
+    const updateProfile = async () => {
+        const {data, error} = await supabase.from('profiles').update({ name: name, avatar: avatarFileName, bio: bio }).eq('id', user?.id).select()
+        if (error) {
+            sendMessage('error', error.message);
+        } else {
+            setModifiedProfile(false);
+            setProfile(data[0] as Profile);
+            sendMessage('success', 'Guardado correctamente.');
         }
     };
 
@@ -85,15 +106,51 @@ const AccountPage: NextPageWithLayout = () => {
         </Paper>
       </Modal>);
 
+    const mockProfile : Profile | null = profile ? { ...profile,  ...{avatar: avatarFileName} } : null;
+
     return (
         <TitlePage title="Mi cuenta">
             <Center>
                 <Container maxWidth="sm" sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-                    <TextField placeholder="¿Cómo te gusta que te llamen?" variant="filled" color="secondary" label="Nombre" value={name} onChange={(e) => {setName(e.target.value); setModified(true)}} />
-                    <TextField placeholder="Escribe tu email…" variant="filled" color="secondary" label="Email" value={email} onChange={(e) => {setEmail(e.target.value); setModified(true)}} />
+                    <Typography variant="h3">Datos personales</Typography>
+                    <Center sx={{gap: 2}}>
+                        <label>
+                            <Tooltip title={avatarFileName ? 'Haz click para cambiarlo' : 'Haz click para subir tu foto o avatar'}>
+                                <Avatar sx={{ width: avatarSize, height: avatarSize }} className={avatarFileName ? 'editLogo' : ''}>
+                                    {uploading ? (<CircularProgress />) : <UserAvatar profile={mockProfile} size={avatarSize} /> }
+                                </Avatar>
+                            </Tooltip>
+                            <IKUpload
+                                useUniqueFileName={true}
+                                responseFields={["tags"]}
+                                folder={"/users"}
+                                onUploadStart={() => setUploading(true)}
+                                onError={(err) => { sendMessage('error', err.message); setUploading(false); }}
+                                onSuccess={(res) => { sendMessage('success', "Foto subida correctamente"); setAvatarFileName(res.name); setUploading(false); setModifiedProfile(true)}}
+                            />
+                        </label>
+                        { !avatarFileName ? <Typography variant="caption">Este es tu avatar por defecto, haz click para subir una foto.</Typography> : <Button onClick={() => {setAvatarFileName(''); setModifiedProfile(true)}}>Eliminar foto</Button>}
+                    </Center>
+                    <TextField placeholder="Tu nombre público" variant="filled" color="secondary" label="Nombre" value={name} onChange={(e) => {setName(e.target.value); setModifiedProfile(true)}} />
+                    <TextField
+                        variant="filled"
+                        multiline
+                        minRows={3}
+                        label="Bio"
+                        placeholder="Descríbete en pocas palabras"
+                        fullWidth
+                        value={bio}
+                        onChange={(event) => {
+                            setModifiedProfile(true);
+                            setBio(event.target.value);
+                        }}
+                    />
+                    <Button variant="contained" onClick={updateProfile} disabled={!modifiedProfile}>Actualizar</Button>
                     <Divider />
-                    <TextField placeholder="Elige una nueva contraseña…" variant="filled" color="secondary" label="Nueva contraseña" type="password" value={password} onChange={(e) => {setPassword(e.target.value); setModified(true)}} />
-                    <Button variant="contained" onClick={updateUser} disabled={!modified}>Actualizar</Button>
+                    <Typography variant="h3">Datos de la cuenta</Typography>
+                    <TextField placeholder="No se mostrará públicamente" variant="filled" color="secondary" label="Email" value={email} onChange={(e) => {setEmail(e.target.value); setModifiedUser(true)}} />
+                    <TextField placeholder="Elige una nueva contraseña…" variant="filled" color="secondary" label="Nueva contraseña" type="password" value={password} onChange={(e) => {setPassword(e.target.value); setModifiedUser(true)}} />
+                    <Button variant="contained" onClick={updateUser} disabled={!modifiedUser}>Actualizar</Button>
                     <Divider />
                     <div><Button onClick={handleOpenDelete} color="error">Eliminar cuenta</Button></div>
                 </Container>

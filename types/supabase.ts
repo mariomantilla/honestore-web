@@ -133,7 +133,10 @@ export interface Database {
           author: string
           body: string
           created_at: string
+          description: string | null
+          hero: string | null
           id: number
+          slug: string
           title: string
           updated_at: string
         }
@@ -141,7 +144,10 @@ export interface Database {
           author: string
           body: string
           created_at?: string
+          description?: string | null
+          hero?: string | null
           id?: number
+          slug: string
           title: string
           updated_at?: string
         }
@@ -149,7 +155,10 @@ export interface Database {
           author?: string
           body?: string
           created_at?: string
+          description?: string | null
+          hero?: string | null
           id?: number
+          slug?: string
           title?: string
           updated_at?: string
         }
@@ -164,19 +173,22 @@ export interface Database {
       }
       profiles: {
         Row: {
-          avatar: number | null
+          avatar: string | null
+          bio: string | null
           id: string
           name: string | null
           role: string | null
         }
         Insert: {
-          avatar?: number | null
+          avatar?: string | null
+          bio?: string | null
           id: string
           name?: string | null
           role?: string | null
         }
         Update: {
-          avatar?: number | null
+          avatar?: string | null
+          bio?: string | null
           id?: string
           name?: string | null
           role?: string | null
@@ -385,25 +397,25 @@ export interface Database {
       }
       tags: {
         Row: {
-          created_at: string | null
+          created_at: string
           description: string
           id: number
           name: string
-          updated_at: string | null
+          updated_at: string
         }
         Insert: {
-          created_at?: string | null
+          created_at?: string
           description: string
           id?: number
           name: string
-          updated_at?: string | null
+          updated_at?: string
         }
         Update: {
-          created_at?: string | null
+          created_at?: string
           description?: string
           id?: number
           name?: string
-          updated_at?: string | null
+          updated_at?: string
         }
         Relationships: []
       }
@@ -421,6 +433,20 @@ export interface Database {
         Returns: undefined
       }
       nearby_shops:
+        | {
+            Args: {
+              location: string
+            }
+            Returns: {
+              id: number
+              created_at: string
+              name: string
+              description: string
+              logo: string
+              location: string
+              updated_at: string
+            }[]
+          }
         | {
             Args: {
               location?: string
@@ -449,20 +475,6 @@ export interface Database {
               updated_at: string
               web: string | null
               whatsapp: string | null
-            }[]
-          }
-        | {
-            Args: {
-              location: string
-            }
-            Returns: {
-              id: number
-              created_at: string
-              name: string
-              description: string
-              logo: string
-              location: string
-              updated_at: string
             }[]
           }
       popular_shops: {

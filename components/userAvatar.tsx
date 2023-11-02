@@ -60,6 +60,9 @@ import turtle from '../resources/animals/turtle.svg'
 import wolf from '../resources/animals/wolf.svg'
 import zebra from '../resources/animals/zebra.svg'
 import AccountCircle from "@mui/icons-material/AccountCircle";
+import { Profile } from "../models"
+import { IKImage } from "imagekitio-react"
+import Avatar from "@mui/material/Avatar"
 
 const avatarsImgs = [
     aligator, ant, ant2, bat, bear, bee, bird, bug, butterfly, butterfly2, butterfly3, camel,
@@ -79,11 +82,28 @@ function uuidToInteger(uuid: string, options: number): number {
 }
 
 
-export default function UserAvatar({uuid, size=32}: {uuid?: string | null, size?: number}) {
+export default function UserAvatar({profile, size=32}: {profile?: Profile | null, size?: number}) {
+
+    if (profile?.avatar) {
+        return (
+            <Avatar sx={{width: size, height: size}}>
+                <IKImage
+                    width={size}
+                    height={size}
+                    path={`users/${profile?.avatar}`}
+                    transformation={[{
+                        height: size.toString(),
+                        width: size.toString(),
+                        dpr: "2"
+                    }]}
+                />
+            </Avatar>
+        );
+    }
 
     const defaultAvatar =  <AccountCircle width={size} height={size} />
     const avatars = avatarsImgs.map((x, i) => <Image src={x} key={i} alt="Avatar" width={size} height={size} />)
-    const n = uuid ? uuidToInteger(uuid, avatars.length) : null ;
+    const n = profile?.id ? uuidToInteger(profile?.id, avatars.length) : null ;
     
     return (
         <>{n ? avatars[n] : defaultAvatar}</>

@@ -45,6 +45,18 @@ export namespace DataService {
         return supabase.from('shops').select('*')
     }
 
+    export const getAllPosts = () => {
+        return supabase.from('posts').select('*, author(*)')
+    }
+
+    export const getPostBySlug = (slug: string) => {
+        return supabase.from('posts').select('*, author(*)').eq('slug', slug)
+    }
+
+    export const getPostById = (id: number) => {
+        return supabase.from('posts').select('*, author(*)').eq('id', id)
+    }
+
     export const newShops = () => {
         return supabase.from('shops').select('*, tags(*)').order('created_at', {ascending: false}).limit(12);
     }

@@ -32,6 +32,8 @@ import Select from '@mui/material/Select';
 import { Category } from '../models';
 import List from '@mui/icons-material/List';
 import Tooltip from '@mui/material/Tooltip';
+import { useUserContext } from '../context/userData';
+import Box from '@mui/material/Box';
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -43,7 +45,7 @@ const Search = styled('div')(({ theme }) => ({
 	},
 	marginLeft: 0,
 	width: '100%',
-	maxWidth: '500px'
+	maxWidth: '300px'
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
@@ -67,7 +69,7 @@ function SearchInput(props: InputBaseProps) {
 
 	const buttonStyles: SxProps = {
 		backgroundColor: alpha("#fff", .80),
-		marginLeft: "-1.5rem",
+		marginLeft: "-2.5rem",
 		'&:hover': {
 			backgroundColor: "#fff"
 		},
@@ -77,7 +79,7 @@ function SearchInput(props: InputBaseProps) {
 	}
 
 
-	return (<>
+	return (<Box sx={{display: "flex", flexGrow: 1, gap: 3, alignItems: "center", paddingRight: 2}}>
 		<Search>
 			<StyledInputBase
 				placeholder="Buscar comercios..."
@@ -93,16 +95,9 @@ function SearchInput(props: InputBaseProps) {
 		<IconButton onClick={() => { updateUrl({newQuery: text}) }} sx={buttonStyles} size={"small"} >
 			<SearchIcon />
 		</IconButton>
-		<Button
-			variant="contained"
-			color="secondary"
-			sx={{ display: { xs: "none", sm: "inherit" }, flexShrink: 0, marginRight: "auto" }}
-			LinkComponent={Link}
-			href="/search"
-		>
-			Ver comercios
-		</Button>
-	</>
+		<Link href="/search">Buscar</Link>
+		<Link href="/blog">Blog</Link>
+	</Box>
 	);
 
 }
@@ -216,6 +211,7 @@ function FiltersBar() {
 function ResponsiveAppBar() {
 
 	const user = useUser()
+	const { profile } = useUserContext();
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const [loginOpen, setLoginOpen] = useState(false);
 	const handleOpenLogin = () => { setLoginOpen(true); handleMenuClose(); };
@@ -314,7 +310,7 @@ function ResponsiveAppBar() {
 							onClick={handleProfileMenuOpen}
 							color="inherit"
 						>
-							<UserAvatar uuid={user?.id} />
+							<UserAvatar profile={profile} />
 						</IconButton>
 					</Toolbar>
 				</Container>

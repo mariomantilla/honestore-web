@@ -13,3 +13,7 @@ export type Comment = Database["public"]["Tables"]["comments"]["Row"]
 export type CommentUser = Comment & {user: string | Profile | Profile[] | null}
 export type Category = Database["public"]["Tables"]["categories"]["Row"]
 
+export type Post = Database["public"]["Tables"]["posts"]["Row"]
+export type PostWithUser = Post & {author: string | Profile | Profile[] | null}
+
+

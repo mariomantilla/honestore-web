@@ -115,16 +115,16 @@ function MyApp({
           <MessagesProvider>
             <SearchProvider>
               <UserProvider>
-                <ResponsiveAppBar />
-                  <IKContext
-                    urlEndpoint={process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT}
-                    publicKey={process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY} // optional
-                    authenticationEndpoint={imageKitAuthenticationEndpoint}>
-                    <Container maxWidth="lg" sx={{ flex: 1 }}>
-                      {getLayout(<Component {...pageProps} />)}
-                    </Container>
-                  </IKContext>
-                <Feedback />
+                <IKContext
+                      urlEndpoint={process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT}
+                      publicKey={process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY} // optional
+                      authenticationEndpoint={imageKitAuthenticationEndpoint}>
+                  <ResponsiveAppBar />
+                  <Container maxWidth="lg" sx={{ flex: 1 }}>
+                    {getLayout(<Component {...pageProps} />)}
+                  </Container>
+                  <Feedback />
+                </IKContext>
               </UserProvider>
             </SearchProvider>
             <AlertComponent />
