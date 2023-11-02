@@ -84,7 +84,7 @@ export default function ShopPage({ post }: { post: PostWithUser }) {
                     a(props) {
                         const {node, ...rest} = props
                         let href = rest['href'];
-                        if (!href?.includes('honestore.app')) rest['target'] = '_blank';
+                        if (href?.startsWith('http')) rest['target'] = '_blank';
                         return <a {...rest} />
                     }
                 }}>
