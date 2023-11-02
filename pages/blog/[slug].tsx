@@ -62,7 +62,7 @@ export default function ShopPage({ post }: { post: PostWithUser }) {
             <Box>
                 <Typography variant="h1" sx={{fontSize: 32, textAlign: "left", lineHeight: "3rem"}}>{post.title}</Typography>
                 <Typography sx={{fontSize: 14, color: "#888"}}>{localDate(new Date(post.created_at), true)}</Typography>
-                <Box sx={{marginTop: 2}}>
+                <Box sx={{marginTop: 2, height: 200}}>
                     <IKImage
                         width={"100%"}
                         path={`blog/${post.hero}`}
