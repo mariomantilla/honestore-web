@@ -48,6 +48,7 @@ export default function ShopPage({ post }: { post: PostWithUser }) {
             <meta name="description" content={post.description ?? ''} />
             <meta key="meta-og-title" property="og:title" content={post.title + " - Blog de Honestore"} />
             <meta key="meta-og-desc" property="og:description" content={post.description ?? ''} />
+            <meta property="og:image" content={process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT+'/blog'+post.hero} />
         </Head>
         <Box sx={{display: "flex", gap: 2, flexDirection: {xs: "column-reverse", md: "row"}}}>
             <Box sx={{width: {xs: "100%", md: "250px"}, flexShrink: 0, display: "flex", flexDirection: "column", gap: 1, marginTop: 2}}>
