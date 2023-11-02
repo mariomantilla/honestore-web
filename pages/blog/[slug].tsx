@@ -48,7 +48,7 @@ export default function ShopPage({ post }: { post: PostWithUser }) {
             <meta name="description" content={post.description ?? ''} />
             <meta key="meta-og-title" property="og:title" content={post.title + " - Blog de Honestore"} />
             <meta key="meta-og-desc" property="og:description" content={post.description ?? ''} />
-            <meta property="og:image" content={process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT+'/blog'+post.hero} />
+            <meta property="og:image" content={process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT+'/tr:h-630,w-1200/blog'+post.hero} />
         </Head>
         <Box sx={{display: "flex", gap: 2, flexDirection: {xs: "column-reverse", md: "row"}}}>
             <Box sx={{width: {xs: "100%", md: "250px"}, flexShrink: 0, display: "flex", flexDirection: "column", gap: 1, marginTop: 2}}>
@@ -63,9 +63,9 @@ export default function ShopPage({ post }: { post: PostWithUser }) {
             <Box>
                 <Typography variant="h1" sx={{fontSize: 32, textAlign: "left", lineHeight: "3rem"}}>{post.title}</Typography>
                 <Typography sx={{fontSize: 14, color: "#888"}}>{localDate(new Date(post.created_at), true)}</Typography>
-                <Box sx={{marginTop: 2, height: 200}}>
+                <Box sx={{marginTop: 2, height: "200px", overflow: "hidden"}}>
                     <IKImage
-                        width={"100%"}
+                        height={200}
                         path={`blog/${post.hero}`}
                         transformation={[{
                             height: "300",
