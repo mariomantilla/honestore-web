@@ -82,7 +82,7 @@ function SearchInput(props: InputBaseProps) {
 	return (<Box sx={{display: "flex", flexGrow: 1, gap: 3, alignItems: "center", paddingRight: 2}}>
 		<Search>
 			<StyledInputBase
-				placeholder="Buscar comercios..."
+				placeholder="Buscar..."
 				inputProps={{ 'aria-label': 'buscar' }}
 				fullWidth
 				value={text}
@@ -95,7 +95,9 @@ function SearchInput(props: InputBaseProps) {
 		<IconButton onClick={() => { updateUrl({newQuery: text}) }} sx={buttonStyles} size={"small"} >
 			<SearchIcon />
 		</IconButton>
-		<Link href="/search">Buscar</Link>
+		<Box sx={{display: {xs: "none", sm: "unset"}}}>
+			<Link href="/search">Buscar</Link>
+		</Box>
 		<Link href="/blog">Blog</Link>
 	</Box>
 	);
@@ -195,7 +197,7 @@ function FiltersBar() {
 				)}
 				filterSelectedOptions={true}
 				isOptionEqualToValue={(a,b) => a.id == b.id}
-				sx={{ minWidth: '300px'}}
+				sx={{ minWidth: {sx: "200px", sm: '300px'}}}
 			/>
 			<Tooltip title={view == viewsOptions.list ? 'Ver mapa' : 'Ver lista' }>
 				<Button variant='contained' color='secondary' onClick={() => {
@@ -288,9 +290,11 @@ function ResponsiveAppBar() {
 			<AppBar position="sticky" sx={{ marginBottom: "2.5rem" }}>
 				<Container maxWidth="lg">
 					<Toolbar disableGutters sx={{ gap: 1 }}>
+						<Box sx={{display: {xs: "none", sm: "unset"}}}>
 						<Link href="/">
 							<Image src={logo} alt="Honestore Logo" width={35} sizes="70px" style={{ margin: "1rem" }} />
 						</Link>
+						</Box>
 						<SearchInput />
 						<Button
 							variant="contained"
