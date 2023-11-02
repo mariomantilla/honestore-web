@@ -99,7 +99,7 @@ function MyApp({
   Formamos una red de usuarios y comercios con un foco en la sostenibilidad, cuidado por el medio ambiente, derechos de los trabajadores e impacto social.
   Como usuario, en la app puedes encontrar comercios que te gustan y venden productos que encajan con tus valores cerca de ti.
   Guarda tus comercios favoritos para tenerlas siempre a mano y compártelas con tu familia y amigos." />
-        <meta property="og:image" content="https://honestore.app/images/logo2000.jpg" />
+        <meta property="og:image" content="https://honestore.app/images/logo2000.jpg" key="head-image" />
         <meta property="og:url" content={canonicalUrl} />
         <link href={canonicalUrl} rel="canonical" key="head-canonical" />
         <link rel="shortcut icon" type="image/x-icon" href="/favicon.png" />
