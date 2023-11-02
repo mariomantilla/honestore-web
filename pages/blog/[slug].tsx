@@ -73,7 +73,23 @@ export default function ShopPage({ post }: { post: PostWithUser }) {
                         }]}
                     />
                 </Box>
-                <Markdown className="blogPost">{post.body}</Markdown>
+                <Markdown className="blogPost" components={{
+                    // Map `h1` (`# heading`) to use `h2`s.
+                    h1: 'h2',
+                    h2: 'h3',
+                    h3: 'h4',
+                    h4: 'h5',
+                    h5: 'h6',
+                    // Rewrite `em`s (`*like so*`) to `i` with a red foreground color.
+                    a(props) {
+                        const {node, ...rest} = props
+                        let href = rest['href'];
+                        if (!href?.includes('honestore.app')) rest['target'] = '_blank';
+                        return <a {...rest} />
+                    }
+                }}>
+                    {post.body}
+                </Markdown>
             </Box>
         </Box>
     </>
