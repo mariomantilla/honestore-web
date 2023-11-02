@@ -45,7 +45,7 @@ const BlogPage = ({posts}: {posts: PostWithUser[]}) => {
                             />
                             <CardMedia sx={{marginBottom: "-5px"}}>
                                 <IKImage
-                                    width={"100%"}
+                                    height={200}
                                     path={`blog/${post.hero}`}
                                     transformation={[{
                                         height: "300",
