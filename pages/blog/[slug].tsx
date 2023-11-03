@@ -58,7 +58,7 @@ export default function ShopPage({ post }: { post: PostWithUser }) {
                 <Center>
                 <Typography>{author.name}</Typography>
                 </Center>
-                <Typography fontSize={12} textAlign={"justify"} padding={2}>{author.bio}</Typography>
+                <Typography fontSize={12} textAlign={"justify"} padding={2} sx={{whiteSpace: "break-spaces"}}>{author.bio}</Typography>
             </Box>
             <Box>
                 <Typography variant="h1" sx={{fontSize: 32, textAlign: "left", lineHeight: "3rem"}}>{post.title}</Typography>
