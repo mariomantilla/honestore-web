@@ -1,5 +1,3 @@
-import Fab from '@mui/material/Fab';
-import AddIcon from '@mui/icons-material/Add';
 import Link from 'next/link';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -10,7 +8,9 @@ import Image from 'next/image'
 import banner from '../public/banner-inverted.png'
 import Center from '../components/center';
 import Search from '@mui/icons-material/Search';
-import { Diversity1, NavigateNext, Store } from '@mui/icons-material';
+import Diversity1 from '@mui/icons-material/Diversity1';
+import NavigateNext from '@mui/icons-material/NavigateNext';
+import Store from '@mui/icons-material/Store';
 import IconButton from '@mui/material/IconButton';
 import { buttonStyles } from '../constants';
 import NewShops from '../components/newShops';
@@ -30,7 +30,7 @@ export default function Home() {
 			<Typography variant='h2' component="h1">La comunidad de activistas del consumo ético</Typography>
 			<Typography variant='h4' component="div" sx={{ display: "flex", gap: 2, justifyContent: "center", alignItems: "center", marginBottom: "2rem" }}>
 				¿Quieres saber más?
-				<IconButton sx={buttonStyles} href="/about" LinkComponent={Link}>
+				<IconButton sx={buttonStyles} href="/about" LinkComponent={Link} aria-label='Haz click para saber más sobre Honestore'>
 					<NavigateNext />
 				</IconButton>
 			</Typography>

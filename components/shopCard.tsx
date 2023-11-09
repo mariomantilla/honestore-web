@@ -25,7 +25,7 @@ const ShopCard = ({ shop }: { shop: ShopTags | null }) => {
             <Box sx={{ display: "flex", flexDirection: "row", columnGap: 2, padding: 1.5, paddingBottom: 0 }}>
                 <Box sx={{ flexShrink: 0, display: {xs: "none", sm: "block"} }}>
                     {shop ? (
-                        <Link href={'/shops/' + shop.slug}>
+                        <Link href={'/shops/' + shop.slug} aria-label={`Ver más sobre el comercio "${shop.name??''}"`}>
                             <Avatar
                                 sx={{ width: "120px", height: "120px" }}
                                 alt={shop.name ?? ''}
@@ -39,6 +39,7 @@ const ShopCard = ({ shop }: { shop: ShopTags | null }) => {
                                         width: "120",
                                         dpr: "2"
                                     }]}
+                                    alt={shop.name??''}
                                 />
                             </Avatar>
                         </Link>
@@ -46,7 +47,7 @@ const ShopCard = ({ shop }: { shop: ShopTags | null }) => {
                 </Box>
                 <Box sx={{ flexShrink: 0, display: {xs: "block", sm: "none"} }}>
                     {shop ? (
-                        <Link href={'/shops/' + shop.slug}>
+                        <Link href={'/shops/' + shop.slug} aria-label={`Ver más sobre el comercio "${shop.name??''}"`}>
                             <Avatar
                                 sx={{ width: "60px", height: "60px" }}
                                 alt={shop.name ?? ''}
@@ -68,7 +69,7 @@ const ShopCard = ({ shop }: { shop: ShopTags | null }) => {
                 <Box sx={{ display: "flex", flexDirection: "column", rowGap: 0, flexGrow: 1, minWidth: 0 }}>
                     <Box sx={{ display: "flex" }}>
                         {shop ? (
-                            <Typography variant="h4" className="singleLineEllipsis" sx={{ alignSelf: "center", flexGrow: 1 }}><Link href={'/shops/' + shop.slug}>{shop.name}</Link></Typography>
+                            <Typography variant="h3" className="singleLineEllipsis" sx={{ alignSelf: "center", flexGrow: 1 }}><Link href={'/shops/' + shop.slug}>{shop.name}</Link></Typography>
 
                         ) : (<Skeleton width="60%" sx={{ alignSelf: "center", flexGrow: 1 }} />)}
                         {shop ? (<FavButton shop={shop} />) : (<Skeleton width="20px" />)}

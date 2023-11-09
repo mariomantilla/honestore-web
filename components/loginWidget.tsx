@@ -6,7 +6,6 @@ import { useEffect, useState } from 'react'
 import { BASE_URL, theme } from '../constants'
 import { supabase } from '../lib/supabaseClient'
 import * as es from './login_es.json'
-import Center from './center'
 
 ThemeSupa.honestore = {
     colors: {

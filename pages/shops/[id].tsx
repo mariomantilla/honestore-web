@@ -280,8 +280,8 @@ const FavsDisplay = ({shop}: {shop: Shop}) => {
 	}
 
 	useEffect(() => {
-        DataService.getFavCount(shop).then(({data}) => {
-			setFavCount((data?.[0].count as number | null) || 0);
+        DataService.getFavCount(shop).then(({count}) => {
+			setFavCount(count || 0);
 		});
     }, [shop]);
 

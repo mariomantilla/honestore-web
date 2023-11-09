@@ -8,7 +8,7 @@ import { useRouter } from 'next/router'
 import { Analytics } from '@vercel/analytics/react';
 import { ThemeProvider } from '@mui/material/styles';
 import ResponsiveAppBar from '../components/appBar'
-import Container from '@mui/material/Container'
+import { Container } from '@mui/material'
 import Box from '@mui/material/Box'
 import Footer from '../components/footer'
 import Head from 'next/head'
@@ -16,7 +16,7 @@ import { BASE_URL, imageKitAuthenticationEndpoint, theme } from '../constants'
 
 import dynamic from 'next/dynamic'
 import { NextPage } from 'next';
-import { supabase, endpoint } from '../lib/supabaseClient';
+import { supabase } from '../lib/supabaseClient';
 import { UserProvider } from '../context/userData';
 import AlertComponent from '../components/alerts';
 import { MessagesProvider } from '../context/messages';
@@ -25,6 +25,8 @@ import mixpanel from 'mixpanel-browser';
 import CookieBanner from '../components/cookieBanner';
 import Feedback from '../components/feedback';
 import { GlobalConfigProvider } from '../context/globalConfig';
+
+require("regenerator-runtime/runtime");
 
 const AndroidBar = dynamic(() => import('../components/androidBar'), {
   ssr: false,
@@ -45,10 +47,23 @@ function MyApp({
   initialSession: Session,
 }>) {
 
-  const router = useRouter()
+const router = useRouter()
 
   const canonicalUrl = (BASE_URL + (router.asPath === "/" ? "" : router.asPath)).split("?")[0];
   const getLayout = Component.getLayout || ((page) => page)
+
+  const authenticator = async () => {
+		const response = await fetch(imageKitAuthenticationEndpoint);
+
+		if (!response.ok) {
+			const errorText = await response.text();
+			throw new Error(`Request failed with status ${response.status}: ${errorText}`);
+		}
+
+		const data = await response.json();
+		const { signature, expire, token } = data;
+		return { signature, expire, token };
+  };
 
   mixpanel.init('09a8489cc7aa57b32a5a31d6e0740db8', {
     debug: false,
@@ -118,7 +133,8 @@ function MyApp({
                 <IKContext
                       urlEndpoint={process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT}
                       publicKey={process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY} // optional
-                      authenticationEndpoint={imageKitAuthenticationEndpoint}>
+					  authenticator={authenticator}
+                >
                   <ResponsiveAppBar />
                   <Container maxWidth="lg" sx={{ flex: 1 }}>
                     {getLayout(<Component {...pageProps} />)}

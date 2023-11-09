@@ -92,7 +92,7 @@ export namespace DataService {
     }
 
     export const getFavCount = (shop: Shop)  => {
-        return supabase.from('favourites').select('count').eq('shop', shop.id);
+        return supabase.from('favourites').select('*', { count: 'exact', head: true }).eq('shop', shop.id);
     }
     
     export const addFavourite = (user: User, shop: Shop) => {

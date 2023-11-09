@@ -20,7 +20,7 @@ export default function NewShops({ children, ...props }: BoxProps) {
 
     return (
         <Box {...props}>
-            <Typography variant='h3' sx={{textAlign: "center"}}>Novedades</Typography>
+            <Typography variant='h2' sx={{textAlign: "center"}}>Novedades</Typography>
             <ShopList shops={shops}></ShopList>
         </Box>
     );

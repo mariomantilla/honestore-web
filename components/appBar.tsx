@@ -10,7 +10,7 @@ import logo from '../public/images/logo2000.jpg'
 import Link from 'next/link';
 import { useSearchContext, viewsOptions } from "../context/search";
 import { alpha, styled, SxProps } from '@mui/material/styles';
-import InputBase, { InputBaseProps } from '@mui/material/InputBase/InputBase';
+import { InputBase, InputBaseProps } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import Map from '@mui/icons-material/Map';
 import Button from '@mui/material/Button';
@@ -83,6 +83,7 @@ function SearchInput(props: InputBaseProps) {
 		<Search>
 			<StyledInputBase
 				placeholder="Buscar..."
+				name='search-bar'
 				inputProps={{ 'aria-label': 'buscar' }}
 				fullWidth
 				value={text}
@@ -92,7 +93,7 @@ function SearchInput(props: InputBaseProps) {
 			/>
 
 		</Search>
-		<IconButton onClick={() => { updateUrl({newQuery: text}) }} sx={buttonStyles} size={"small"} >
+		<IconButton onClick={() => { updateUrl({newQuery: text}) }} sx={buttonStyles} size={"small"} aria-label="Buscar" >
 			<SearchIcon />
 		</IconButton>
 		<Box sx={{display: {xs: "none", sm: "unset"}}}>
@@ -173,6 +174,7 @@ function FiltersBar() {
 				renderValue={v => v ? catsById[v as string].name : 'Categoría'}
 				value={category?.id??''}
 				displayEmpty={true}
+				name='category-filter'
 				onChange={e => {
 					updateUrl({
 						newCat: e.target.value != '' ? catsById[e.target.value as string] : null
@@ -193,7 +195,7 @@ function FiltersBar() {
 				onChange={(e, val) => updateUrl({newTags: val})}
 				getOptionLabel={(option) => option.name}
 				renderInput={(params) => (
-					<StyledTagsFilter {...params} placeholder="Añadir Filtro" />
+					<StyledTagsFilter {...params} name="tags-filter" placeholder="Añadir Filtro" />
 				)}
 				filterSelectedOptions={true}
 				isOptionEqualToValue={(a,b) => a.id == b.id}

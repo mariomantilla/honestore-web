@@ -14,7 +14,7 @@ function Footer() {
   return (
     <footer>
       <Container maxWidth="lg">
-        <Box sx={{ flexGrow: 1, display: "flex", flexWrap: "wrap" }}>
+        <Box sx={{ flexGrow: 1, display: "flex", flexWrap: "wrap", gap: 1 }}>
           <Box sx={{ display: { xs: "none", lg: "flex" }, alignItems: "center" }}>
             <Link href="/"><Image src={logo} alt="Honestore Logo" /></Link>
           </Box>
@@ -22,15 +22,15 @@ function Footer() {
             <Image src={logoSquare} width={150} alt="Honestore Logo" />
           </Box>
           <Box sx={{ display: "flex", flexGrow: 1, color: "white", gap: 2.5, alignItems: "center", marginLeft: {xs: 0, lg: 2}, justifyContent: {xs: "center"}}}>
-            <Link href="https://instagram.com/honestore.app" target="_blank" rel="noreferrer"><Instagram fontSize='large' /></Link>
-            <Link href="mailto:info@honestore.app" target="_blank" rel="noreferrer"><Email fontSize='large' /></Link>
+            <Link href="https://instagram.com/honestore.app" target="_blank" rel="noreferrer" aria-label='Visita nuestro Instagram'><Instagram fontSize='large' /></Link>
+            <Link href="mailto:info@honestore.app" target="_blank" rel="noreferrer" aria-label="Envíanos un email"><Email fontSize='large' /></Link>
           </Box>
           <Box sx={{display: "flex", flexGrow: 1, justifyContent: "center", alignItems: "center"}}>
             <Link href="/download">
             <Image src={playBadge} width="200" alt="Honestore Logo" />
             </Link>
           </Box>
-          <Box sx={{ display: "flex", flexGrow: 1, flexDirection: "column", color: "white", fontSize: 18, gap: 1, textAlign: {xs: "center", sm: "right"}, flexBasis: "max-content", flexShrink: 0}}>
+          <Box sx={{ display: "flex", flexGrow: 1, flexDirection: "column", color: "white", fontSize: 18, gap: 1, textAlign: {xs: "center", sm: "right"}, flexBasis: "max-content", flexShrink: 0, lineHeight: "32px"}}>
             <Link href="/terms">Términos y condiciones</Link>
             <Link href="/privacy">Política de privacidad</Link>
             <Link href="/cookies">Política de cookies</Link>

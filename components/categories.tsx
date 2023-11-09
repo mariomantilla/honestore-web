@@ -35,7 +35,7 @@ export default function Categories({ children, ...props }: BoxProps) {
     
     return (
         <Box {...props}>
-            <Typography variant='h3' sx={{textAlign: "center"}}>Explora por categorias</Typography>
+            <Typography variant='h2' sx={{textAlign: "center"}}>Explora por categorias</Typography>
             <Box sx={{display: "flex", gap: 5, padding: 2, paddingTop: 0, justifyContent: "space-evenly", flexWrap: "wrap"}}>
                 {categories.map((c, i) => (
                     <Box key={i} sx={{display: "flex", flexDirection: "column", alignItems: "center", gap:1}}>
