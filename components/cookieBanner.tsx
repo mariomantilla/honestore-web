@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 
 function CookieBanner() {
 
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   const consent = () => {
     mixpanel.opt_in_tracking();
