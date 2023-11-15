@@ -7,12 +7,8 @@ import Divider from '@mui/material/Divider';
 import Image from 'next/image'
 import banner from '../public/banner-inverted.png'
 import Center from '../components/center';
-import Search from '@mui/icons-material/Search';
-import Diversity1 from '@mui/icons-material/Diversity1';
-import NavigateNext from '@mui/icons-material/NavigateNext';
-import Store from '@mui/icons-material/Store';
-import IconButton from '@mui/material/IconButton';
-import { buttonStyles } from '../constants';
+import Storefront from '@mui/icons-material/StorefrontTwoTone';
+import ShoppingBasketTwoTone from '@mui/icons-material/ShoppingBasketTwoTone';
 import NewShops from '../components/newShops';
 import Categories from '../components/categories';
 
@@ -28,23 +24,28 @@ export default function Home() {
 				<Image src={banner} width={300} priority alt="Honestore, La comunidad de activistas del consumo ético" />
 			</Center>
 			<Typography variant='h2' component="h1">La comunidad de activistas del consumo ético</Typography>
-			<Typography variant='h4' component="div" sx={{ display: "flex", gap: 2, justifyContent: "center", alignItems: "center", marginBottom: "2rem" }}>
-				¿Quieres saber más?
-				<IconButton sx={buttonStyles} href="/about" LinkComponent={Link} aria-label='Haz click para saber más sobre Honestore'>
-					<NavigateNext />
-				</IconButton>
-			</Typography>
-			<Divider />
-			<Box sx={{ padding: "2rem", display: "flex", justifyContent: "space-evenly", flexWrap: "wrap", gap: "1rem" }}>
-				<Button variant="contained" startIcon={<Search />} LinkComponent={Link} href="/search" sx={{textAlign: "center"}}>
-					Buscar comercios sostenibles
-				</Button>
-				<Button variant="contained" startIcon={<Store />} LinkComponent={Link} href="/add_shop" sx={{textAlign: "center"}}>
-					¿Tienes un comercio? Añádelo
-				</Button>
-				<Button variant="contained" startIcon={<Diversity1 />} LinkComponent={Link} href="/signup" sx={{textAlign: "center"}}>
-					Únete a la comunidad
-				</Button>
+			<Box sx={{display: "flex", gap: 4, marginBottom: 2, flexDirection: "column"}}>
+				<Box sx={{display: "flex", gap: 5, flexDirection: {xs: "column", sm: "row"}}}>
+					<Box sx={{display: "flex", flex: "0 1 50%", alignItems: "center", flexDirection: "column", gap: 2}}>
+						<Storefront fontSize='large' color='primary' />
+						<Typography variant='h3' component="h2" sx={{textAlign: "center"}}>Comercios sostenibles</Typography>
+						<Typography sx={{textAlign: "center"}}>
+						Aumenta tu visibilidad, conecta con consumidores comprometidos 🤝
+						y destaca tus prácticas responsables 📣. Atrae nuevos clientes y construye una
+						comunidad que valora tu compromiso con la sostenibilidad 🌱
+						</Typography>
+						<Button variant='contained' href='/add_shop' LinkComponent={Link}>Añade tu comercio gratis</Button>
+					</Box>
+					<Box sx={{display: "flex", flex: "0 1 50%", alignItems: "center", flexDirection: "column", gap: 2}}>
+						<ShoppingBasketTwoTone fontSize='large' color='primary' />
+						<Typography variant='h3' component="h2" sx={{textAlign: "center"}}>Consumidores conscientes</Typography>
+						<Typography sx={{textAlign: "center"}}>
+						Encuentra comercios sostenibles cerca de ti 🏡. Filtra según tus valores e intereses
+						en una comunidad que valora la sostenibilidad 🚴‍♂️. Honestore te lo pone más fácil para consumir de forma consciente 👍
+						</Typography>
+						<Button variant='contained' href='/search' LinkComponent={Link}>Comienza a buscar</Button>
+					</Box>
+				</Box>
 			</Box>
 			<Divider />
 			<Categories />

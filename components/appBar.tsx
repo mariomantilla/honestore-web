@@ -13,6 +13,7 @@ import { alpha, styled, SxProps } from '@mui/material/styles';
 import { InputBase, InputBaseProps } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import Map from '@mui/icons-material/Map';
+import MenuIcon from '@mui/icons-material/Menu';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import Modal from '@mui/material/Modal';
@@ -96,10 +97,11 @@ function SearchInput(props: InputBaseProps) {
 		<IconButton onClick={() => { updateUrl({newQuery: text}) }} sx={buttonStyles} size={"small"} aria-label="Buscar" >
 			<SearchIcon />
 		</IconButton>
-		<Box sx={{display: {xs: "none", sm: "unset"}}}>
-			<Link href="/search">Buscar</Link>
+		<Box sx={{display: {xs: "none", sm: "flex"}, gap: 3}}>
+			<Link href="/about">Conócenos</Link>
+			<Link href="/search">Comercios</Link>
+			<Link href="/blog">Blog</Link>
 		</Box>
-		<Link href="/blog">Blog</Link>
 	</Box>
 	);
 
@@ -217,6 +219,7 @@ function ResponsiveAppBar() {
 	const user = useUser()
 	const { profile } = useUserContext();
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+	const [anchorMainEl, setAnchorMainEl] = useState<null | HTMLElement>(null);
 	const [loginOpen, setLoginOpen] = useState(false);
 	const handleOpenLogin = () => { setLoginOpen(true); handleMenuClose(); };
 	const handleCloseLogin = () => { setLoginOpen(false); handleMenuClose(); };
@@ -229,6 +232,7 @@ function ResponsiveAppBar() {
 	})
 
 	const isMenuOpen = Boolean(anchorEl);
+	const isMainMenuOpen = Boolean(anchorMainEl);
 
 	const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
 		setAnchorEl(event.currentTarget);
@@ -238,7 +242,15 @@ function ResponsiveAppBar() {
 		setAnchorEl(null);
 	};
 
-	const menuId = 'primary-search-account-menu';
+	const handleMainMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+		setAnchorMainEl(event.currentTarget);
+	};
+
+	const handleMainMenuClose = () => {
+		setAnchorMainEl(null);
+	};
+
+	const accountMenuId = 'primary-account-menu';
 	const renderMenu = (
 		<Menu
 			anchorEl={anchorEl}
@@ -246,7 +258,7 @@ function ResponsiveAppBar() {
 				vertical: 'bottom',
 				horizontal: 'right',
 			}}
-			id={menuId}
+			id={accountMenuId}
 			keepMounted
 			transformOrigin={{
 				vertical: 'top',
@@ -276,6 +288,29 @@ function ResponsiveAppBar() {
 		</Menu>
 	);
 
+	const mainMenuId = 'primary-menu';
+	const renderMainMenu = (
+		<Menu
+			anchorEl={anchorMainEl}
+			anchorOrigin={{
+				vertical: 'bottom',
+				horizontal: 'right',
+			}}
+			id={mainMenuId}
+			keepMounted
+			transformOrigin={{
+				vertical: 'top',
+				horizontal: 'right',
+			}}
+			open={isMainMenuOpen}
+			onClose={handleMainMenuClose}
+		>
+			<MenuItem key="about" onClick={handleMainMenuClose} component={Link} href="/about">Conócenos</MenuItem>
+			<MenuItem key="search" onClick={handleMainMenuClose} component={Link} href="/search">Buscar comercios</MenuItem>
+			<MenuItem key="blog" onClick={handleMainMenuClose} component={Link} href="/blog">Blog</MenuItem>
+		</Menu>
+	);
+
 	const renderLoginModal = (<Modal
 		open={loginOpen}
 		onClose={handleCloseLogin}
@@ -292,16 +327,16 @@ function ResponsiveAppBar() {
 			<AppBar position="sticky" sx={{ marginBottom: "2.5rem" }}>
 				<Container maxWidth="lg">
 					<Toolbar disableGutters sx={{ gap: 1 }}>
-						<Box sx={{display: {xs: "none", sm: "unset"}}}>
+						{/* <Box sx={{display: {xs: "none", sm: "unset"}}}> */}
 						<Link href="/">
 							<Image src={logo} alt="Honestore Logo" width={35} sizes="70px" style={{ margin: "1rem" }} />
 						</Link>
-						</Box>
+						{/* </Box> */}
 						<SearchInput />
 						<Button
 							variant="contained"
 							color="secondary"
-							sx={{ display: { xs: "none", sm: "inherit" }, flexShrink: 0 }}
+							sx={{ display: { xs: "none", md: "inherit" }, flexShrink: 0 }}
 							LinkComponent={Link}
 							href="/add_shop"
 						>
@@ -310,13 +345,25 @@ function ResponsiveAppBar() {
 						<IconButton
 							size="large"
 							edge="end"
-							aria-label="account of current user"
-							aria-controls={menuId}
+							aria-label="menu de usuario"
+							aria-controls={accountMenuId}
 							aria-haspopup="true"
 							onClick={handleProfileMenuOpen}
 							color="inherit"
 						>
 							<UserAvatar profile={profile} />
+						</IconButton>
+						<IconButton
+							size="large"
+							edge="end"
+							aria-label="menu principal"
+							aria-controls={mainMenuId}
+							aria-haspopup="true"
+							onClick={handleMainMenuOpen}
+							color="inherit"
+							sx={{display: {sx: "inherit", sm: "none"}}}
+						>
+							<MenuIcon />
 						</IconButton>
 					</Toolbar>
 				</Container>
@@ -324,6 +371,7 @@ function ResponsiveAppBar() {
 				<Loader />
 			</AppBar>
 			{renderMenu}
+			{renderMainMenu}
 			{renderLoginModal}
 		</>
 	);

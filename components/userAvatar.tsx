@@ -63,6 +63,7 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import { Profile } from "../models"
 import { IKImage } from "imagekitio-react"
 import Avatar from "@mui/material/Avatar"
+import { ImageKitImage } from "./imageKitImage"
 
 const avatarsImgs = [
     aligator, ant, ant2, bat, bear, bee, bird, bug, butterfly, butterfly2, butterfly3, camel,
@@ -87,15 +88,11 @@ export default function UserAvatar({profile, size=32}: {profile?: Profile | null
     if (profile?.avatar) {
         return (
             <Avatar sx={{width: size, height: size}}>
-                <IKImage
+                <ImageKitImage
                     width={size}
                     height={size}
-                    path={`users/${profile?.avatar}`}
-                    transformation={[{
-                        height: size.toString(),
-                        width: size.toString(),
-                        dpr: "2"
-                    }]}
+                    src={`users/${profile?.avatar}`}
+                    alt={profile.name??''}
                 />
             </Avatar>
         );

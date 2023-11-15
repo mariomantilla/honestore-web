@@ -9,7 +9,6 @@ import bath from "../resources/categories/bath.svg"
 import food from "../resources/categories/food.svg"
 import shirt from "../resources/categories/shirt.svg"
 import waiter from "../resources/categories/waiter.svg"
-import SvgIcon from "@mui/material/SvgIcon";
 import Image from "next/image"
 
 const icons: { [key: number]: any} = {
@@ -29,7 +28,7 @@ export default function Categories({ children, ...props }: BoxProps) {
     }, []);
 
     props.sx = {
-        ...{ display: "flex", flexDirection: "column", gap: 2.5, paddingTop: 3 },
+        ...{ display: "flex", flexDirection: "column", gap: 0, paddingTop: 3 },
         ...props.sx
     }
     

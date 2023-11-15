@@ -37,7 +37,7 @@ export const theme = createTheme({
         h2: {
             fontSize: 32,
             textAlign: "center",
-            marginBottom: "1em",
+            marginBottom: "0.5em",
         },
         h3: {
             fontSize: 24,

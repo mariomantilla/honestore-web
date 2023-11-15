@@ -32,6 +32,7 @@ import { useUserContext } from "../context/userData";
 import { socialInfoData } from "../constants/socialInfo";
 import { Marker } from "leaflet";
 import { useGlobalConfigContext } from "../context/globalConfig";
+import { ImageKitImage } from "../components/imageKitImage";
 
 
 
@@ -53,6 +54,9 @@ export default function AddShopPage() {
     const [logoFileName, setLogoFileName] = useState();
     const [shopName, setShopName] = useState('');
     const [shopDescription, setShopDescription] = useState('');
+
+    const [forCustomers, setForCustomers] = useState(false);
+    const [forBusinesses, setForBusinesses] = useState(false);
 
     const [online, setOnline] = useState(false);
     const [coordinates, setCoordinates] = useState<[number, number]>([0, 0]);
@@ -150,7 +154,9 @@ export default function AddShopPage() {
             email: email,
             whatsapp: whatsapp,
             published: true,
-            logo_path: logoFileName
+            logo_path: logoFileName,
+            for_customers: forCustomers,
+            for_businesses: forBusinesses
         };
         if (profile?.role == 'admin') newData.owner = null;
         setUpdating(true);
@@ -199,16 +205,13 @@ export default function AddShopPage() {
                         <Tooltip title={logoFileName ? 'Haz click para cambiarlo' : 'Haz click para subir tu logo'}>
                             <Avatar sx={{ width: 256, height: 256 }} className={logoFileName ? 'editLogo' : ''}>
                                 {uploading ? (<CircularProgress />) : logoFileName ? (
-                                    <IKImage
-                                        width={"256"}
-                                        height={"256"}
-                                        path={`shops/${logoFileName}`}
-                                        transformation={[{
-                                            height: "256",
-                                            width: "256",
-                                            dpr: "2"
-                                        }]}
-                                    />) : (
+                                    <ImageKitImage
+                                        width={256}
+                                        height={256}
+                                        src={`shops/${logoFileName}`}
+                                        alt="Logo de la tienda"
+                                    />
+                                    ) : (
                                     <>Subir logo*</>
                                 )}
                             </Avatar>
@@ -246,6 +249,19 @@ export default function AddShopPage() {
                     filterSelectedOptions={true}
                     isOptionEqualToValue={(a,b) => a.id == b.id}
                 />
+                <Box>
+                <Box sx={{display: "flex", gap: 2}}>
+                    <FormControlLabel
+                        control={<Checkbox checked={forCustomers} onChange={(e, c) => setForCustomers(c)} />}
+                        label="Mis clientes son consumidores individuales"
+                    />
+                    <FormControlLabel
+                        control={<Checkbox checked={forBusinesses} onChange={(e, c) => setForBusinesses(c)} />}
+                        label="Mis clientes son empresas"
+                    />
+                </Box>
+                <Typography variant="caption">Selecciona al menos una de las dos.</Typography>
+                </Box>
                 <TextField
                     variant="filled"
                     multiline
@@ -258,7 +274,7 @@ export default function AddShopPage() {
                     }}
                 />
                 <Center>
-                    <Button variant="contained" onClick={handleNext} disabled={!shopName || !logoFileName}>Siguiente</Button>
+                    <Button variant="contained" onClick={handleNext} disabled={!shopName || !logoFileName || !(forBusinesses || forCustomers)}>Siguiente</Button>
                 </Center>
             </Container>
         ), (

@@ -8,10 +8,11 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Link from "next/link";
 import Avatar from "@mui/material/Avatar";
-import { IKImage } from "imagekitio-react";
 import { DataService } from "../lib/data";
 import LocationOff from "@mui/icons-material/LocationOff";
 import Chip from "@mui/material/Chip";
+import Image from "next/image"
+import { imageKitLoader } from "../lib/imagekitloader";
 
 
 const MarkerIcon = new DivIcon({
@@ -59,15 +60,12 @@ function ShopMarker({ shop }: { shop: Shop }) {
                             sx={{ width: "45px", height: "45px" }}
                             alt={shop.name ?? ''}
                         >
-                            <IKImage
-                                width={"45"}
-                                height={"45"}
-                                path={`shops/${shop.logo_path}`}
-                                transformation={[{
-                                    height: "45",
-                                    width: "45",
-                                    dpr: "2"
-                                }]}
+                            <Image
+                                loader={imageKitLoader}
+                                src={`shops/${shop.logo_path}`}
+                                alt={shop.name??''}
+                                width={45}
+                                height={45}
                             />
                         </Avatar>
                     </Link>

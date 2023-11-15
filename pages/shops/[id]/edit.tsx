@@ -33,6 +33,7 @@ import Checkbox from "@mui/material/Checkbox";
 import { useGlobalConfigContext } from "../../../context/globalConfig";
 import { Autocomplete, Typography } from "@mui/material";
 import { useRouter } from "next/router";
+import { ImageKitImage } from "../../../components/imageKitImage";
 
 
 export async function getStaticPaths() {
@@ -214,15 +215,11 @@ const EditShopPage = ({ shop }: { shop: ShopTagsCategories }) => {
                             <Tooltip title={logoFileName ? 'Haz click para cambiarlo' : 'Haz click para subir tu logo'}>
                                 <Avatar sx={{ width: 256, height: 256 }} className="editLogo">
                                     {uploading ? (<CircularProgress />) : logoFileName ? (
-                                        <IKImage
-                                            width={"256"}
-                                            height={"256"}
-                                            path={`shops/${logoFileName}`}
-                                            transformation={[{
-                                                height: "256",
-                                                width: "256",
-                                                dpr: "2"
-                                            }]}
+                                        <ImageKitImage
+                                            width={256}
+                                            height={256}
+                                            src={`shops/${logoFileName}`}
+                                            alt={"Logo del comercio"}
                                         />) : (
                                         <>Subir logo*</>
                                     )}

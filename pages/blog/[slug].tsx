@@ -1,13 +1,15 @@
 import Box from "@mui/material/Box";
 import { DataService } from "../../lib/data";
 import { PostWithUser, Profile } from "../../models";
-import { Typography } from "@mui/material";
+import { Container, Divider, Typography } from "@mui/material";
 import UserAvatar from "../../components/userAvatar";
 import { localDate } from "../../helpers/datetime";
 import Markdown from "react-markdown";
 import { IKImage } from "imagekitio-react";
 import Center from "../../components/center";
 import Head from "next/head";
+import Image from "next/image"
+import { ImageKitImage } from "../../components/imageKitImage";
 
 
 export async function getStaticPaths() {
@@ -41,6 +43,8 @@ export default function ShopPage({ post }: { post: PostWithUser }) {
     if (!post) return null;
     const author = post?.author as Profile;
 
+    const urlEndpoint = process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT??'';
+
     return (
     <>
         <Head>
@@ -50,28 +54,27 @@ export default function ShopPage({ post }: { post: PostWithUser }) {
             <meta key="meta-og-desc" property="og:description" content={post.description ?? ''} />
             <meta property="og:image" content={process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT+'/tr:h-630,w-1200/blog/'+post.hero} key="head-image" />
         </Head>
-        <Box sx={{display: "flex", gap: 2, flexDirection: {xs: "column-reverse", md: "row"}}}>
-            <Box sx={{width: {xs: "100%", md: "250px"}, flexShrink: 0, display: "flex", flexDirection: "column", gap: 1, marginTop: 2}}>
-                <Center>
-                    <UserAvatar profile={author} size={100} />
-                </Center>
-                <Center>
-                <Typography>{author.name}</Typography>
-                </Center>
-                <Typography fontSize={12} textAlign={"justify"} padding={2} sx={{whiteSpace: "break-spaces"}}>{author.bio}</Typography>
-            </Box>
+        <Container maxWidth="md">
+        <Box sx={{display: "flex", gap: 2, flexDirection: "column"}}>
             <Box>
                 <Typography variant="h1" sx={{fontSize: 32, textAlign: "left", lineHeight: "3rem"}}>{post.title}</Typography>
-                <Typography sx={{fontSize: 14, color: "#888"}}>{localDate(new Date(post.created_at), true)}</Typography>
-                <Box sx={{marginTop: 2, height: "200px", overflow: "hidden"}}>
-                    <IKImage
-                        height={200}
-                        path={`blog/${post.hero}`}
-                        transformation={[{
-                            height: "300",
-                            width: "1400",
-                            dpr: "2"
-                        }]}
+                <Box sx={{display: "flex", gap: 0.7, alignItems: "center", marginTop: 1}}>
+                    <Typography sx={{fontSize: 18, fontWeight: 200}}>Por</Typography>
+                    <Typography sx={{fontSize: 18, flexGrow: 1}}>{author.name}</Typography>
+                    <Typography sx={{fontSize: 14, color: "#888"}}>{localDate(new Date(post.created_at), true)}</Typography>
+                </Box>
+                <Box sx={{marginTop: 2, position: "relative"}}>
+                    <Image
+                        priority={true}
+                        sizes="100vw"
+                        style={{
+                            width: '100%',
+                            height: 'auto',
+                        }}
+                        width={1704}
+                        height={486}
+                        src={`${urlEndpoint}/blog/${post.hero}?tr=w-1704,h-486`}
+                        alt={post.title}
                     />
                 </Box>
                 <Markdown className="blogPost" components={{
@@ -92,7 +95,20 @@ export default function ShopPage({ post }: { post: PostWithUser }) {
                     {post.body}
                 </Markdown>
             </Box>
+            <Divider />
+            <Box sx={{display: "flex", flexDirection: "column"}}>
+                <Center>
+                <UserAvatar profile={author} size={100} />
+                </Center>
+                <Center>
+                <Typography>{author.name}</Typography>
+                </Center>
+                <Typography fontSize={16} textAlign={"justify"} padding={2} sx={{whiteSpace: "break-spaces", fontWeight: "300"}}>
+                    {author.bio}
+                </Typography>
+            </Box>
         </Box>
+        </Container>
     </>
     );
 }

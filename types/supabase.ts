@@ -246,6 +246,8 @@ export interface Database {
           created_at: string
           description: string | null
           email: string | null
+          for_businesses: boolean
+          for_customers: boolean
           id: number
           instagram: string | null
           location: unknown | null
@@ -270,6 +272,8 @@ export interface Database {
           created_at?: string
           description?: string | null
           email?: string | null
+          for_businesses?: boolean
+          for_customers?: boolean
           id?: number
           instagram?: string | null
           location?: unknown | null
@@ -294,6 +298,8 @@ export interface Database {
           created_at?: string
           description?: string | null
           email?: string | null
+          for_businesses?: boolean
+          for_customers?: boolean
           id?: number
           instagram?: string | null
           location?: unknown | null
@@ -458,6 +464,8 @@ export interface Database {
               created_at: string
               description: string | null
               email: string | null
+              for_businesses: boolean
+              for_customers: boolean
               id: number
               instagram: string | null
               location: unknown | null
@@ -487,6 +495,8 @@ export interface Database {
           created_at: string
           description: string | null
           email: string | null
+          for_businesses: boolean
+          for_customers: boolean
           id: number
           instagram: string | null
           location: unknown | null
@@ -516,6 +526,8 @@ export interface Database {
           created_at: string
           description: string | null
           email: string | null
+          for_businesses: boolean
+          for_customers: boolean
           id: number
           instagram: string | null
           location: unknown | null
@@ -562,3 +574,4 @@ export interface Database {
     }
   }
 }
+

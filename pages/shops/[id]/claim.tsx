@@ -10,6 +10,7 @@ import TitlePage from "../../../components/titlePage";
 import { useMessagesContext } from "../../../context/messages";
 import { DataService, getShop, getShopsIds } from "../../../lib/data";
 import { Shop } from "../../../models";
+import { ShopLogo } from "../../../components/shopLogo";
 
 export async function getStaticPaths() {
     let ids: number[] = await getShopsIds();
@@ -57,16 +58,7 @@ export default function ClaimShopPage({ shop }: { shop: Shop }) {
         <TitlePage title={`Reclamar ${shop.name}`}>
             <Center>
                 <Avatar alt={shop.name ?? ''} sx={{ height: 200, width: 200, border: "1px solid #ccc", alignSelf: { xs: "center", sm: "inherit" }, marginBlock: 2 }}>
-                    <IKImage
-                        width={"200"}
-                        height={"200"}
-                        path={`shops/${shop.logo_path}`}
-                        transformation={[{
-                            height: "200",
-                            width: "200",
-                            dpr: "2"
-                        }]}
-                    />
+                    <ShopLogo shop={shop} size={200} />
                 </Avatar>
                 {user ? (
                     <Box sx={{ display: "flex", flexDirection: "column", gap: 2, alignItems: "center", maxWidth: "700px", textAlign: "center" }}>

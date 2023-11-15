@@ -41,6 +41,8 @@ import Card from "@mui/material/Card";
 import { CardActions, CardContent, Chip, IconButton, Skeleton, TextField } from "@mui/material";
 import { localDate } from "../../helpers/datetime";
 import UserAvatar from "../../components/userAvatar";
+import { ImageKitImage } from "../../components/imageKitImage";
+import { ShopLogo } from "../../components/shopLogo";
 
 
 export async function getStaticPaths() {
@@ -385,15 +387,9 @@ export default function ShopPage({ shop }: { shop: ShopTagsCategories }) {
 				<Box sx={{ display: "flex", gap: 3, flexDirection: { xs: "column", sm: "row" }, padding: 2 }}>
 					<Box sx={{ display: "flex", gap: 3, flexDirection: "column", flexBasis: 0 }}>
 						<Avatar alt={shop.name ?? ''} sx={{ height: 200, width: 200, border: "1px solid #ccc", alignSelf: { xs: "center", sm: "inherit" } }}>
-							<IKImage
-								width={"200"}
-								height={"200"}
-								path={`shops/${shop.logo_path}`}
-								transformation={[{
-									height: "200",
-									width: "200",
-									dpr: "2"
-								}]}
+							<ShopLogo
+								shop={shop}
+								size={200}
 							/>
 						</Avatar>
 						<Box sx={{ display: "flex", gap: 1, alignItems: "baseline", flexWrap: "wrap", justifyContent: "center" }}>

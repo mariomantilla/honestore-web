@@ -7,6 +7,7 @@ import { localDate } from "../helpers/datetime";
 import { IKImage } from "imagekitio-react";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { ImageKitImage } from "../components/imageKitImage";
 
 export async function getStaticProps() {
 	let { data, error } = await DataService.getAllPosts();
@@ -43,15 +44,10 @@ const BlogPage = ({posts}: {posts: PostWithUser[]}) => {
                                 title={<Link href={"/blog/"+post.slug}>{post.title}</Link>}
                                 subheader={localDate(new Date(post.created_at), true)}
                             />
-                            <CardMedia sx={{marginBottom: "-5px"}}>
-                                <IKImage
-                                    height={200}
-                                    path={`blog/${post.hero}`}
-                                    transformation={[{
-                                        height: "300",
-                                        width: "600",
-                                        dpr: "2"
-                                    }]}
+                            <CardMedia sx={{marginBottom: "-5px", height: "200px", position: "relative"}}>
+                                <ImageKitImage
+                                    fill={true}
+                                    src={`blog/${post.hero}`}
                                     alt={post.description??''}
                                 />
                             </CardMedia>
