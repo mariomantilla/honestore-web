@@ -132,6 +132,7 @@ input[type=file] {
 
 .blogPost {
   font-weight: 300;
+  line-height: 1.6rem;
 }
 
 .blogPost h2 {

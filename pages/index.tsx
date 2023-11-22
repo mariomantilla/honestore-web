@@ -11,9 +11,20 @@ import Storefront from '@mui/icons-material/StorefrontTwoTone';
 import ShoppingBasketTwoTone from '@mui/icons-material/ShoppingBasketTwoTone';
 import NewShops from '../components/newShops';
 import Categories from '../components/categories';
+import { DataService } from '../lib/data';
+import { Category } from '../models';
 
+export async function getStaticProps({ params }: { params: { id: string } }) {
+	const categories = (await DataService.getCategories()).data ?? [];
+	return {
+		props: {
+			categories: categories
+		},
 
-export default function Home() {
+	}
+}
+
+export default function Home({categories}: {categories: Category[]}) {
 
 	return (
 		<>
@@ -48,7 +59,7 @@ export default function Home() {
 				</Box>
 			</Box>
 			<Divider />
-			<Categories />
+			<Categories categories={categories} />
 			<Divider />
 			<NewShops sx={{marginTop: "1.5rem"}} />
 		</>

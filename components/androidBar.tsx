@@ -6,6 +6,8 @@ import { useEffect, useState } from 'react';
 
 
 export default function AndroidBar() {
+    
+    return null; // disabled for now since webapp is much advanced
 
     const [open, setOpen] = useState(false);
 
@@ -25,7 +27,7 @@ export default function AndroidBar() {
     useEffect(() => {
         let hideAndroidBar = localStorage.getItem('hideAndroidBar');
         if (!hideAndroidBar) {
-            setOpen(true);
+            //setOpen(true);
         }
     }, [])
 

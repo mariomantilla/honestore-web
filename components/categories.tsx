@@ -19,13 +19,9 @@ const icons: { [key: number]: any} = {
 }
 
 
-export default function Categories({ children, ...props }: BoxProps) {
-
-    const [categories, setCategories] = useState<(Category | null)[]>(new Array(3).fill(null));
-
-    useEffect(() => {
-        DataService.getCategories().then((resp) => setCategories(resp.data ?? []));
-    }, []);
+export default function Categories({ categories, children, ...props }: BoxProps & {
+    categories: Category[];
+  }) {
 
     props.sx = {
         ...{ display: "flex", flexDirection: "column", gap: 0, paddingTop: 3 },
@@ -39,17 +35,13 @@ export default function Categories({ children, ...props }: BoxProps) {
                 {categories.map((c, i) => (
                     <Box key={i} sx={{display: "flex", flexDirection: "column", alignItems: "center", gap:1}}>
                         <Box sx={{padding: 2}}>
-                            {c? (
-                                <Link href={`/search?category=${c.id}`}>
-                                    <Image src={icons[c.id]} alt={c.name} width={90} />
-                                </Link>
-                            ):<Skeleton variant="circular" width="90px" height="90px" />}
+                            <Link href={`/search?category=${c.id}`}>
+                                <Image src={icons[c.id]} alt={c.name} width={90} />
+                            </Link>
                         </Box>
-                        {c? (
-                                <Link href={`/search?category=${c.id}`}>
-                                    <Typography sx={{fontSize: 18}}>{c?.name}</Typography>
-                                </Link>
-                        ):<Skeleton width="200px" height={"18px"} />}
+                        <Link href={`/search?category=${c.id}`}>
+                            <Typography sx={{fontSize: 18}}>{c?.name}</Typography>
+                        </Link>
                     </Box>
                 ))}
             </Box>
