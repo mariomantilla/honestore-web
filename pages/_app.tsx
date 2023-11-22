@@ -26,7 +26,7 @@ import CookieBanner from '../components/cookieBanner';
 import Feedback from '../components/feedback';
 import { GlobalConfigProvider } from '../context/globalConfig';
 import ErrorBoundary from '../components/ErrorBounday';
-import Script from 'next/script';
+import Tinybird from '../lib/analytics';
 
 require("regenerator-runtime/runtime");
 
@@ -75,6 +75,11 @@ const router = useRouter()
     opt_out_persistence_by_default: true
   });
 
+  const analytics = new Tinybird({
+    host: "https://api.tinybird.co",
+    token: "p.eyJ1IjogIjBmYzdjZGMxLTE2YzItNDBkOC1hNWU1LTRhYzQ4NTI5NzdjMCIsICJpZCI6ICIxYTk5MWExZC02Nzc3LTQ1MjAtODQ1Zi05M2U2MjdlZWFjMWEiLCAiaG9zdCI6ICJldV9zaGFyZWQifQ.qagN6JTBThGXKZNqaf2KhWYY8LldrUmrl7qW1rwVYyY"
+  });
+
   useEffect(() => {
     const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
       if (event == 'SIGNED_OUT') {
@@ -85,12 +90,13 @@ const router = useRouter()
         mixpanel.identify(session?.user.id.toString());
       }
     });
-
+    analytics.trackPageHit();
     return () => authListener.subscription.unsubscribe(); // Cleanup the listener when component unmounts
   }, []);
 
   useEffect(() => {
     const handleRouteChange = (url: string) => {
+        analytics.trackPageHit();
         //Send track event when new pages is loaded
         mixpanel.track_pageview();
     }
@@ -155,12 +161,6 @@ const router = useRouter()
       </ThemeProvider>
       <Analytics />
     </SessionContextProvider>
-    <Script
-      src="https://unpkg.com/@tinybirdco/flock.js"
-      defer
-      data-host="https://api.tinybird.co"
-      data-token="p.eyJ1IjogIjBmYzdjZGMxLTE2YzItNDBkOC1hNWU1LTRhYzQ4NTI5NzdjMCIsICJpZCI6ICIxYTk5MWExZC02Nzc3LTQ1MjAtODQ1Zi05M2U2MjdlZWFjMWEiLCAiaG9zdCI6ICJldV9zaGFyZWQifQ.qagN6JTBThGXKZNqaf2KhWYY8LldrUmrl7qW1rwVYyY"
-    />
     </ErrorBoundary>
   )
 }
