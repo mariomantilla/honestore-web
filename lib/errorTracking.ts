@@ -1,4 +1,8 @@
-import { error } from "console";
+interface SeriaalizedError {
+    name: string,
+    message: string,
+    stack: string,
+}
 
 export default class ErrorTracker {
 
@@ -23,7 +27,7 @@ export default class ErrorTracker {
         this.domain = domain || null;
     }
 
-    serializeError(error: any) {
+    serializeError(error: any): SeriaalizedError {
         if (error instanceof Error) {
             // Extract basic properties of the error object
             const { name, message, stack } = error;
@@ -32,12 +36,16 @@ export default class ErrorTracker {
             const serializedError = {
                 name,
                 message,
-                stack,
+                stack: stack || "",
             };
             return serializedError;
         } else {
             // If the error is not an instance of Error, stringify it directly
-            return JSON.parse(JSON.stringify(error));
+            return {
+                name: "Unkown error class",
+                message: JSON.parse(JSON.stringify(error)),
+                stack: ""
+            }
         }
     }
 
@@ -57,17 +65,15 @@ export default class ErrorTracker {
     }
 
     // Function to send the error information to the error tracking system
-    sendToErrorTrackingSystem(serializedError: object) {
+    sendToErrorTrackingSystem(serializedError: SeriaalizedError) {
         // Combine relevant information
         const errorInfo = {
-            serializedError,
-            href: window.location.href,
-            version: '1',
             timestamp: new Date().toISOString(),
+            href: window.location.href,
+            ...serializedError,
+            version: '1',
         };
-        // Implement your logic to send the error information to your tracking system
-        // For example, you can use XMLHttpRequest, fetch, or any other suitable method.
-        // Make sure to handle the actual implementation based on your error tracking system.
+        
         let url;
 
         // Use public Tinybird url if no custom endpoint is provided
