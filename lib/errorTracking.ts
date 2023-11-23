@@ -73,7 +73,7 @@ export default class ErrorTracker {
             ...serializedError,
             version: '1',
         };
-        
+
         let url;
 
         // Use public Tinybird url if no custom endpoint is provided
@@ -98,7 +98,8 @@ export default class ErrorTracker {
     addHandlers() {
         if (typeof window === "undefined") return;
         if (process.env.NEXT_PUBLIC_BASE_URL?.includes('localhost')) {
-            console.log('Debug environment: disabled error tracking system')
+            console.log('Debug environment: disabled error tracking system');
+            return
         }
         window.onerror = (...params) => this.handleErrorEvent(...params);
         window.onunhandledrejection = (...params) => this.handlePromiseRejection(...params);
