@@ -27,6 +27,7 @@ import Feedback from '../components/feedback';
 import { GlobalConfigProvider } from '../context/globalConfig';
 import ErrorBoundary from '../components/ErrorBounday';
 import Tinybird from '../lib/analytics';
+import ErrorTracker from '../lib/errorTracking';
 
 require("regenerator-runtime/runtime");
 
@@ -77,7 +78,12 @@ const router = useRouter()
 
   const analytics = new Tinybird({
     host: "https://api.tinybird.co",
-    token: "p.eyJ1IjogIjBmYzdjZGMxLTE2YzItNDBkOC1hNWU1LTRhYzQ4NTI5NzdjMCIsICJpZCI6ICIxYTk5MWExZC02Nzc3LTQ1MjAtODQ1Zi05M2U2MjdlZWFjMWEiLCAiaG9zdCI6ICJldV9zaGFyZWQifQ.qagN6JTBThGXKZNqaf2KhWYY8LldrUmrl7qW1rwVYyY"
+    token: process.env.NEXT_PUBLIC_ANALYTICS_TOKEN
+  });
+
+  const errorTracker = new ErrorTracker({
+    host: "https://api.tinybird.co",
+    token: process.env.NEXT_PUBLIC_ERROR_TRACKING_TOKEN
   });
 
   useEffect(() => {
@@ -91,6 +97,7 @@ const router = useRouter()
       }
     });
     analytics.trackPageHit();
+    errorTracker.addHandlers()
     return () => authListener.subscription.unsubscribe(); // Cleanup the listener when component unmounts
   }, []);
 
@@ -107,7 +114,7 @@ const router = useRouter()
   }, [router.events])
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary tracker={errorTracker}>
     <SessionContextProvider supabaseClient={supabase} initialSession={pageProps.initialSession}>
       <Head>
         <title>Honestore: Tiendas sostenibles y de consumo responsable cerca de ti</title>

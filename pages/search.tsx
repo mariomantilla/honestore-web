@@ -21,6 +21,7 @@ const SearchPage = () => {
         let isSubscribed = true;
         DataService.searchShops(searchQuery, category, tags).then((shops) => {
             if (isSubscribed) {
+                if (shops.error) throw new Error(shops.error.message);
                 setShops(shops.data as ShopTags[] ?? []);
                 setLoading(false);
             }

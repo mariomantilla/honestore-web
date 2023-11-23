@@ -1,6 +1,8 @@
 import React, { Component, ErrorInfo, ReactNode } from "react";
+import ErrorTracker from "../lib/errorTracking";
 
 interface Props {
+  tracker: ErrorTracker;
   children?: ReactNode;
 }
 
@@ -24,7 +26,7 @@ class ErrorBoundary extends Component<Props, State> {
   }
 
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error("Uncaught error:", error, errorInfo);
+    this.props.tracker.handleErrorEvent("", undefined, undefined, undefined, error)
   }
 
   public render() {
