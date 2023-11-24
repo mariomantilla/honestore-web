@@ -74,12 +74,12 @@ export default class Tinybird {
         ];
 
         // Deep copy
-        let _payload = JSON.parse(JSON.stringify(payload));
+        let _payload = JSON.stringify(payload);
         attributesToMask.forEach(attr => {
             _payload = _payload.replaceAll(new RegExp(`("${attr}"):(".+?"|\\d+)`, 'mgi'), '$1:"********"');
         });
 
-        return _payload;
+        return JSON.parse(_payload);
     };
 
     /**
@@ -105,7 +105,7 @@ export default class Tinybird {
 
         payload = this._maskSuspiciousAttributes(payload);
         payload = Object.assign({}, payload, this.globalAttributes);
-        
+
         fetch(url, {
             method: 'POST',
             headers: {
@@ -116,7 +116,7 @@ export default class Tinybird {
                 action: name,
                 version: '1',
                 session_id: this._getSessionId(),
-                payload
+                payload: JSON.stringify(payload)
             }),
         })
     };

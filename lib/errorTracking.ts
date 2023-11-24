@@ -6,7 +6,7 @@ interface SeriaalizedError {
 
 export default class ErrorTracker {
 
-    DATASOURCE: string = 'error_events';
+    DATASOURCE = 'error_events';
 
     proxy: string | null
     token: string | null
@@ -51,17 +51,26 @@ export default class ErrorTracker {
 
     // Function to handle unhandled promise rejections
     handlePromiseRejection(event: PromiseRejectionEvent) {
-        // Extract relevant information from the event
-        const { reason } = event;
-        // Serialize the error object
-        const serializedError = this.serializeError(reason);        // Send the serialized error info to your error tracking system
-        this.sendToErrorTrackingSystem(serializedError);
+        try {
+            // Extract relevant information from the event
+            const { reason } = event;
+            // Serialize the error object
+            const serializedError = this.serializeError(reason);        // Send the serialized error info to your error tracking system
+            this.sendToErrorTrackingSystem(serializedError);
+        } catch (error) {
+            console.log(error);
+        }
+        
     }
 
     handleErrorEvent(event: string | Event, source: string | undefined, lineno: number | undefined, colno: number | undefined, error: any | undefined) {
-        const serializedError = this.serializeError(error);
-        // Send the serialized error info to your error tracking system
-        this.sendToErrorTrackingSystem(serializedError);
+        try {
+            const serializedError = this.serializeError(error);
+            // Send the serialized error info to your error tracking system
+            this.sendToErrorTrackingSystem(serializedError);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     // Function to send the error information to the error tracking system
@@ -81,25 +90,26 @@ export default class ErrorTracker {
             url = `${this.proxy}/api/tracking`;
         } else if (this.host) {
             let host = this.host.replaceAll(/\/+$/gm, '');
-            url = `${host}/v0/events?name=${this.DATASOURCE}&token=${this.token}`
+            url = `${host}/v0/events?name=${this.DATASOURCE}`
         } else {
-            url = `https://api.tinybird.co/v0/events?name=${this.DATASOURCE}&token=${this.token}`
+            url = `https://api.tinybird.co/v0/events?name=${this.DATASOURCE}`
         }
         
         fetch(url, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
+              'Authorization': 'Bearer '+this.token
             },
             body: JSON.stringify(errorInfo),
-        })
+        }).catch((e) => {console.log(e)})
     }
 
     addHandlers() {
         if (typeof window === "undefined") return;
         if (process.env.NEXT_PUBLIC_BASE_URL?.includes('localhost')) {
             console.log('Debug environment: disabled error tracking system');
-            return
+            // return
         }
         window.onerror = (...params) => this.handleErrorEvent(...params);
         window.onunhandledrejection = (...params) => this.handlePromiseRejection(...params);
