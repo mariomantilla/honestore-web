@@ -72,7 +72,7 @@ export namespace DataService {
             baseQuery = baseQuery.eq('categories.id', category.id);
             select += ', categories!inner(*)'
         } else select += ', categories(*)'
-        return baseQuery.select(select as potentialShopsSelects);
+        return baseQuery.eq('for_customers', true).select(select as potentialShopsSelects);
     }
 
     export const getCategories = () => {
