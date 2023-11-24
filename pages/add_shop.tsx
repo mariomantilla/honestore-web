@@ -203,7 +203,7 @@ export default function AddShopPage() {
                 <Center>
                     <label>
                         <Tooltip title={logoFileName ? 'Haz click para cambiarlo' : 'Haz click para subir tu logo'}>
-                            <Avatar sx={{ width: 256, height: 256 }} className={logoFileName ? 'editLogo' : ''}>
+                            <Avatar sx={{ width: 256, height: 256, backgroundColor: '#fff' }} className={logoFileName ? 'editLogo' : ''}>
                                 {uploading ? (<CircularProgress />) : logoFileName ? (
                                     <ImageKitImage
                                         width={256}

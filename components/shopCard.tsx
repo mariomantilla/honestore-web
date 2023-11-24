@@ -30,7 +30,7 @@ const ShopCard = ({ shop }: { shop: ShopTags | null }) => {
                     {shop ? (
                         <Link href={'/shops/' + shop.slug} aria-label={`Ver más sobre el comercio "${shop.name??''}"`}>
                             <Avatar
-                                sx={{ width: "120px", height: "120px" }}
+                                sx={{ width: "120px", height: "120px", backgroundColor: '#fff' }}
                                 alt={shop.name ?? ''}
                             >
                                 <ShopLogo shop={shop} size={120} />
@@ -42,7 +42,7 @@ const ShopCard = ({ shop }: { shop: ShopTags | null }) => {
                     {shop ? (
                         <Link href={'/shops/' + shop.slug} aria-label={`Ver más sobre el comercio "${shop.name??''}"`}>
                             <Avatar
-                                sx={{ width: "60px", height: "60px" }}
+                                sx={{ width: "60px", height: "60px", backgroundColor: '#fff' }}
                                 alt={shop.name ?? ''}
                             >
                                 <ShopLogo shop={shop} size={60} />
