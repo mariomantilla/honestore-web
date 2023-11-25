@@ -297,11 +297,6 @@ const FavsDisplay = ({shop}: {shop: Shop}) => {
 export default function ShopPage({ shop }: { shop: ShopTagsCategories }) {
 
 	const router = useRouter();
-
-	if (router.isFallback) {
-		return <Container sx={{ textAlign: "center" }}><CircularProgress /></Container>
-	}
-
 	const [comments, setComments] = useState<(CommentUser | null)[]>([null, null, null]);
 
 	const updateComments = useCallback(() => {
@@ -311,8 +306,14 @@ export default function ShopPage({ shop }: { shop: ShopTagsCategories }) {
 	  }, [shop]);
 
 	useEffect(() => {
-        updateComments();
+		if (!router.isFallback) {
+        	updateComments();
+		}
     }, [updateComments]);
+
+	if (router.isFallback) {
+		return <Container sx={{ textAlign: "center" }}><CircularProgress /></Container>
+	}
 
 	let actions: React.ReactNode[] = [];
 
