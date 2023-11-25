@@ -1,5 +1,5 @@
-import { Category, CommentUser, Profile, Shop, ShopTags, ShopTagsCategories, Tag } from "../../models";
-import { DataService, getShop, getShopBySlug } from "../../lib/data";
+import { Category, CommentUser, Profile, Shop, ShopTagsCategories, Tag } from "../../models";
+import { DataService, getShopBySlug } from "../../lib/data";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -25,14 +25,13 @@ import Image from 'next/image'
 import Link from "next/link";
 import Button from "@mui/material/Button";
 import { FavButton } from "../../components/favButton";
-import { IKImage } from "imagekitio-react";
 import WhatsApp from "@mui/icons-material/WhatsApp";
 import dynamic from "next/dynamic";
 import Alert from "@mui/material/Alert";
 import Center from "../../components/center";
 import { useUserContext } from "../../context/userData";
-import { User, useUser } from "@supabase/auth-helpers-react";
-import { BASE_URL, theme } from "../../constants";
+import { useUser } from "@supabase/auth-helpers-react";
+import { BASE_URL } from "../../constants";
 import Tooltip from "@mui/material/Tooltip";
 import TagChip from "../../components/tagChip";
 import { clampStyles } from "../../helpers/lineClamp";
@@ -41,7 +40,6 @@ import Card from "@mui/material/Card";
 import { CardActions, CardContent, Chip, IconButton, Skeleton, TextField } from "@mui/material";
 import { localDate } from "../../helpers/datetime";
 import UserAvatar from "../../components/userAvatar";
-import { ImageKitImage } from "../../components/imageKitImage";
 import { ShopLogo } from "../../components/shopLogo";
 
 
@@ -299,6 +297,11 @@ const FavsDisplay = ({shop}: {shop: Shop}) => {
 export default function ShopPage({ shop }: { shop: ShopTagsCategories }) {
 
 	const router = useRouter();
+
+	if (router.isFallback) {
+		return <Container sx={{ textAlign: "center" }}><CircularProgress /></Container>
+	}
+
 	const [comments, setComments] = useState<(CommentUser | null)[]>([null, null, null]);
 
 	const updateComments = useCallback(() => {
@@ -310,10 +313,6 @@ export default function ShopPage({ shop }: { shop: ShopTagsCategories }) {
 	useEffect(() => {
         updateComments();
     }, [updateComments]);
-
-	if (router.isFallback) {
-		return <Container sx={{ textAlign: "center" }}><CircularProgress /></Container>
-	}
 
 	let actions: React.ReactNode[] = [];
 
