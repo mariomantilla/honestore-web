@@ -10,7 +10,6 @@ export default async function handler(
 		if (shopId) {
 			let shop = await getShop(parseInt(shopId.toString()));
 			if (shop) {
-				await res.revalidate("/shops/" + shopId);
 				await res.revalidate("/shops/" + shop?.slug);
 				await res.revalidate("/shops/" + shopId + "/edit");
 				await res.revalidate("/shops/" + shopId + "/claim");

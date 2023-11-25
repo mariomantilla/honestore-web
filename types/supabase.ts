@@ -547,6 +547,37 @@ export interface Database {
           whatsapp: string | null
         }[]
       }
+      similar_shops: {
+        Args: {
+          target_id: number
+        }
+        Returns: {
+          address: string | null
+          consent_proof: string | null
+          created_at: string
+          description: string | null
+          email: string | null
+          for_businesses: boolean
+          for_customers: boolean
+          id: number
+          instagram: string | null
+          location: unknown | null
+          location_coordinates: string | null
+          logo: string | null
+          logo_path: string | null
+          name: string | null
+          online: boolean
+          owner: string | null
+          owner_email: string | null
+          owner_name: string | null
+          phone: string | null
+          published: boolean
+          slug: string
+          updated_at: string
+          web: string | null
+          whatsapp: string | null
+        }[]
+      }
       slugify: {
         Args: {
           value: string

@@ -61,6 +61,10 @@ export namespace DataService {
         return supabase.from('shops').select('*, tags(*)').order('created_at', {ascending: false}).limit(12);
     }
 
+    export const similarShops = (shop: Shop) => {
+        return supabase.rpc('similar_shops', { target_id: shop.id }).select('*, tags(*)').limit(12);
+    }
+
     export const searchShops = (query: string, category: Category | null, tags: Tag[])  => {
         let select = '*';
         let baseQuery = supabase.rpc('search_shops', { search: query });

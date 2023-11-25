@@ -9,22 +9,24 @@ import banner from '../public/banner-inverted.png'
 import Center from '../components/center';
 import Storefront from '@mui/icons-material/StorefrontTwoTone';
 import ShoppingBasketTwoTone from '@mui/icons-material/ShoppingBasketTwoTone';
-import NewShops from '../components/newShops';
 import Categories from '../components/categories';
 import { DataService } from '../lib/data';
-import { Category } from '../models';
+import { Category, ShopTags } from '../models';
+import ShopList from '../components/shopList';
 
 export async function getStaticProps({ params }: { params: { id: string } }) {
 	const categories = (await DataService.getCategories()).data ?? [];
+	const newShops = (await DataService.newShops()).data ?? [];
 	return {
 		props: {
-			categories: categories
+			categories: categories,
+			newShops: newShops
 		},
-
+		revalidate: 60*60*24*(parseFloat(process.env.REVALIDATE_INDEX_DAYS??'') || 3)
 	}
 }
 
-export default function Home({categories}: {categories: Category[]}) {
+export default function Home({categories, newShops}: {categories: Category[], newShops: ShopTags[]}) {
 
 	return (
 		<>
@@ -61,7 +63,10 @@ export default function Home({categories}: {categories: Category[]}) {
 			<Divider />
 			<Categories categories={categories} />
 			<Divider />
-			<NewShops sx={{marginTop: "1.5rem"}} />
+			<Box sx={{ display: "flex", flexDirection: "column", gap: 2.5, marginTop: "1.5rem" }}>
+            	<Typography variant='h2' sx={{textAlign: "center"}}>Novedades</Typography>
+            	<ShopList shops={newShops}></ShopList>
+        	</Box>
 		</>
 	)
 }

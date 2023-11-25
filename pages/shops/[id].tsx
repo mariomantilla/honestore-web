@@ -1,4 +1,4 @@
-import { Category, CommentUser, Profile, Shop, ShopTagsCategories, Tag } from "../../models";
+import { Category, CommentUser, Profile, Shop, ShopTags, ShopTagsCategories, Tag } from "../../models";
 import { DataService, getShopBySlug } from "../../lib/data";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -19,9 +19,6 @@ import Add from '@mui/icons-material/Add';
 import Cancel from '@mui/icons-material/Cancel';
 import ShopExternalAction from '../../components/shopExternalAction';
 import LocationOff from '@mui/icons-material/LocationOff';
-import NewShops from "../../components/newShops";
-import banner from '../../public/banner-inverted.png'
-import Image from 'next/image'
 import Link from "next/link";
 import Button from "@mui/material/Button";
 import { FavButton } from "../../components/favButton";
@@ -41,6 +38,7 @@ import { CardActions, CardContent, Chip, IconButton, Skeleton, TextField } from 
 import { localDate } from "../../helpers/datetime";
 import UserAvatar from "../../components/userAvatar";
 import { ShopLogo } from "../../components/shopLogo";
+import ShopList from "../../components/shopList";
 
 
 export async function getStaticPaths() {
@@ -59,11 +57,13 @@ export async function getStaticProps({ params }: { params: { id: string } }) {
 			notFound: true,
 		}
 	}
+	const similarShops = (await DataService.similarShops(shop)).data ?? [];
 	return {
 		props: {
-			shop: shop
+			shop,
+			similarShops
 		},
-
+		revalidate: 60*60*24*(parseFloat(process.env.REVALIDATE_SHOP_DAYS??'') || 3)
 	}
 }
 
@@ -294,7 +294,7 @@ const FavsDisplay = ({shop}: {shop: Shop}) => {
 	)
 }
 
-export default function ShopPage({ shop }: { shop: ShopTagsCategories }) {
+export default function ShopPage({ shop, similarShops }: { shop: ShopTagsCategories, similarShops: ShopTags[] }) {
 
 	const router = useRouter();
 	const [comments, setComments] = useState<(CommentUser | null)[]>([null, null, null]);
@@ -420,22 +420,10 @@ export default function ShopPage({ shop }: { shop: ShopTagsCategories }) {
 					<MapWithNoSSR shops={[shop]} center={DataService.shopCoordinates(shop)} locate={false} />
 					<Divider />
 				</>) }
-				<Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-around", flexWrap: "wrap" }}>
-					<Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-						<Image
-							src={banner}
-							width={300}
-							priority
-							alt="Honestore, La comunidad de activistas del consumo ético" style={{ maxWidth: "100%", height: "auto" }}
-						/>
-						<Typography sx={{ padding: "0.5rem 0.8rem", fontWeight: "bold", textAlign: "center" }}>La comunidad de activistas del consumo ético</Typography>
-					</Box>
-					<Button href="/about" LinkComponent={Link} variant="contained" sx={{ textAlign: "center" }}>
-						Descubrir más sobre Honestore
-					</Button>
-				</Box>
-				<Divider />
-				<NewShops />
+				<Box sx={{ display: "flex", flexDirection: "column", gap: 2.5 }}>
+            	<Typography variant='h2' sx={{textAlign: "center"}}>Comercios similares</Typography>
+            		<ShopList shops={similarShops}></ShopList>
+        		</Box>
 			</Box>
 		</>
 	);
