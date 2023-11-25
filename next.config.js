@@ -340,7 +340,11 @@ module.exports = {
         destination: '/shops/85-cal-sarda',
         permanent: true,
       },
-      "86","86-km-0-by-unio"
+      {
+        source: '/shops/86',
+        destination: '/shops/86-km-0-by-unio',
+        permanent: true,
+      },
       {
         source: '/shops/87',
         destination: '/shops/87-biopompas-ninot',
