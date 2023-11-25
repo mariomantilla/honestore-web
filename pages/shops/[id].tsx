@@ -386,7 +386,7 @@ export default function ShopPage({ shop, similarShops }: { shop: ShopTagsCategor
 			<Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
 				<Box sx={{ display: "flex", gap: 3, flexDirection: { xs: "column", sm: "row" }, padding: 2 }}>
 					<Box sx={{ display: "flex", gap: 3, flexDirection: "column", flexBasis: 0 }}>
-						<Avatar alt={shop.name ?? ''} sx={{ height: 200, width: 200, border: "1px solid #ccc", alignSelf: { xs: "center", sm: "inherit" } }}>
+						<Avatar alt={shop.name ?? ''} sx={{ height: 200, width: 200, border: "1px solid #ccc", alignSelf: { xs: "center", sm: "inherit" }, backgroundColor: "#fff" }}>
 							<ShopLogo
 								shop={shop}
 								size={200}
