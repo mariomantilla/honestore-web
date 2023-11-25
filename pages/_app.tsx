@@ -26,7 +26,7 @@ import CookieBanner from '../components/cookieBanner';
 import Feedback from '../components/feedback';
 import { GlobalConfigProvider } from '../context/globalConfig';
 import ErrorBoundary from '../components/ErrorBounday';
-import Tinybird from '../lib/analytics';
+import WebAnalytics from '../lib/analytics';
 import ErrorTracker from '../lib/errorTracking';
 
 require("regenerator-runtime/runtime");
@@ -76,7 +76,7 @@ const router = useRouter()
     opt_out_persistence_by_default: true
   });
 
-  const analytics = new Tinybird({
+  const analytics = new WebAnalytics({
     host: "https://api.tinybird.co",
     token: process.env.NEXT_PUBLIC_ANALYTICS_TOKEN
   });
