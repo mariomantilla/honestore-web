@@ -81,6 +81,7 @@ export default class ErrorTracker {
             href: window.location.href,
             ...serializedError,
             version: '1',
+            userAgent: window.navigator.userAgent
         };
 
         let url;
