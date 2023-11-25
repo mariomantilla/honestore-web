@@ -16,6 +16,12 @@ export default function PrivacyPage() {
         setConsent(false);
     };
 
+    const approveConsent = () => {
+        mixpanel.opt_in_tracking();
+        localStorage.removeItem('disableAnalytics')
+        setConsent(true);
+    }
+
     useEffect(() => {
         setConsent(mixpanel.has_opted_in_tracking());
     }, []);
@@ -67,7 +73,7 @@ export default function PrivacyPage() {
                     Al visitar nuestro sitio web, se te presentará un banner de cookies que te informará sobre el uso de cookies y
                     otros mecanismos de almacenamiento local. Al cerrar el banner o seguir navegando en nuestro sitio, aceptas el
                     uso de cookies de acuerdo con esta política. Iniciando sesión o registrándote aceptas el uso de las cookies
-                    necesarias para el funcionamiento de dichas funcionalidades. Mediante el banner puedes también aceptar el eso
+                    necesarias para el funcionamiento de dichas funcionalidades. Mediante el banner puedes también aceptar el uso
                     de otras cookies no esenciales.
                 </Typography>
                 <Typography>
@@ -79,7 +85,10 @@ export default function PrivacyPage() {
                     Estado del consentimiento de cookies: {consent ? <>
                     Si<br />
                     <Button variant="contained" onClick={removeConsent}>Retirar consentimiento</Button>
-                    </>: 'No'}
+                    </> : <>
+                    No<br />
+                    <Button variant="contained" onClick={approveConsent}>Aprovar consentimiento</Button>
+                    </>}
                 </Typography>
             </Policy>
             <Policy title="Enlaces a terceros" id="links">

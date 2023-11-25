@@ -125,7 +125,7 @@ export default class WebAnalytics {
      * Track page hit
      */
     trackPageHit() {
-        if (process.env.NEXT_PUBLIC_DISABLE_TRACKING) {
+        if (process.env.NEXT_PUBLIC_DISABLE_TRACKING || localStorage.getItem('disableAnalytics')) {
             console.log('Tracking disabled');
             return
         }

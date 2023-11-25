@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { Button, Drawer, Snackbar, Typography } from '@mui/material';
+import { Button, Drawer, IconButton, Typography } from '@mui/material';
 import Link from 'next/link';
+import Close from '@mui/icons-material/Close';
 import mixpanel from 'mixpanel-browser';
 import { useEffect, useState } from 'react';
 
@@ -14,8 +15,14 @@ function CookieBanner() {
     setOpen(false);
   };
 
+  const dismiss = () => {
+    mixpanel.opt_out_tracking();
+    localStorage.setItem('disableAnalytics', "1")
+    setOpen(false);
+  };
+
   useEffect(() => {
-    setOpen(!mixpanel.has_opted_in_tracking());
+    setOpen(!mixpanel.has_opted_in_tracking() && !localStorage.getItem('disableAnalytics'));
   }, []);
 
   return (
@@ -33,6 +40,7 @@ function CookieBanner() {
         anchor="bottom"
     >
       <Typography>
+      <IconButton sx={{float: "right", marginTop: -3}} onClick={dismiss}><Close /></IconButton>
       ¡Hola! 😊 Sabemos que la privacidad es importante, por eso queremos ser transparentes contigo.
       Utilizamos tecnologías para mejorar tu experiencia en nuestro sitio web y ofrecerte contenido
       adaptado a tus preferencias. Si estás de acuerdo, simplemente haz clic en &quot;Aceptar&quot; y comenzaremos.
