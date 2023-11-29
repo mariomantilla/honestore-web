@@ -403,22 +403,28 @@ export interface Database {
       }
       tags: {
         Row: {
+          color: string
           created_at: string
           description: string
+          icon: string
           id: number
           name: string
           updated_at: string
         }
         Insert: {
+          color?: string
           created_at?: string
           description: string
+          icon?: string
           id?: number
           name: string
           updated_at?: string
         }
         Update: {
+          color?: string
           created_at?: string
           description?: string
+          icon?: string
           id?: number
           name?: string
           updated_at?: string

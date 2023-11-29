@@ -1,6 +1,5 @@
 import Typography from "@mui/material/Typography";
 import Link from "next/link";
-import Image from "next/image";
 import { ShopTags, Tag } from "../models";
 
 import Skeleton from "@mui/material/Skeleton";
@@ -8,17 +7,15 @@ import { FavButton } from "./favButton";
 import Avatar from "@mui/material/Avatar";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
-import { IKImage } from "imagekitio-react";
 import { clampStyles } from "../helpers/lineClamp";
 import TagChip from "./tagChip";
-import { imageKitLoader } from "../lib/imagekitloader";
 import { ShopLogo } from "./shopLogo";
 
 const ShopCard = ({ shop }: { shop: ShopTags | null }) => {
 
 	const tagsChips = shop && Array.isArray(shop.tags) ?
 		shop.tags.map((t: Tag, i: number) => (
-			<TagChip key={i} name={t.name} description={t.description} />
+			<TagChip key={i} tag={t} tiny />
 		))
 	: [] ;
 

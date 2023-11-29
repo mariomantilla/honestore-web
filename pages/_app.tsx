@@ -99,7 +99,7 @@ const router = useRouter()
     analytics.trackPageHit();
     errorTracker.addHandlers()
     return () => authListener.subscription.unsubscribe(); // Cleanup the listener when component unmounts
-  }, []);
+  }, [analytics, errorTracker]);
 
   useEffect(() => {
     const handleRouteChange = (url: string) => {
@@ -111,7 +111,7 @@ const router = useRouter()
     return () => {
         router.events.off('routeChangeComplete', handleRouteChange)
     }
-  }, [router.events])
+  }, [router.events, analytics])
 
   return (
     <ErrorBoundary tracker={errorTracker}>

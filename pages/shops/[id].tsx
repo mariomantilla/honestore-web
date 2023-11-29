@@ -57,7 +57,9 @@ export async function getStaticProps({ params }: { params: { id: string } }) {
 			notFound: true,
 		}
 	}
-	const similarShops = (await DataService.similarShops(shop)).data ?? [];
+	const similarShopsResp = await DataService.similarShops(shop);
+	if (similarShopsResp.error) throw Error(JSON.stringify(similarShopsResp.error));
+	const similarShops = similarShopsResp.data ?? [];
 	return {
 		props: {
 			shop,
@@ -309,7 +311,7 @@ export default function ShopPage({ shop, similarShops }: { shop: ShopTagsCategor
 		if (!router.isFallback) {
         	updateComments();
 		}
-    }, [updateComments]);
+    }, [updateComments, router.isFallback]);
 
 	if (router.isFallback) {
 		return <Container sx={{ textAlign: "center" }}><CircularProgress /></Container>
@@ -362,7 +364,7 @@ export default function ShopPage({ shop, similarShops }: { shop: ShopTagsCategor
 
 	const tagsChips = shop && Array.isArray(shop.tags) ?
 		shop.tags.map((t: Tag, i: number) => (
-			<TagChip key={i} name={t.name} description={t.description} />
+			<TagChip key={i} tag={t} />
 		))
 	: [] ;
 
