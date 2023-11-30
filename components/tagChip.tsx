@@ -42,7 +42,7 @@ export default function TagChip({tag, tiny=false}: {tag: Tag, tiny?: boolean}) {
       <div>
         { tiny ? (
           <Tooltip title={tag.name}>
-            <IconButton onClick={handleClick} color={"secondary"}><FontAwesomeIcon icon={tagIcons[tag.icon]} width={16} height={16} /></IconButton>
+            <IconButton onClick={handleClick} color={"primary"}><FontAwesomeIcon icon={tagIcons[tag.icon]} width={16} height={16} /></IconButton>
           </Tooltip>
         ) : (
           <Chip icon={<FontAwesomeIcon style={{marginLeft: "8px"}} icon={tagIcons[tag.icon]}  width={14} height={14} />} label={tag.name} onClick={handleClick} color={"primary"} />
