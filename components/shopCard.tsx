@@ -13,10 +13,10 @@ import { ShopLogo } from "./shopLogo";
 
 const ShopCard = ({ shop }: { shop: ShopTags | null }) => {
 
-	const tagsChips = shop && Array.isArray(shop.tags) ?
-		shop.tags.map((t: Tag, i: number) => (
-			<TagChip key={i} tag={t} tiny />
-		))
+	const tagsChips = shop && Array.isArray(shop.tags) ? []
+		// shop.tags.map((t: Tag, i: number) => (
+		// 	<TagChip key={i} tag={t} tiny />
+		// ))
 	: [] ;
 
 

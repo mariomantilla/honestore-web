@@ -87,7 +87,7 @@ export default function PrivacyPage() {
                     <Button variant="contained" onClick={removeConsent}>Retirar consentimiento</Button>
                     </> : <>
                     No<br />
-                    <Button variant="contained" onClick={approveConsent}>Aprovar consentimiento</Button>
+                    <Button variant="contained" onClick={approveConsent}>Aprobar consentimiento</Button>
                     </>}
                 </Typography>
             </Policy>
