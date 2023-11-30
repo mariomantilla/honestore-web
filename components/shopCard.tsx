@@ -8,16 +8,16 @@ import Avatar from "@mui/material/Avatar";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import { clampStyles } from "../helpers/lineClamp";
-// import TagChip from "./tagChip";
-// import { ShopLogo } from "./shopLogo";
+import TagChip from "./tagChip";
+import { ShopLogo } from "./shopLogo";
 
 const ShopCard = ({ shop }: { shop: ShopTags | null }) => {
 
-	// const tagsChips = shop && Array.isArray(shop.tags) ?
-	// 	shop.tags.map((t: Tag, i: number) => (
-	// 		<TagChip key={i} tag={t} tiny />
-	// 	))
-	// : [] ;
+	const tagsChips = shop && Array.isArray(shop.tags) ?
+		shop.tags.map((t: Tag, i: number) => (
+			<TagChip key={i} tag={t} tiny />
+		))
+	: [] ;
 
     return (
         <Paper elevation={2} sx={{display: "flex", flexDirection: "column", height: "100%"}}>
@@ -29,7 +29,7 @@ const ShopCard = ({ shop }: { shop: ShopTags | null }) => {
                                 sx={{ width: "120px", height: "120px", backgroundColor: '#fff' }}
                                 alt={shop.name ?? ''}
                             >
-                                {/* <ShopLogo shop={shop} size={120} /> */}
+                                <ShopLogo shop={shop} size={120} />
                             </Avatar>
                         </Link>
                     ) : (<Skeleton variant='circular' height={120} width={120} />)}
@@ -41,7 +41,7 @@ const ShopCard = ({ shop }: { shop: ShopTags | null }) => {
                                 sx={{ width: "60px", height: "60px", backgroundColor: '#fff' }}
                                 alt={shop.name ?? ''}
                             >
-                                {/* <ShopLogo shop={shop} size={60} /> */}
+                                <ShopLogo shop={shop} size={60} />
                             </Avatar>
                         </Link>
                     ) : (<Skeleton variant='circular' height={120} width={120} />)}
@@ -69,7 +69,7 @@ const ShopCard = ({ shop }: { shop: ShopTags | null }) => {
                 flexWrap: "wrap-reverse",
                 maxHeight: "3.2rem"
              }}>
-                {/* {tagsChips} */}
+                {tagsChips}
             </Box>
         </Paper>
     );
