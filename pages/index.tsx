@@ -13,6 +13,8 @@ import Categories from '../components/categories';
 import { DataService } from '../lib/data';
 import { Category, ShopTags } from '../models';
 import ShopList from '../components/shopList';
+import Head from 'next/head';
+import { BASE_URL } from '../constants';
 
 export async function getStaticProps({ params }: { params: { id: string } }) {
 	const categories = (await DataService.getCategories()).data ?? [];
@@ -28,8 +30,30 @@ export async function getStaticProps({ params }: { params: { id: string } }) {
 
 export default function Home({categories, newShops}: {categories: Category[], newShops: ShopTags[]}) {
 
+	const webpageStructuredData = {
+		"@context": "https://schema.org",
+		"@type": "WebSite",
+		"name": "Honestore",
+		"url": `${BASE_URL}/`,
+		"potentialAction": {
+		  "@type": "SearchAction",
+		  "target": {
+			"@type": "EntryPoint",
+			"urlTemplate": `${BASE_URL}/search?q={search_term_string}`
+		  },
+		  "query-input": "required name=search_term_string"
+		}
+	}
+
 	return (
 		<>
+			<Head>
+				<link href={`${BASE_URL}/`} rel="canonical" key="head-canonical" />
+			</Head>
+			<script
+				type="application/ld+json"
+				dangerouslySetInnerHTML={{ __html: JSON.stringify(webpageStructuredData) }}
+			/>
 			<Center sx={{ display: { xs: 'none', sm: 'flex' } }}>
 				<Image src={banner} width={500} priority alt="Honestore, La comunidad de activistas del consumo ético" />
 			</Center>

@@ -39,6 +39,7 @@ import { localDate } from "../../helpers/datetime";
 import UserAvatar from "../../components/userAvatar";
 import { ShopLogo } from "../../components/shopLogo";
 import ShopList from "../../components/shopList";
+import { LocalBusiness, Review, WithContext } from "schema-dts";
 
 
 export async function getStaticPaths() {
@@ -140,8 +141,26 @@ const CommentCard = ({comment, update}: {comment: CommentUser | null, update: Fu
 		}
 	}
 
+	const commentStructuredData: WithContext<Review> = {
+        '@context': 'https://schema.org',
+        '@type': 'Review',
+        author: {
+            '@type': "Person",
+            name: user?.name??'',
+        },
+        reviewRating: {
+			"@type": "Rating",
+			"ratingValue": "3"
+		},
+		datePublished: comment?.created_at,
+    }
+
 	return (
 		<Card sx={{width: "400px", maxWidth: "80vw", display: deleted ? 'none' : 'unset'}}>
+			<script
+				type="application/ld+json"
+				dangerouslySetInnerHTML={{ __html: JSON.stringify(commentStructuredData) }}
+			/>
 			<CardActions sx={{borderTop: "1px solid #eee"}}>
 				<Box sx={{padding: 1, display: "flex", gap: 2, width: "100%"}}>
 					{ comment ? (
@@ -376,6 +395,26 @@ export default function ShopPage({ shop, similarShops }: { shop: ShopTagsCategor
 
 	const canonicalUrl = `${BASE_URL}/shops/${shop.slug}`;
 
+	let shopStructuredData: WithContext<LocalBusiness> | null = null;
+	if (shop.address) {
+		const cords = DataService.shopCoordinates(shop)??[0,0];
+		shopStructuredData = {
+			'@context': 'https://schema.org',
+			'@type': 'LocalBusiness',
+			name: shop.name??'',
+			address: {
+				'@type': "PostalAddress",
+				streetAddress: shop.address,
+			},
+			geo: {
+				'@type': 'GeoCoordinates',
+				latitude: cords[0],
+				longitude: cords[1],
+			},
+			telephone: shop.phone??undefined
+		}
+	}
+
 	return (
 		<>
 			<Head>
@@ -385,6 +424,10 @@ export default function ShopPage({ shop, similarShops }: { shop: ShopTagsCategor
 				<meta key="meta-og-desc" property="og:description" content={shop.description ?? ''} />
 				<link href={canonicalUrl} rel="canonical" key="head-canonical" />
 			</Head>
+			{ shopStructuredData ? (<script
+				type="application/ld+json"
+				dangerouslySetInnerHTML={{ __html: JSON.stringify(shopStructuredData) }}
+			/>) : null }
 			<Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
 				<Box sx={{ display: "flex", gap: 3, flexDirection: { xs: "column", sm: "row" }, padding: 2 }}>
 					<Box sx={{ display: "flex", gap: 3, flexDirection: "column", flexBasis: 0 }}>

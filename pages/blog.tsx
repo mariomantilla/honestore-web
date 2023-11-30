@@ -31,7 +31,6 @@ const BlogPage = ({posts}: {posts: PostWithUser[]}) => {
     
     const router = useRouter();
 
-
     return (
         <>
         <Typography variant="h1">El Blog de Honestore</Typography>

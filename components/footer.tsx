@@ -11,11 +11,24 @@ import LinkedIn from '@mui/icons-material/LinkedIn';
 import Twitter from '@mui/icons-material/Twitter';
 import Facebook from '@mui/icons-material/Facebook';
 import Link from 'next/link';
+import { Organization, WithContext } from 'schema-dts';
+import { BASE_URL } from '../constants';
 
 
 function Footer() {
+
+  const honestoreStructuredData: WithContext<Organization> = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "url": `${BASE_URL}/`,
+    "logo": `${BASE_URL}/images/logo2000.jpg`
+  }
   return (
     <footer>
+      <script
+				type="application/ld+json"
+				dangerouslySetInnerHTML={{ __html: JSON.stringify(honestoreStructuredData) }}
+			/>
       <Container maxWidth="lg">
         <Box sx={{ flexGrow: 1, display: "flex", flexWrap: "wrap", gap: 1 }}>
           <Box sx={{ display: "flex", flexGrow: {xs: 1, sm: 0}, alignItems: "center", flexDirection: "column" }}>

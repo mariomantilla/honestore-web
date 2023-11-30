@@ -11,8 +11,7 @@ import Avatar from "@mui/material/Avatar";
 import { DataService } from "../lib/data";
 import LocationOff from "@mui/icons-material/LocationOff";
 import Chip from "@mui/material/Chip";
-import Image from "next/image"
-import { imageKitLoader } from "../lib/imagekitloader";
+import { ShopLogo } from "./shopLogo";
 
 
 const MarkerIcon = new DivIcon({
@@ -57,16 +56,10 @@ function ShopMarker({ shop }: { shop: Shop }) {
                 <Box sx={{ display: "flex", gap: 1 }}>
                     <Link href={'/shops/' + shop.slug}>
                         <Avatar
-                            sx={{ width: "45px", height: "45px" }}
+                            sx={{ width: "45px", height: "45px", backgroundColor: '#fff' }}
                             alt={shop.name ?? ''}
                         >
-                            <Image
-                                loader={imageKitLoader}
-                                src={`shops/${shop.logo_path}`}
-                                alt={shop.name??''}
-                                width={45}
-                                height={45}
-                            />
+                            <ShopLogo shop={shop} size={45} />
                         </Avatar>
                     </Link>
                     <Box>

@@ -46,7 +46,7 @@ export namespace DataService {
     }
 
     export const getAllPosts = () => {
-        return supabase.from('posts').select('*, author(*)')
+        return supabase.from('posts').select('*, author(*)').order('updated_at', {ascending: false})
     }
 
     export const getPostBySlug = (slug: string) => {
