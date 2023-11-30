@@ -43,6 +43,16 @@ type AppPropsWithLayout<P = any> = AppProps & {
   Component: NextPageWithLayout
 }
 
+const analytics = new WebAnalytics({
+  host: "https://api.tinybird.co",
+  token: process.env.NEXT_PUBLIC_ANALYTICS_TOKEN
+});
+
+const errorTracker = new ErrorTracker({
+  host: "https://api.tinybird.co",
+  token: process.env.NEXT_PUBLIC_ERROR_TRACKING_TOKEN
+});
+
 function MyApp({
   Component,
   pageProps,
@@ -76,16 +86,6 @@ const router = useRouter()
     opt_out_persistence_by_default: true
   });
 
-  const analytics = new WebAnalytics({
-    host: "https://api.tinybird.co",
-    token: process.env.NEXT_PUBLIC_ANALYTICS_TOKEN
-  });
-
-  const errorTracker = new ErrorTracker({
-    host: "https://api.tinybird.co",
-    token: process.env.NEXT_PUBLIC_ERROR_TRACKING_TOKEN
-  });
-
   useEffect(() => {
     const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
       if (event == 'SIGNED_OUT') {
@@ -99,7 +99,7 @@ const router = useRouter()
     analytics.trackPageHit();
     errorTracker.addHandlers()
     return () => authListener.subscription.unsubscribe(); // Cleanup the listener when component unmounts
-  }, [analytics, errorTracker]);
+  }, []);
 
   useEffect(() => {
     const handleRouteChange = (url: string) => {
@@ -111,7 +111,7 @@ const router = useRouter()
     return () => {
         router.events.off('routeChangeComplete', handleRouteChange)
     }
-  }, [router.events, analytics])
+  }, [router.events])
 
   return (
     <ErrorBoundary tracker={errorTracker}>
