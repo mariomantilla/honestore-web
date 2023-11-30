@@ -8,16 +8,16 @@ import Avatar from "@mui/material/Avatar";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import { clampStyles } from "../helpers/lineClamp";
-import TagChip from "./tagChip";
-import { ShopLogo } from "./shopLogo";
+// import TagChip from "./tagChip";
+// import { ShopLogo } from "./shopLogo";
 
 const ShopCard = ({ shop }: { shop: ShopTags | null }) => {
 
-	const tagsChips = shop && Array.isArray(shop.tags) ?
-		shop.tags.map((t: Tag, i: number) => (
-			<TagChip key={i} tag={t} tiny />
-		))
-	: [] ;
+	// const tagsChips = shop && Array.isArray(shop.tags) ?
+	// 	shop.tags.map((t: Tag, i: number) => (
+	// 		<TagChip key={i} tag={t} tiny />
+	// 	))
+	// : [] ;
 
     return (
         <Paper elevation={2} sx={{display: "flex", flexDirection: "column", height: "100%"}}>
