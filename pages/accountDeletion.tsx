@@ -14,14 +14,14 @@ export default function PrivacyPage() {
                 <Typography>Pasos a seguir en la web:</Typography>
                 <ol>
                     <li>Inicia sesión en la web (puedes hacer click <Link href="/login">aqui</Link>)</li>
-                    <li>Haz click en el menu de cuenta (con tu avatar o icono de usuario), y luego en el submenú "Cuenta"</li>
-                    <li>En la página de <Link href="/account">administración de cuenta</Link>, dirígete al final de la página y haz click en "Eliminar cuenta"</li>
+                    <li>Haz click en el menu de cuenta (con tu avatar o icono de usuario), y luego en el submenú &quot;Cuenta&quot;</li>
+                    <li>En la página de <Link href="/account">administración de cuenta</Link>, dirígete al final de la página y haz click en &quot;Eliminar cuenta&quot;</li>
                 </ol>
                 <Typography>Pasos a seguir en la app:</Typography>
                 <ol>
-                    <li>Inicia sesión en la app desde la pestaña de Favoritos (el icono "corazón" en la parte inferior)</li>
-                    <li>Una vez iniciada la sesión, haz click en la pestaña "Más" (el icono de tres puntos)</li>
-                    <li>Haz click en el button "Eliminar cuenta"</li>
+                    <li>Inicia sesión en la app desde la pestaña de Favoritos (el icono &quot;corazón&quot; en la parte inferior)</li>
+                    <li>Una vez iniciada la sesión, haz click en la pestaña &quot;Más&quot; (el icono de tres puntos)</li>
+                    <li>Haz click en el button &quot;Eliminar cuenta&quot;</li>
                 </ol>
                 <Typography>
                     Una vez se complete el proceso, que no debería tardar más de unos segundos,
