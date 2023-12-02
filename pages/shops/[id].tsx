@@ -486,7 +486,7 @@ export default function ShopPage({ shop, similarShops }: { shop: ShopTagsCategor
 					>
 					<Paper elevation={3} sx={{padding: "2rem"}}>
 						<Typography variant="h3" sx={{marginBottom: "1rem"}} id="modal-error-title">
-							Informar de un error sobre "{shop.name}"
+							Informar de un error sobre &quot;{shop.name}&quot;
 						</Typography>
 						<TextField
 							id="error-report"
