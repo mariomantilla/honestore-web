@@ -6,17 +6,19 @@ import UserAvatar from "../../components/userAvatar";
 import { localDate } from "../../helpers/datetime";
 import Markdown from "react-markdown";
 import Center from "../../components/center";
-import Head from "next/head";
 import { FixedRatioImageKitImage } from "../../components/imageKitImage";
 import { Article, WithContext } from 'schema-dts'
+import OverrideHead from "../../components/head";
 
 
 export async function getStaticPaths() {
-	let postsRequest = await DataService.getAllPosts();
-	let posts: PostWithUser[] = postsRequest.data ?? [];
+	let {data, error} = await DataService.getAllPosts();
+    if  (error) throw(error);
+	let posts: PostWithUser[] = data ?? [];
+
 	return {
 		paths: posts.map((p) => `/blog/${p.slug}`),
-		fallback: true, // can also be true or 'blocking'
+		fallback: false, // can also be true or 'blocking'
 	}
 }
 
@@ -64,13 +66,11 @@ export default function ArticlePage({ post }: { post: PostWithUser }) {
 
     return (
     <>
-        <Head>
-            <title>{post.title + " - Blog de Honestore"}</title>
-            <meta name="description" content={post.description ?? ''} />
-            <meta key="meta-og-title" property="og:title" content={post.title + " - Blog de Honestore"} />
-            <meta key="meta-og-desc" property="og:description" content={post.description ?? ''} />
-            <meta property="og:image" content={imageURL(1200, 630)} key="head-image" />
-        </Head>
+        <OverrideHead
+            title={post.title + " - Blog de Honestore"}
+            description={post.description ?? ''}
+            image={imageURL(1200, 630)}
+        />
         <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(articleStructuredData) }}

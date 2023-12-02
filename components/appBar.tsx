@@ -99,7 +99,7 @@ function SearchInput(props: InputBaseProps) {
 		</IconButton>
 		<Box sx={{display: {xs: "none", sm: "flex"}, gap: 3}}>
 			<Link href="/about">Conócenos</Link>
-			<Link href="/search">Comercios</Link>
+			<Link href="/search?view=map">Mapa</Link>
 			<Link href="/blog">Blog</Link>
 		</Box>
 	</Box>
@@ -280,7 +280,7 @@ function ResponsiveAppBar() {
 			) : (
 				[
 					<MenuItem key="login" onClick={handleOpenLogin}>Inicia sesión</MenuItem>,
-					<MenuItem key="singup" onClick={handleOpenLogin}>Crear cuenta</MenuItem>,
+					<MenuItem key="singup" component={Link} href="/signup">Crear cuenta</MenuItem>,
 					<Divider key="div" />,
 					<MenuItem key="addShop" onClick={handleMenuClose} component={Link} href="/add_shop">Añade tu comercio gratis</MenuItem>,
 				]
@@ -306,7 +306,7 @@ function ResponsiveAppBar() {
 			onClose={handleMainMenuClose}
 		>
 			<MenuItem key="about" onClick={handleMainMenuClose} component={Link} href="/about">Conócenos</MenuItem>
-			<MenuItem key="search" onClick={handleMainMenuClose} component={Link} href="/search">Buscar comercios</MenuItem>
+			<MenuItem key="search" onClick={handleMainMenuClose} component={Link} href="/search?view=map">Mapa</MenuItem>
 			<MenuItem key="blog" onClick={handleMainMenuClose} component={Link} href="/blog">Blog</MenuItem>
 		</Menu>
 	);

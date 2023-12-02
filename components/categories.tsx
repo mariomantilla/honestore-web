@@ -35,11 +35,11 @@ export default function Categories({ categories, children, ...props }: BoxProps 
                 {categories.map((c, i) => (
                     <Box key={i} sx={{display: "flex", flexDirection: "column", alignItems: "center", gap:1}}>
                         <Box sx={{padding: 2}}>
-                            <Link href={`/search?category=${c.id}`}>
+                            <Link href={`/categories/${c.slug}`}>
                                 <Image src={icons[c.id]} alt={c.name} width={90} />
                             </Link>
                         </Box>
-                        <Link href={`/search?category=${c.id}`}>
+                        <Link href={`/categories/${c.slug}`}>
                             <Typography sx={{fontSize: 18}}>{c?.name}</Typography>
                         </Link>
                     </Box>

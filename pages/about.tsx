@@ -3,18 +3,16 @@ import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
-import Head from "next/head";
 import Link from "next/link";
 
 import appMockup from "../public/images/mobile.png"
 import sinergias from "../public/images/sinergias.jpg"
 import appMockup2 from "../public/images/mobile2.png"
 import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import Snackbar from "@mui/material/Snackbar";
 import ResponsiveImage from "../components/responsiveImage";
 import React from "react";
 import AddContact from "../components/addContact";
+import OverrideHead from "../components/head";
 
 
 export default function AboutPage() {
@@ -27,12 +25,7 @@ export default function AboutPage() {
 
     return (
         <>
-            <Head>
-                <title>Sobre Honestore</title>
-                <meta name="description" content={desc} />
-                <meta property="og:title" content="Sobre Honestore" />
-                <meta property="og:description" content={desc} />
-            </Head>
+            <OverrideHead title="Sobre Honestore" description={desc} />
             <Container maxWidth="lg" sx={{ display: "flex", flexDirection: "column", gap: 2.5 }}>
                 <Box>
                     <Typography variant="h1" component="h1">Honestore</Typography>

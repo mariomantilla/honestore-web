@@ -40,6 +40,7 @@ import UserAvatar from "../../components/userAvatar";
 import { ShopLogo } from "../../components/shopLogo";
 import ShopList from "../../components/shopList";
 import { LocalBusiness, Review, WithContext } from "schema-dts";
+import OverrideHead from "../../components/head";
 
 
 export async function getStaticPaths() {
@@ -417,13 +418,11 @@ export default function ShopPage({ shop, similarShops }: { shop: ShopTagsCategor
 
 	return (
 		<>
-			<Head>
-				<title>{shop.name + " en Honestore"}</title>
-				<meta name="description" content={shop.description ?? ''} />
-				<meta key="meta-og-title" property="og:title" content={shop.name + " en Honestore"} />
-				<meta key="meta-og-desc" property="og:description" content={shop.description ?? ''} />
-				<link href={canonicalUrl} rel="canonical" key="head-canonical" />
-			</Head>
+			<OverrideHead
+            	title={shop.name + " en Honestore"}
+            	description={shop.description ?? ''}
+				canonical={canonicalUrl}
+        	/>
 			{ shopStructuredData ? (<script
 				type="application/ld+json"
 				dangerouslySetInnerHTML={{ __html: JSON.stringify(shopStructuredData) }}

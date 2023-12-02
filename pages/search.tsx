@@ -6,6 +6,7 @@ import { useSearchContext, viewsOptions } from "../context/search";
 import OverrideHead from "../components/head";
 import Box from "@mui/system/Box";
 import dynamic from "next/dynamic";
+import { Container, Typography } from "@mui/material";
 
 const MapWithNoSSR = dynamic(() => import('../components/map'), {
     ssr: false,
@@ -31,10 +32,17 @@ const SearchPage = () => {
         }
     }, [searchQuery, category, tags]);
 
+    const desc = `Localiza comercios, tiendas y restaurantes sostenibles cerca de ti en un mapa interactivo,
+                explora por categorías y filtra según tus valores. Conecta con negocios que comparten tu
+                compromiso con la sostenibilidad.`
 
-    return (
+    return (<>
+        <OverrideHead title="Encuentra comercios, tiendas y restaurantes sotenibles en Honestore" description={desc} />
         <Box sx={{display: "flex", flexDirection: "column", gap: 2}}>
-            <OverrideHead title="Buscar comercios en Honestore" />
+            { loading ? 
+            <Container maxWidth="md">
+                <Typography variant="subtitle1" sx={{textAlign: "center"}}>{desc}</Typography>
+            </Container> : null }
             { view == viewsOptions.list ? (
                     <ShopList shops={loading ? new Array(10).fill(null) : shops } />
                 ) : (
@@ -42,7 +50,7 @@ const SearchPage = () => {
                 ) 
             }
         </Box>
-    );
+    </>);
 }
 
 export default SearchPage

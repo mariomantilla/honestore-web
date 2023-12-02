@@ -10,7 +10,7 @@ import Center from "../components/center";
 import LoginWidget from "../components/loginWidget";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
-import { IKImage, IKUpload } from "imagekitio-react";
+import { IKUpload } from "imagekitio-react";
 import { useMessagesContext } from "../context/messages";
 import CircularProgress from "@mui/material/CircularProgress";
 import Tooltip from "@mui/material/Tooltip";
@@ -33,6 +33,7 @@ import { socialInfoData } from "../constants/socialInfo";
 import { Marker } from "leaflet";
 import { useGlobalConfigContext } from "../context/globalConfig";
 import { ImageKitImage } from "../components/imageKitImage";
+import OverrideHead from "../components/head";
 
 
 
@@ -203,7 +204,7 @@ export default function AddShopPage() {
                 <Center>
                     <label>
                         <Tooltip title={logoFileName ? 'Haz click para cambiarlo' : 'Haz click para subir tu logo'}>
-                            <Avatar sx={{ width: 256, height: 256, backgroundColor: '#fff' }} className={logoFileName ? 'editLogo' : ''}>
+                            <Avatar sx={{ width: 256, height: 256, backgroundColor: '#fff', border: "1px solid #aaa", color: "#888" }} className={logoFileName ? 'editLogo' : ''}>
                                 {uploading ? (<CircularProgress />) : logoFileName ? (
                                     <ImageKitImage
                                         width={256}
@@ -412,14 +413,28 @@ export default function AddShopPage() {
         {l: "Sostenibilidad"},
     ]
 
+    const title = 'Registra tu Comercio Sostenible en Honestore';
+    const desc = `Aumenta la visibilidad de tu tienda, restaurante o comercio conectando con consumidores comprometidos
+    y destaca tus prácticas responsables. Atrae nuevos clientes y construye una comunidad que valora tu compromiso
+    con la sostenibilidad`;
 
-    return (
+    return (<>
+        <OverrideHead
+            title={title}
+            description={desc}
+        />
         <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
             { updating ? (<Center>
                 <Typography variant="h3">Actualizando datos...</Typography>
                 <CircularProgress size="5rem" sx={{marginTop: 3}} />
             </Center>) : (
             <>
+                { activeStep == 0 ? (<>
+                <Typography variant="h1">{title}</Typography>
+                <Container maxWidth="md">
+                    <Typography variant="subtitle1"sx={{textAlign: "center"}} >{desc}</Typography>
+                </Container>
+                </>) : null }
                 <Center sx={{display: {xs: "flex", sm: "none"}}}>
                     { activeStep <5 ? <Typography variant="h3">Paso {activeStep+1} de 5: {labels[activeStep].l}</Typography> : null }
                 </Center>
@@ -439,5 +454,5 @@ export default function AddShopPage() {
             </>
             ) }
         </Box>
-    )
+    </>)
 }

@@ -79,6 +79,17 @@ export namespace DataService {
         return baseQuery.eq('for_customers', true).select(select as potentialShopsSelects);
     }
 
+    export const popularShopsByCategory = (category: Category)  => {
+        return supabase.rpc('popular_shops', { search: '' })
+            .eq('categories.id', category.id)
+            .eq('for_customers', true)
+            .select('*, tags(*), categories!inner(*)');
+    }
+
+    export const getCategoryBySlug = (slug: string) => {
+        return supabase.from('categories').select('*').eq('slug', slug)
+    }
+
     export const getCategories = () => {
         return supabase.from('categories').select('*');
     }

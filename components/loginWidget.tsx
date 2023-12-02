@@ -20,7 +20,7 @@ ThemeSupa.honestore = {
     },
 };
 
-export default function LoginWidget({ view }: { view?: ViewType }) {
+export default function LoginWidget({ view, maxWidth = "400px" }: { view?: ViewType, maxWidth?: number | string }) {
     
     const router = useRouter();
     const [origin, setOrigin] = useState<string | undefined>(undefined);
@@ -30,7 +30,7 @@ export default function LoginWidget({ view }: { view?: ViewType }) {
     }, [router.asPath]);
 
     return (
-        <Box sx={{ padding: "1rem", maxWidth: "400px" }}>
+        <Box sx={{ padding: "1rem", maxWidth: maxWidth }}>
             <Auth
                 supabaseClient={supabase}
                 appearance={{ theme: ThemeSupa }}

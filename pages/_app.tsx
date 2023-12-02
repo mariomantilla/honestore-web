@@ -126,7 +126,7 @@ const router = useRouter()
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="author" content="Honestore" />
         <meta key="meta-og-title" property="og:title" content="Honestore: Tiendas sostenibles y de consumo responsable cerca de ti" />
-        <meta  key="meta-og-desc" property="og:description" content="Descubre Honestore, la plataforma que conecta consumidores responsables con comercios sostenibles en España.
+        <meta key="meta-og-desc" property="og:description" content="Descubre Honestore, la plataforma que conecta consumidores responsables con comercios sostenibles en España.
   Encuentra y filtra comercios que se alinean con tus valores de sostenibilidad: reducción de residuos, comercio justo, circularidad, energías renovables y más.
   Información detallada, mapas y experiencias de usuario optimizada. Conviértete en parte de nuestra comunidad consciente, transformando la manera en que
   compras y apoyando a comercios locales comprometidos con la sostenibilidad." />
