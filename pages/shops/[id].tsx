@@ -34,13 +34,14 @@ import TagChip from "../../components/tagChip";
 import { clampStyles } from "../../helpers/lineClamp";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Card from "@mui/material/Card";
-import { CardActions, CardContent, Chip, IconButton, Skeleton, TextField } from "@mui/material";
+import { CardActions, CardContent, Chip, IconButton, Modal, Paper, Skeleton, TextField } from "@mui/material";
 import { localDate } from "../../helpers/datetime";
 import UserAvatar from "../../components/userAvatar";
 import { ShopLogo } from "../../components/shopLogo";
 import ShopList from "../../components/shopList";
 import { LocalBusiness, Review, WithContext } from "schema-dts";
 import OverrideHead from "../../components/head";
+import { useMessagesContext } from "../../context/messages";
 
 
 export async function getStaticPaths() {
@@ -320,6 +321,10 @@ export default function ShopPage({ shop, similarShops }: { shop: ShopTagsCategor
 
 	const router = useRouter();
 	const [comments, setComments] = useState<(CommentUser | null)[]>([null, null, null]);
+	const [errorModalOpen, setErrorModalOpen] = useState(false);
+	const [errorInfo, setErrorInfo] = useState('');
+    const { sendMessage } = useMessagesContext();
+
 
 	const updateComments = useCallback(() => {
 		DataService.getComments(shop).then(({data}) => {
@@ -416,6 +421,19 @@ export default function ShopPage({ shop, similarShops }: { shop: ShopTagsCategor
 		}
 	}
 
+	let sendErrorReport = () => {
+        DataService.addErrorReport(shop, errorInfo).then((r) => {
+            if (!r.error) {
+                sendMessage('success', 'Informe enviado! Gracias por tu colaboración');
+				setErrorInfo('');
+            }
+            else {
+                sendMessage('error', 'Error al enviar el informe');
+            }
+			setErrorModalOpen(false);
+        });
+    }
+
 	return (
 		<>
 			<OverrideHead
@@ -455,6 +473,38 @@ export default function ShopPage({ shop, similarShops }: { shop: ShopTagsCategor
 						<ViewMoreText text={shop.description} lines={6} />
 					</Box>
 				</Box>
+				<Center>
+					<Button size="small" color="info" variant="text"
+						sx={{textTransform: "none"}}
+						onClick={() => setErrorModalOpen(true)}
+					>Informar de un error</Button>
+				</Center>
+				<Modal
+					open={errorModalOpen}
+					onClose={() => setErrorModalOpen(false)}
+					aria-labelledby="modal-error-title"
+					>
+					<Paper elevation={3} sx={{padding: "2rem"}}>
+						<Typography variant="h3" sx={{marginBottom: "1rem"}} id="modal-error-title">
+							Informar de un error sobre "{shop.name}"
+						</Typography>
+						<TextField
+							id="error-report"
+							label="Describe el error que has encontrado"
+							multiline
+							value={errorInfo}
+							onChange={(event) => {setErrorInfo(event.target.value)}}
+							rows={4}
+							sx={{ width: "100%" }}
+							placeholder="Intenta ser específico para que podamos subsanarlo lo antes posible"
+							variant="filled"
+						/>
+						<Box sx={{display: "flex", gap: 2, justifyContent: "flex-end", marginTop: "2rem"}}>
+							<Button onClick={() => setErrorModalOpen(false)}>Cancelar</Button>
+							<Button onClick={sendErrorReport} variant="contained">Enviar</Button>
+						</Box>
+					</Paper>
+				</Modal>
 				<OwnerEditSection shop={shop} />
 				<Divider />
 				<CommentCarrousel comments={comments} update={updateComments} />

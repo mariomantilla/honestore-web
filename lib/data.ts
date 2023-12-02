@@ -145,6 +145,10 @@ export namespace DataService {
     export const addFeedback = (rating: number, comments: string) => {
         return supabase.from('feedback').insert({'rating':rating, 'comments': comments});
     }
+
+    export const addErrorReport = (shop: Shop, info: string) => {
+        return supabase.from('error_reports').insert({'shop': shop.id, 'error_info': info});
+    }
     
     export const getProfile = (user: User) => {
         return supabase.from('profiles').select('*').eq('id', user.id);

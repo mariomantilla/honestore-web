@@ -76,6 +76,46 @@ export interface Database {
           }
         ]
       }
+      error_reports: {
+        Row: {
+          created_at: string
+          error_info: string
+          id: number
+          shop: number
+          updated_at: string
+          user: string | null
+        }
+        Insert: {
+          created_at?: string
+          error_info: string
+          id?: number
+          shop: number
+          updated_at?: string
+          user?: string | null
+        }
+        Update: {
+          created_at?: string
+          error_info?: string
+          id?: number
+          shop?: number
+          updated_at?: string
+          user?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "error_reports_shop_fkey"
+            columns: ["shop"]
+            referencedRelation: "shops"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "error_reports_user_fkey"
+            columns: ["user"]
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       favourites: {
         Row: {
           created_at: string | null
