@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { ImageKitImage } from "../components/imageKitImage";
 import OverrideHead from "../components/head";
+import Breadcrumbs from "../components/Breadcrumbs";
 
 export async function getStaticProps() {
 	let { data, error } = await DataService.getAllPosts();
@@ -43,6 +44,7 @@ const BlogPage = ({posts}: {posts: PostWithUser[]}) => {
         <OverrideHead
             title={title}
         />
+        <Breadcrumbs items={[{name: "Blog"}]} />
         <Typography variant="h1">{title}</Typography>
         <Typography variant="h2" sx={{marginTop: 2}}>{subtitle}</Typography>
         <Container maxWidth="md">

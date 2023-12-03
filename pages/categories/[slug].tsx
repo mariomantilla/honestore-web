@@ -3,6 +3,7 @@ import ShopList from "../../components/shopList";
 import { DataService } from "../../lib/data";
 import { Category, ShopTags } from "../../models";
 import OverrideHead from "../../components/head";
+import Breadcrumbs from "../../components/Breadcrumbs";
 
 
 export async function getStaticPaths() {
@@ -47,6 +48,7 @@ export default function ExploreCategoryPage({ category, shops }: { category: Cat
             title={title}
             description={category.description}
         />
+        <Breadcrumbs items={[{name: category.name}]} />
         <Box sx={{display: "flex", gap: 4, flexDirection: "column"}}>
             <Typography variant="h1">{title}</Typography>
             <Container maxWidth="md">

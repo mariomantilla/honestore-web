@@ -33,6 +33,7 @@ export const theme = createTheme({
         h1: {
             fontSize: 48,
             textAlign: "center",
+            marginTop: "1.5rem"
         },
         h2: {
             fontSize: 32,

@@ -9,6 +9,7 @@ import Center from "../../components/center";
 import { FixedRatioImageKitImage } from "../../components/imageKitImage";
 import { Article, WithContext } from 'schema-dts'
 import OverrideHead from "../../components/head";
+import Breadcrumbs from "../../components/Breadcrumbs";
 
 
 export async function getStaticPaths() {
@@ -75,6 +76,7 @@ export default function ArticlePage({ post }: { post: PostWithUser }) {
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(articleStructuredData) }}
         />
+        <Breadcrumbs items={[{name: "Blog", path: "/blog"},{name: post.title}]} />
         <Container maxWidth="md">
         <Box sx={{display: "flex", gap: 2, flexDirection: "column"}}>
             <Box>

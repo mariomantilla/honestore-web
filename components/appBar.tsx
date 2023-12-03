@@ -324,14 +324,12 @@ function ResponsiveAppBar() {
 
 	return (
 		<>
-			<AppBar position="sticky" sx={{ marginBottom: "2.5rem" }}>
+			<AppBar position="sticky" sx={{ marginBottom: "1rem" }}>
 				<Container maxWidth="lg">
 					<Toolbar disableGutters sx={{ gap: 1 }}>
-						{/* <Box sx={{display: {xs: "none", sm: "unset"}}}> */}
 						<Link href="/">
 							<Image src={logo} alt="Honestore Logo" width={35} sizes="70px" style={{ margin: "1rem" }} />
 						</Link>
-						{/* </Box> */}
 						<SearchInput />
 						<Button
 							variant="contained"
