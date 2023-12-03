@@ -37,8 +37,8 @@ export default function Breadcrumbs({ items }: {items: Item[]}) {
         />
         <MUIBreadcrumbs aria-label="ruta de navegación">
             {allItems.map((item, i) => item.path ? (
-                <Link href={item.path}>{item.name}</Link>
-            ) : <Typography color="text.primary">{item.name}</Typography> )}
+                <Link href={item.path} key={i}>{item.name}</Link>
+            ) : <Typography color="text.primary" key={i}>{item.name}</Typography> )}
         </MUIBreadcrumbs>
     </>)
 }
