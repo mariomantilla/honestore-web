@@ -63,7 +63,7 @@ const menuLinks = [
 	// ['Conócenos', '/about'],
 	['Mapa', '/search?view=map'],
 	['Blog', '/blog'],
-	['Para comercios', '/shops'],
+	['Para comercios', '/for-shops'],
 ];
 
 function SearchInput(props: InputBaseProps) {

@@ -97,14 +97,14 @@ const ShopsResourcesPage = () => {
                     Recibe comentarios y sugerencias directamente de tus clientes, todo desde una plataforma única.
                     Optimiza tu presencia sostenible y conquista a tus clientes de manera efectiva.
                 </Typography>
-                <Box sx={{display: "flex", gap: 3}}>
-                    <FontAwesomeIcon icon={faHeart} fontSize={24} color={theme.palette.primary.main} />
-                    <FontAwesomeIcon icon={faComments} fontSize={24} color={theme.palette.primary.main} />
-                    <FontAwesomeIcon icon={faPaperPlane} fontSize={24} color={theme.palette.primary.main} />
-                    <FontAwesomeIcon icon={faArrowTrendUp} fontSize={24} color={theme.palette.primary.main} />
-                    <FontAwesomeIcon icon={faCircleInfo} fontSize={24} color={theme.palette.primary.main} />
-                    <FontAwesomeIcon icon={faPeopleGroup} fontSize={24} color={theme.palette.primary.main} />
-                    <FontAwesomeIcon icon={faThumbsUp} fontSize={24} color={theme.palette.primary.main} />
+                <Box sx={{display: "flex", gap: 3, flexWrap: "wrap"}}>
+                    <FontAwesomeIcon icon={faHeart} fontSize={24} height={24} width={24} color={theme.palette.primary.main} />
+                    <FontAwesomeIcon icon={faComments} fontSize={24} height={24} color={theme.palette.primary.main} />
+                    <FontAwesomeIcon icon={faPaperPlane} fontSize={24} height={24} color={theme.palette.primary.main} />
+                    <FontAwesomeIcon icon={faArrowTrendUp} fontSize={24} height={24} color={theme.palette.primary.main} />
+                    <FontAwesomeIcon icon={faCircleInfo} fontSize={24} height={24} color={theme.palette.primary.main} />
+                    <FontAwesomeIcon icon={faPeopleGroup} fontSize={24} height={24} color={theme.palette.primary.main} />
+                    <FontAwesomeIcon icon={faThumbsUp} fontSize={24} height={24} color={theme.palette.primary.main} />
                 </Box>
                 <Box>
                 <Button
