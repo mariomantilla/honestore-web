@@ -1,10 +1,12 @@
 import Typography from "@mui/material/Typography";
 import Policy from "../components/policyItem";
 import PolicyPage from "../components/policyPage";
+import Breadcrumbs from "../components/Breadcrumbs";
 
 
 export default function TermsPage() {
-    return (
+    return (<>
+        <Breadcrumbs items={[{name: "Términos y condiciones"}]} />
         <PolicyPage title="Términos y condiciones" lastEdit="28/03/2023" desc="Esta página describe y regula el uso de la plataforma y la web y las condiciones en las que se ofrece el servicio. Por favor, léela detenidamente antes usar la app o el sitio web.">
             <Policy title="Ámbito" id="scope">
                 <Typography>
@@ -72,5 +74,5 @@ export default function TermsPage() {
                 </Typography>
             </Policy>
         </PolicyPage>
-    );
+    </>);
 }

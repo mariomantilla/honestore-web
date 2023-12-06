@@ -5,7 +5,7 @@ import { PostWithUser } from "../models";
 import { localDate } from "../helpers/datetime";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { ImageKitImage } from "../components/imageKitImage";
+import { FixedRatioImageKitImage, ImageKitImage } from "../components/imageKitImage";
 import OverrideHead from "../components/head";
 import Breadcrumbs from "../components/Breadcrumbs";
 
@@ -43,31 +43,45 @@ const BlogPage = ({posts}: {posts: PostWithUser[]}) => {
         <>
         <OverrideHead
             title={title}
+            description="desc"
         />
         <Breadcrumbs items={[{name: "Blog"}]} />
         <Typography variant="h1">{title}</Typography>
         <Typography variant="h2" sx={{marginTop: 2}}>{subtitle}</Typography>
         <Container maxWidth="md">
-            <Typography variant="subtitle1" sx={{textAlign: "center"}}>{desc}</Typography>
+            <Typography variant="subtitle1" sx={{textAlign: "center"}} component={"h3"}>{desc}</Typography>
         </Container>
         <Grid container spacing={1.5} sx={{marginTop: 3}}>
             { posts.map((post, i) => (
                 <Grid xs={12} sm={6} md={4} lg={4} key={i}>
-                    <Card>
-                        <CardActionArea onClick={() => router.push('/blog/'+post.slug)}>
+                    <Card sx={{height: "100%"}}>
+                        <CardActionArea onClick={() => router.push('/blog/'+post.slug)}
+                            sx={{height: "100%", display: "flex", flexDirection: "column", alignItems: "normal"}}>
                             <CardHeader
                                 title={
                                 <Typography variant="h3">
                                     <Link href={"/blog/"+post.slug}>{post.title}</Link>
                                 </Typography>}
                                 subheader={localDate(new Date(post.created_at), true)}
+                                sx={{flexGrow: 1}}
                             />
-                            <CardMedia sx={{marginBottom: "-5px", height: "200px", position: "relative"}}>
-                                <ImageKitImage
-                                    fill={true}
+                            <CardMedia sx={{marginBottom: "-5px"}}>
+                                <FixedRatioImageKitImage
+                                    priority={true}
+                                    style={{
+                                        width: '100%',
+                                        height: 'auto',
+                                    }}
+                                    width={350}
+                                    height={200}
+                                    src={`/blog/${post.hero}`}
+                                    alt={post.title}
+                                />
+                                {/* <ImageKitImage
+                                    // fill={true}
                                     src={`blog/${post.hero}`}
                                     alt={post.description??''}
-                                />
+                                /> */}
                             </CardMedia>
                         </CardActionArea>
                     </Card>

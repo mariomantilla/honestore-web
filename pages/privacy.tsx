@@ -1,10 +1,12 @@
 import Typography from "@mui/material/Typography";
 import Policy from "../components/policyItem";
 import PolicyPage from "../components/policyPage";
+import Breadcrumbs from "../components/Breadcrumbs";
 
 
 export default function PrivacyPage() {
-    return (
+    return (<>
+        <Breadcrumbs items={[{name: "Política de Privacidad"}]} />
         <PolicyPage title="Política de Privacidad" lastEdit="28/03/2023" desc="Tu privacidad es importante para nosotros. En esta página te contamos qué datos recopilamos, que hacemos con ellos y cúales son tus derechos al respecto.">
             <Policy title="Ámbito" id="scope">
                 <Typography>
@@ -164,5 +166,5 @@ export default function PrivacyPage() {
                 </Typography>
             </Policy>
         </PolicyPage>
-    );
+    </>);
 }

@@ -49,7 +49,7 @@ function Footer() {
               </Link>
             </Box>
           </Box>
-          <Box sx={{ display: "flex", flexGrow: 1, flexDirection: "column", color: "white", fontSize: 18, gap: 1, textAlign: {xs: "center", sm: "right"}, flexBasis: "max-content", flexShrink: 0, lineHeight: "32px"}}>
+          <Box sx={{ display: "flex", flexGrow: 1, flexDirection: "column", color: "white", fontSize: 15, gap: 0.5, textAlign: {xs: "center", sm: "right"}, flexBasis: "max-content", flexShrink: 0, lineHeight: "32px"}}>
             <Link href="/terms">Términos y condiciones</Link>
             <Link href="/privacy">Política de privacidad</Link>
             <Link href="/cookies">Política de cookies</Link>

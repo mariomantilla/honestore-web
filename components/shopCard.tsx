@@ -10,8 +10,11 @@ import Box from "@mui/material/Box";
 import { clampStyles } from "../helpers/lineClamp";
 import TagChip from "./tagChip";
 import { ShopLogo } from "./shopLogo";
+import { useRouter } from "next/router";
 
 const ShopCard = ({ shop }: { shop: ShopTags | null }) => {
+
+    const router = useRouter();
 
 	const tagsChips = shop && Array.isArray(shop.tags) ?
 		shop.tags.map((t: Tag, i: number) => (
@@ -54,7 +57,7 @@ const ShopCard = ({ shop }: { shop: ShopTags | null }) => {
                         ) : (<Skeleton width="60%" sx={{ alignSelf: "center", flexGrow: 1 }} />)}
                         {shop ? (<FavButton shop={shop} />) : (<Skeleton width="20px" />)}
                     </Box>
-                    <Typography variant="body2" color="text.secondary" sx={clampStyles(3)}>
+                    <Typography variant="body2" color="text.secondary" sx={clampStyles(3)} onClick={() => router.push('/shops/'+shop?.slug)}>
                         {shop ? shop.description ?? '' : (<><Skeleton width="90%" /><Skeleton width="100%" /><Skeleton width="85%" /></>)}
                     </Typography>
                 </Box>

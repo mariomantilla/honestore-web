@@ -1,5 +1,6 @@
 import Typography from "@mui/material/Typography";
 import TitlePage from "../components/titlePage";
+import Breadcrumbs from "../components/Breadcrumbs";
 
 
 export default function JoinTheTeamPage() {
@@ -13,7 +14,8 @@ export default function JoinTheTeamPage() {
     Explora nuestras opciones de colaboración y encuentra la que mejor se adapte a tus necesidades y valores. 
     `   
 
-    return (
+    return (<>
+        <Breadcrumbs items={[{name: "Únete al equipo"}]} />
         <TitlePage title={"Únete al equipo"} desc={desc}>
             <Typography sx={{ textAlign: "center" }}>{desc}</Typography>
             <Typography variant="h3" sx={{ padding: "0.5em" }}>Relaciones externas</Typography>
@@ -31,5 +33,5 @@ export default function JoinTheTeamPage() {
             ✉️ Si te interesa, envíanos un mensaje a <a href="mailto:info@honestore.app">info@honestore.app</a>. También puedes compartir esta oportunidad con personas afines que puedan estar interesadas.
             </Typography>
         </TitlePage>
-    );
+    </>);
 }

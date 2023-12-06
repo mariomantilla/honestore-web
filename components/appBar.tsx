@@ -46,7 +46,7 @@ const Search = styled('div')(({ theme }) => ({
 	},
 	marginLeft: 0,
 	width: '100%',
-	maxWidth: '300px'
+	maxWidth: '200px'
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
@@ -58,6 +58,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 		width: '100%',
 	},
 }));
+
+const menuLinks = [
+	// ['Conócenos', '/about'],
+	['Mapa', '/search?view=map'],
+	['Blog', '/blog'],
+	['Para comercios', '/shops'],
+];
 
 function SearchInput(props: InputBaseProps) {
 
@@ -98,9 +105,9 @@ function SearchInput(props: InputBaseProps) {
 			<SearchIcon />
 		</IconButton>
 		<Box sx={{display: {xs: "none", sm: "flex"}, gap: 3}}>
-			<Link href="/about">Conócenos</Link>
-			<Link href="/search?view=map">Mapa</Link>
-			<Link href="/blog">Blog</Link>
+			{menuLinks.map((item, i) => 
+				<Link key={i} href={item[1]}>{item[0]}</Link>
+			)}
 		</Box>
 	</Box>
 	);
@@ -305,9 +312,9 @@ function ResponsiveAppBar() {
 			open={isMainMenuOpen}
 			onClose={handleMainMenuClose}
 		>
-			<MenuItem key="about" onClick={handleMainMenuClose} component={Link} href="/about">Conócenos</MenuItem>
-			<MenuItem key="search" onClick={handleMainMenuClose} component={Link} href="/search?view=map">Mapa</MenuItem>
-			<MenuItem key="blog" onClick={handleMainMenuClose} component={Link} href="/blog">Blog</MenuItem>
+			{menuLinks.map((item, i) => 
+				<MenuItem key={i} onClick={handleMainMenuClose} component={Link} href={item[1]}>{item[0]}</MenuItem>
+			)}
 		</Menu>
 	);
 
