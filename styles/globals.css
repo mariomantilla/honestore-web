@@ -1,10 +1,13 @@
 html,
 body {
-  min-width: fit-content;
   padding: 0;
   margin: 0;
   font-family: 'Open Sans', BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+#__next {
+  min-width: fit-content;
 }
 
 a {

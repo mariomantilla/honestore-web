@@ -315,6 +315,7 @@ function ResponsiveAppBar() {
 			{menuLinks.map((item, i) => 
 				<MenuItem key={i} onClick={handleMainMenuClose} component={Link} href={item[1]}>{item[0]}</MenuItem>
 			)}
+			<MenuItem key={"add-shop"} onClick={handleMainMenuClose} component={Link} href={"add_shop"}>Añade tu comercio gratis</MenuItem>
 		</Menu>
 	);
 
