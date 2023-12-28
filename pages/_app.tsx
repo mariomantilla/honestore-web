@@ -134,6 +134,7 @@ const router = useRouter()
         <meta property="og:url" content={canonicalUrl} />
         <link href={canonicalUrl} rel="canonical" key="head-canonical" />
         <link rel="shortcut icon" type="image/x-icon" href="/favicon.png" />
+        <meta name="robots" content={process.env.NEXT_PUBLIC_NO_INDEX == '1' ? 'noindex, nofollow' : 'index, follow' } />
       </Head>
       <ThemeProvider theme={theme}>
         <Box sx={{

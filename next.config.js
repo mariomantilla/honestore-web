@@ -3,6 +3,19 @@
 module.exports = {
   reactStrictMode: true,
   swcMinify: true,
+  async headers() {
+    return process.env['NEXT_PUBLIC_NO_INDEX'] == 1 ? [
+      {
+        source: '/:path*',
+        headers: [
+          {
+            key: 'X-Robots-Tag',
+            value: 'noindex, nofollow',
+          },
+        ],
+      },
+    ] : []
+  },
   images: {
     remotePatterns: [
       {
