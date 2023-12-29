@@ -4,7 +4,7 @@ module.exports = {
   reactStrictMode: true,
   swcMinify: true,
   async headers() {
-    return process.env['NEXT_PUBLIC_NO_INDEX'] == 1 ? [
+    return process.env['NEXT_PUBLIC_NO_INDEX'] ? [
       {
         source: '/:path*',
         headers: [
