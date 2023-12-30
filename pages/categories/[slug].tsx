@@ -41,7 +41,7 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
 
 export default function ExploreCategoryPage({ category, shops }: { category: Category, shops: ShopTags[] }) {
 
-    const title = `Comercios sostenibles en ${category.name}`;
+    const title = category.seo_title || `Comercios sostenibles en ${category.name}`;
 
     return (<>
         <OverrideHead

@@ -17,7 +17,7 @@ import Head from 'next/head';
 import { BASE_URL } from '../constants';
 
 export async function getStaticProps({ params }: { params: { id: string } }) {
-	const categories = (await DataService.getCategories()).data ?? [];
+	const categories = (await DataService.getCategories(true)).data ?? [];
 	const newShops = (await DataService.newShops()).data ?? [];
 	return {
 		props: {

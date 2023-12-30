@@ -13,24 +13,30 @@ export interface Database {
         Row: {
           created_at: string
           description: string
+          home: boolean
           id: number
           name: string
+          seo_title: string
           slug: string
           updated_at: string
         }
         Insert: {
           created_at?: string
           description?: string
+          home?: boolean
           id?: number
           name: string
+          seo_title?: string
           slug?: string
           updated_at?: string
         }
         Update: {
           created_at?: string
           description?: string
+          home?: boolean
           id?: number
           name?: string
+          seo_title?: string
           slug?: string
           updated_at?: string
         }
@@ -75,6 +81,27 @@ export interface Database {
             referencedColumns: ["id"]
           }
         ]
+      }
+      countries: {
+        Row: {
+          created_at: string
+          id: number
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          name?: string
+          updated_at?: string
+        }
+        Relationships: []
       }
       error_reports: {
         Row: {
@@ -289,6 +316,7 @@ export interface Database {
         Row: {
           address: string | null
           consent_proof: string | null
+          country: number | null
           created_at: string
           description: string | null
           email: string | null
@@ -315,6 +343,7 @@ export interface Database {
         Insert: {
           address?: string | null
           consent_proof?: string | null
+          country?: number | null
           created_at?: string
           description?: string | null
           email?: string | null
@@ -341,6 +370,7 @@ export interface Database {
         Update: {
           address?: string | null
           consent_proof?: string | null
+          country?: number | null
           created_at?: string
           description?: string | null
           email?: string | null
@@ -365,6 +395,12 @@ export interface Database {
           whatsapp?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "shops_country_fkey"
+            columns: ["country"]
+            referencedRelation: "countries"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "shops_owner_fkey"
             columns: ["owner"]
@@ -513,6 +549,7 @@ export interface Database {
             Returns: {
               address: string | null
               consent_proof: string | null
+              country: number | null
               created_at: string
               description: string | null
               email: string | null
@@ -544,6 +581,7 @@ export interface Database {
         Returns: {
           address: string | null
           consent_proof: string | null
+          country: number | null
           created_at: string
           description: string | null
           email: string | null
@@ -575,6 +613,7 @@ export interface Database {
         Returns: {
           address: string | null
           consent_proof: string | null
+          country: number | null
           created_at: string
           description: string | null
           email: string | null
@@ -606,6 +645,7 @@ export interface Database {
         Returns: {
           address: string | null
           consent_proof: string | null
+          country: number | null
           created_at: string
           description: string | null
           email: string | null

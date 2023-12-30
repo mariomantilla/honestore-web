@@ -90,8 +90,9 @@ export namespace DataService {
         return supabase.from('categories').select('*').eq('slug', slug)
     }
 
-    export const getCategories = () => {
-        return supabase.from('categories').select('*');
+    export const getCategories = (home: boolean = false) => {
+        const base = supabase.from('categories').select('*');
+        return home ? base.eq('home', true) : base ;
     }
 
     export const getTags = () => {
